@@ -242,3 +242,5 @@ Route::get('/targets', 'AdminController@gettargetslist')->middleware('auth', 'ad
 Route::post('/createtarget', 'AdminController@createtarget')->middleware('auth', 'admin');
 
 Route::post('/edittarget','AdminController@edittarget')->middleware('auth', 'admin');
+
+Route::post('/deletetargret','AdminController@deletetargret')->middleware('auth', 'admin');

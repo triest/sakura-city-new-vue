@@ -3796,6 +3796,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log("targets");
@@ -3830,11 +3832,28 @@ __webpack_require__.r(__webpack_exports__);
     deleWindow: function deleWindow(item) {
       this.id = item.id;
       this.name = item.name;
-      console.log(this.id);
       $("#del-modal").modal('show');
     },
-    createTarget: function createTarget() {
+    confurmDelete: function confurmDelete() {
       var _this2 = this;
+
+      var that = this;
+      var formData = new FormData();
+      formData.append('id', this.id);
+      axios.post('/deletetargret', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        if (response.data == "ok") {
+          _this2.name = "";
+        }
+      }).catch(function () {});
+      this.getTargets();
+      $("#del-modal").modal('hide');
+    },
+    createTarget: function createTarget() {
+      var _this3 = this;
 
       var that = this;
       var formData = new FormData();
@@ -3845,13 +3864,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         if (response.data == "ok") {
-          _this2.name = "";
+          _this3.name = "";
         }
       }).catch(function () {});
       this.getTargets();
     },
     saveChange: function saveChange() {
-      var _this3 = this;
+      var _this4 = this;
 
       console.log("change");
       var formData = new FormData();
@@ -3863,7 +3882,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         if (response.data == "ok") {
-          _this3.name = "";
+          _this4.name = "";
         }
       }).catch(function () {});
       this.getTargets();
@@ -53118,7 +53137,36 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "modal fade", attrs: { id: "del-modal" } }, [
+      _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _vm._v("\n                    Удалить цель "),
+            _c("b", [_vm._v(_vm._s(_vm.name))]),
+            _vm._v(" ?\n                ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              attrs: { type: "button" },
+              on: { click: _vm.confurmDelete }
+            },
+            [_vm._v("Удалить")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              attrs: { type: "button", "data-dismiss": "modal" }
+            },
+            [_vm._v("Отмена")]
+          )
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "modal fade", attrs: { id: "edit-modal" } }, [
       _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
@@ -53158,7 +53206,7 @@ var render = function() {
                 attrs: { type: "button" },
                 on: { click: _vm.saveChange }
               },
-              [_vm._v("Save")]
+              [_vm._v("Сохранить")]
             ),
             _vm._v(" "),
             _c(
@@ -53167,7 +53215,7 @@ var render = function() {
                 staticClass: "btn btn-secondary",
                 attrs: { type: "button", "data-dismiss": "modal" }
               },
-              [_vm._v("Cancel")]
+              [_vm._v("Отмена")]
             )
           ])
         ])
@@ -53177,7 +53225,7 @@ var render = function() {
     _c("br"),
     _c("br"),
     _vm._v(" "),
-    _vm._m(1),
+    _vm._m(0),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
@@ -53210,7 +53258,7 @@ var render = function() {
     _c("button", { on: { click: _vm.createTarget } }, [_vm._v("Создать")]),
     _vm._v(" "),
     _c("table", { staticClass: "table" }, [
-      _vm._m(2),
+      _vm._m(1),
       _vm._v(" "),
       _c(
         "tbody",
@@ -53240,7 +53288,7 @@ var render = function() {
                   staticClass: "btn",
                   on: {
                     click: function($event) {
-                      return _vm.deleWindow(target.id)
+                      return _vm.deleWindow(target)
                     }
                   }
                 },
@@ -53255,26 +53303,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "modal fade", attrs: { id: "del-modal" } },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" })
-            ])
-          ]
-        )
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

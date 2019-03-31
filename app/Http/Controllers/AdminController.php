@@ -48,18 +48,27 @@ class AdminController extends Controller
 
     public function edittarget(Request $request)
     {
-        dump($request);
         $validatedData = $request->validate([
             'name' => 'required',
-            'id'=>'required'
+            'id' => 'required',
         ]);
-        $target=Target::select(['id', 'name'])->where('id', $request->id)->first();
-        dump($target);
-        if ($target==null) {
+        $target = Target::select(['id', 'name'])->where('id', $request->id)->first();
+
+        if ($target == null) {
             return response()->json('fail');
         }
-        $target->name=$request->name;
+        $target->name = $request->name;
         $target->save();
+
         return response()->json("ok");
+    }
+
+    public function deletetargret(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id' => 'required',
+        ]);
+        $target= Target::select(['id', 'name'])->where('id', $request->id)->first();
+        $target->delete();
     }
 }

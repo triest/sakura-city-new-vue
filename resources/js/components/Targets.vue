@@ -4,8 +4,10 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-
+                        Удалить цель <b>{{name}}</b> ?
                     </div>
+                    <button type="button" class="btn btn-danger" v-on:click="confurmDelete">Удалить</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
                 </div>
             </div>
         </div>
@@ -19,8 +21,8 @@
                         <label>Название</label>
                         <input type="text" v-model="item.name">
                         <br>
-                        <button type="button" class="btn btn-secondary" v-on:click="saveChange">Save</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" v-on:click="saveChange">Сохранить</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
                     </div>
                 </div>
             </div>
@@ -45,7 +47,7 @@
                     <button class="btn" @click="editWindow(target)"><i class="fa fa-pencil"></i></button>
                 </td>
                 <td>
-                    <button class="btn" @click="deleWindow(target.id)"><i class="fa fa-trash"></i></button>
+                    <button class="btn" @click="deleWindow(target)"><i class="fa fa-trash"></i></button>
                 </td>
             </tr>
             </tbody>
@@ -65,12 +67,12 @@
                 name: "",
                 id: "",
                 value_input: "",
-                item:""
+                item: ""
             }
         },
         methods: {
             getTargets() {
-                this.targets=null;
+                this.targets = null;
                 axios.get('/targets')
                     .then((response) => {
                             this.targets = response.data;
@@ -81,16 +83,39 @@
             editWindow(item) {
                 this.id = item.id;
                 this.value_input = item.name;
-                this.item=item;
+                this.item = item;
                 console.log(this.id);
                 $("#edit-modal").modal('show');
             },
             deleWindow(item) {
                 this.id = item.id;
                 this.name = item.name;
-                console.log(this.id);
                 $("#del-modal").modal('show');
             },
+            confurmDelete() {
+                var that = this;
+                let formData = new FormData();
+                formData.append('id', this.id);
+                axios.post('/deletetargret', formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then((response) => {
+
+                        if (response.data == "ok") {
+                            this.name = "";
+                        }
+                    })
+                    .catch(function () {
+                    });
+                this.getTargets();
+                $("#del-modal").modal('hide');
+            },
+
+
+
             createTarget() {
                 var that = this;
                 let formData = new FormData();
