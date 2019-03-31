@@ -9,7 +9,6 @@
                 </div>
             </div>
         </div>
-
         <div id="edit-modal" class="modal fade">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -26,8 +25,6 @@
                 </div>
             </div>
         </div>
-
-
         <br><br>
         <label>Создать цель знакоства.<br> После добавления она будет доступна пользователям</label> <br>
         <input type="text" id="name" name="name" v-model="name" placeholder="Введите цель">
@@ -134,7 +131,7 @@
                     .catch(function () {
                     });
                 this.getTargets();
-                $("#edit-modal").modal('hide');
+                $("#edit-modal").modal('show');
             }
         }
     }
