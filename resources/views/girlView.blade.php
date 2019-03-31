@@ -18,7 +18,8 @@
                     <privatepanel :id="{{$girl->id}}" :user_id="{{$girl->user_id}}"></privatepanel>
                 </div>
             @else
-                <a class="btn btn-primary" href="route{{'girlsEditAuchAnket'}}"> Редактировать анкету</a>
+                <br>
+                <a class="btn btn-primary" href="{{route('girlsEditAuchAnket')}}"> Редактировать анкету</a>
             @endif
             @if(auth()->user()->get_id()!=$girl->user_id)
             @endif
