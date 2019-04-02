@@ -6,26 +6,26 @@
 
     <br>
     <br>
-    <div class="col-sm-4">
-        <img width="200" src="<?php echo asset("/images/upload/$girl->main_image")?>">
-        {{$girl->status}}
-        @if (Auth::guest())
-        @else
-            @if($girl->user_id!=auth()->user()->id)
-                <br>
-                <div class="card-body" id="app7">
-                    <br>
-                    <privatepanel :id="{{$girl->id}}" :user_id="{{$girl->user_id}}"></privatepanel>
-                </div>
-            @else
-                <br>
-                <a class="btn btn-primary" href="{{route('girlsEditAuchAnket')}}"> Редактировать анкету</a>
-            @endif
-            @if(auth()->user()->get_id()!=$girl->user_id)
-            @endif
-        @endif
 
-    </div>
+    <img width="200" src="<?php echo asset("/images/upload/$girl->main_image")?>">
+    {{$girl->status}}
+    @if (Auth::guest())
+    @else
+        @if($girl->user_id!=auth()->user()->id)
+            <br>
+            <div class="card-body" id="app7">
+                <br>
+                <privatepanel :id="{{$girl->id}}" :user_id="{{$girl->user_id}}"></privatepanel>
+            </div>
+        @else
+            <br>
+            <a class="btn btn-primary" href="{{route('girlsEditAuchAnket')}}"> Редактировать анкету</a>
+        @endif
+        @if(auth()->user()->get_id()!=$girl->user_id)
+        @endif
+    @endif
+
+
     <div class="col-sm-4">
         <h4 class="card-title">
             {{$girl->name}}
@@ -73,11 +73,12 @@
 
                 <div class="row">
                     @foreach($images as $image)
-                        <div class="col-sm-5 col-md-5">
+                        <div class="col-sm-6 col-md-4 col-ld">
                             <a class="lightbox" href="<?php echo asset("/images/upload/$image->photo_name")?>">
-                                <img height="150" src="<?php echo asset("/images/upload/$image->photo_name")?>">
+                                <img height="250" src="<?php echo asset("/images/upload/$image->photo_name")?>">
                             </a>
                         </div>
+                        <div class="col-sm-6 col-md-4 col-ld"></div>
                     @endforeach
                 </div>
             </div>
@@ -99,6 +100,7 @@
                                              src="<?php echo asset("/images/upload/$image->photo_name")?>">
                                     </a>
                                 </div>
+                                <div class="col-sm-6 col-md-4 col-ld"></div>
                             @endforeach
                         </div>
                     </div>

@@ -31,9 +31,7 @@ class ContactsController extends Controller
         $contacts = [];
         foreach ($dialogs as $dialog) {
             $other = $dialog->other_id;
-
             $user = User::select()->where('id', $other)->first();
-
             array_push($contacts, $user);
         }
 
