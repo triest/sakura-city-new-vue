@@ -30,6 +30,11 @@ class Girl extends Model
         return $this->belongsToMany('App\Target','girl_target');
     }
 
+    public function interest()
+    {
+        //return $this->hasOne('App\Target');
+        return $this->belongsToMany('App\Interest','girl_interess');
+    }
 }
 
 

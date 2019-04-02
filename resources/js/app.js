@@ -52,6 +52,8 @@ Vue.component('presents', require('./components/Presents.vue').default);
 
 Vue.component('targets', require('./components/Targets.vue').default);
 
+Vue.component('interes', require('./components/Interes.vue').default);
+
 Vue.component('mypresents', require('./components/MyPresents.vue').default);
 
 //модальное окно для отправки сообщения

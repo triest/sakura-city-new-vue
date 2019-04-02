@@ -7,6 +7,7 @@ use App\Photo;
 use App\Target;
 use App\User;
 use App\Privatephoto;
+use App\Interest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,7 @@ class AnketController extends Controller
     {
         $user = Auth::user();
         $targets = Target::select(['id', 'name'])->get();
+        $interests = Interest::select(['id', 'name'])->get();
         //add check phone is confurnd
         if ($user->phone == null or $user->phone_confirmed == 0) {
             return view("custom.resetSMS2");
@@ -31,7 +33,7 @@ class AnketController extends Controller
 
         return view('createAnket')
             ->with(
-                ['username' => $user->name, 'tagrets' => $targets]);
+                ['username' => $user->name, 'tagrets' => $targets, 'interests' => $interests]);
     }
 
     function store(Request $request)
@@ -124,6 +126,12 @@ class AnketController extends Controller
             }
         }
 
+        foreach ($request->interest as $item) {
+            $target = Interest::select(['id', 'name'])->where('id', $item)->first();
+            if ($target != null) {
+                $girl->interest()->attach($target);
+            }
+        }
 
         return redirect('/anket');
     }

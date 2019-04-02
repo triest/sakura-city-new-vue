@@ -67,6 +67,13 @@
             <br>
         @endforeach
 
+        <b>Интересы:</b> <br>
+        @foreach($interests as $interest)
+            <input class="form-check-input" type="checkbox" value="{{$interest->id}}" name="interest[]"  >
+            <label class="form-check-label" for="{{$target->id}}">{{$interest->name}}</label>
+            <br>
+        @endforeach
+
         <label>Выберите заглавную фотографию</label>
 
         <input type="file" id="file" accept="image/*" name="file" value="{{ old('file')}}" required>
