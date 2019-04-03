@@ -72,6 +72,32 @@
             </div>
         @endforeach
         <br>
+        Интересы:
+        @foreach($allInterests as $tag)
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="tags[]" value="{{$tag}}"
+                       @if(in_array($tag,$anketInterests)) checked="1" @endif >
+                <label class="form-check-label" for="exampleCheck1">{{$tag}}</label>
+            </div>
+        @endforeach
+
+        <div id="country">
+            <label>Город</label>
+            <input type="text" name="state" id="state" class="form-control">
+        </div>
+
+        <label>Город:
+            <select id="city" class="city" style="width: 200px" name="city">
+                <option value="-">-</option>
+            </select>
+        </label>
+
+
+        <!--  <div id="selectCityApp">
+              <selectcity></selectcity>
+          </div>
+          -->
+
         <br>
         <div class="form-group">
             <label for="exampleInputFile">Текст анкеты:</label><br>
@@ -126,6 +152,21 @@
             }
         </script>
 
+        <script>
+            $('#state').on('input', function (e) {
+                var state_id = e.target.value;
+                $.get(
+                    "/findcity/" + state_id,
+                    function (data, status) {
+                        $('#city').empty();
+                        $.each(data[0], function (index, subcatObj) {
+
+                            $('#city').append('<option value="' + subcatObj.id + '">' + subcatObj.name + '</option>');
+                        })
+                    }
+                )
+            });
+        </script>
         <button type="submit" class="btn btn-default">Сохранить изминения</button>
     </form>
 @endsection

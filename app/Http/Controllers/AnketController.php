@@ -49,6 +49,8 @@ class AnketController extends Controller
             // 'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        dump($request);
+        die();
 
         $user = Auth::user();
 
@@ -126,6 +128,10 @@ class AnketController extends Controller
             }
         }
 
+        if ($request->has('id_city')) {
+            $girl->id_city = $request->id_city;
+        }
+
         foreach ($request->interest as $item) {
             $target = Interest::select(['id', 'name'])->where('id', $item)->first();
             if ($target != null) {
@@ -177,6 +183,19 @@ class AnketController extends Controller
             array_push($anketTarget, $tag->name);
         }
 
+        $interests = $girl->interest()->get();
+
+        $allInterests = [];
+        foreach ($interests as $tag) {
+            array_push($allInterests, $tag->name);
+        }
+
+        $anketInterest = [];
+        foreach ($interests as $tag) {
+            array_push($anketInterest, $tag->name);
+        }
+
+
         //   $countries = collect(DB::select('select * from countries'));
         //$countries = collect(DB::select('select * from countries'));
 
@@ -187,6 +206,9 @@ class AnketController extends Controller
             'targets' => $targets,
             'allTarget' => $allTarget,
             'anketTarget' => $anketTarget,
+            'interests' => $interests,
+            'anketInterests' => $anketInterest,
+            'allInterests' => $allInterests,
         ]);
     }
 
@@ -235,6 +257,11 @@ class AnketController extends Controller
         if ($request->has('male')) {
             $sex = 'male';
         }
+
+        if ($request->has('city')) {
+            $girl->city_id=$request->city;
+        }
+
         DB::table('girls')->where('id', $girl->id)->update(['age' => $request['age']]);
         DB::table('girls')->where('id', $girl->id)->update(['sex' => $request['sex']]);
         DB::table('girls')->where('id', $girl->id)->update(['meet' => $request['met']]);
@@ -625,5 +652,13 @@ class AnketController extends Controller
         return response()->json([
             $photos,
         ]);
+    }
+
+    public function findcity($name)
+    {
+        //echo $name;
+        $cities = DB::table('cities')->where('name', 'like', $name.'%')->get();
+
+        return response()->json([$cities]);
     }
 }

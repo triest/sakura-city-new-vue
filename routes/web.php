@@ -160,7 +160,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/deleteinteress', 'AdminController@deleteinteress')->middleware('auth', 'admin');
 
 
-
 });
 
 Route::get('/getpresents', 'PresentController@getpresents');
@@ -260,3 +259,5 @@ Route::post('/edittarget', 'AdminController@edittarget')->middleware('auth', 'ad
 
 Route::post('/deletetargret', 'AdminController@deletetargret')->middleware('auth', 'admin');
 
+//поиск города
+Route::get('/findcity/{name}', 'AnketController@findcity')->middleware('auth');

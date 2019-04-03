@@ -72,6 +72,8 @@ Vue.component('edit', require('./components/Edit.vue').default);
 
 Vue.component('phonecomponent', require('./components/phoneComponent.vue').default);
 
+Vue.component('selectcity', require('./components/SelectCity.vue').default);
+
 const app = new Vue({
     el: '#app',
     data: {
@@ -137,6 +139,13 @@ const myAnket = new Vue({
 
 const phoneApp = new Vue({
     el: '#phoneApp',
+    data: {
+        showModal: false
+    }
+});
+
+const selectCityApp = new Vue({
+    el: '#selectCityApp',
     data: {
         showModal: false
     }
