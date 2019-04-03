@@ -83,7 +83,11 @@
 
         <div id="country">
             <label>Город</label>
-            <input type="text" name="state" id="state" class="form-control" value="{{$city->name}}">
+            @if($city!=null)
+                <input type="text" name="state" id="state" class="form-control" value="{{$city->name}}">
+            @else
+                <input type="text" name="state" id="state" class="form-control">
+            @endif
         </div>
 
         <label>Город:

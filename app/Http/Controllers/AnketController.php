@@ -49,9 +49,6 @@ class AnketController extends Controller
             // 'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        dump($request);
-        die();
-
         $user = Auth::user();
 
         $girl = Girl::select('id', 'name', 'user_id')->where('user_id', $user->id)->first();
@@ -121,15 +118,17 @@ class AnketController extends Controller
         }
 
         //цели
-        foreach ($request->target as $item) {
-            $target = Target::select(['id', 'name'])->where('id', $item)->first();
-            if ($target != null) {
-                $girl->target()->attach($target);
+        if ($request->has('target')) {
+            foreach ($request->target as $item) {
+                $target = Target::select(['id', 'name'])->where('id', $item)->first();
+                if ($target != null) {
+                    $girl->target()->attach($target);
+                }
             }
         }
 
-        if ($request->has('id_city')) {
-            $girl->id_city = $request->id_city;
+        if ($request->has('city')) {
+            $girl->city_id = $request->city;
         }
 
         foreach ($request->interest as $item) {
@@ -195,8 +194,11 @@ class AnketController extends Controller
             array_push($anketInterest, $tag->name);
         }
 
-        $city = DB::table('cities')->where('id_city', '=', $girl->city_id)->first();
-    //    dump($city);
+        if ($girl->city_id != null) {
+            $city = DB::table('cities')->where('id_city', '=', $girl->city_id)->first();
+        } else {
+            $city = null;
+        }
 
         //   $countries = collect(DB::select('select * from countries'));
         //$countries = collect(DB::select('select * from countries'));
@@ -288,13 +290,15 @@ class AnketController extends Controller
         //переделываем цели
         $girl->target()->detach();
         $target_requwest = $request->input('tags');
-        $targets = Target::select('id',
-            'name',
-            'created_at',
-            'updated_at')->whereIn('name', $target_requwest)->get();
+        if ($target_requwest != null) {
+            $targets = Target::select('id',
+                'name',
+                'created_at',
+                'updated_at')->whereIn('name', $target_requwest)->get();
 
-        foreach ($targets as $target) {
-            $girl->target()->attach($target);
+            foreach ($targets as $target) {
+                $girl->target()->attach($target);
+            }
         }
 
         //    return $this->girlsEditAuchAnket();

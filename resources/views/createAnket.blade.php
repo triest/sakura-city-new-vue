@@ -62,17 +62,29 @@
 
         <b>Цель знакомства:</b> <br>
         @foreach($tagrets as $target)
-            <input class="form-check-input" type="checkbox" value="{{$target->id}}" name="target[]"  >
+            <input class="form-check-input" type="checkbox" value="{{$target->id}}" name="target[]">
             <label class="form-check-label" for="{{$target->id}}">{{$target->name}}</label>
             <br>
         @endforeach
 
         <b>Интересы:</b> <br>
         @foreach($interests as $interest)
-            <input class="form-check-input" type="checkbox" value="{{$interest->id}}" name="interest[]"  >
+            <input class="form-check-input" type="checkbox" value="{{$interest->id}}" name="interest[]">
             <label class="form-check-label" for="{{$target->id}}">{{$interest->name}}</label>
             <br>
         @endforeach
+
+        <div id="country">
+            <label>Город</label>
+            <input type="text" name="state" id="state" class="form-control">
+        </div>
+
+        <label>Город:
+            <select id="city" class="city" style="width: 200px" name="city">
+                <option value="-">-</option>
+            </select>
+        </label>
+        <br>
 
         <label>Выберите заглавную фотографию</label>
 
@@ -151,4 +163,21 @@
 
         <button type="submit" class="btn btn-default">Создать анкету</button>
     </form>
+
+    <script>
+        $('#state').on('input', function (e) {
+            var state_id = e.target.value;
+            $.get(
+                "/findcity/" + state_id,
+                function (data, status) {
+                    $('#city').empty();
+                    $.each(data[0], function (index, subcatObj) {
+
+                        $('#city').append('<option value="' + subcatObj.id_city + '">' + subcatObj.name + '</option>');
+                    })
+                }
+            )
+        });
+    </script>
+
 @endsection

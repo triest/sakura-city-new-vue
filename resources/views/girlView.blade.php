@@ -58,6 +58,13 @@
         @foreach($targets as $target)
             <li>{{$target->name}}</li>
         @endforeach
+        <br>
+        <b>Город:</b> <br>
+        @if($city!=null)
+            {{$city->name}}
+        @endif
+
+        <br><br>
 
         <p class="card-text"><b> {!!$girl->description  !!}</b></p>
 

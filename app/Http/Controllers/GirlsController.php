@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use File;
+use Illuminate\Support\Facades\DB;
 use Storage;
 use DateTime;
 use App\User;
 use App\Girl;
 use App\Photo;
-use DB;
+
 
 class GirlsController extends Controller
 {
@@ -69,6 +70,12 @@ class GirlsController extends Controller
 
         $targets = $girl->target()->get();
 
+        if ($girl->city_id != null) {
+            $city = DB::table('cities')->where('id_city', '=', $girl->city_id)->first();
+        } else {
+            $city = null;
+        }
+
         //проверяем, что просматривающий пользователь зареген.
         if ($AythUser != null) {
             //  $girl_user_id=$girl->user_id;
@@ -102,6 +109,7 @@ class GirlsController extends Controller
             'images' => $images,
             'privatephotos' => $privatephoto,
             'targets' => $targets,
+            'city' => $city,
         ]);
     }
 
@@ -140,11 +148,11 @@ class GirlsController extends Controller
         $inputCode = $request->code;
         $user = Auth::user();
         if ($user->active_code == $inputCode) {
-            $user->phone_confirmed=1;
+            $user->phone_confirmed = 1;
             $user->save();
+
             return response()->json(['result' => 'ok']);
-        }
-        else{
+        } else {
             return response()->json(['result' => 'wrongCode']);
         }
     }
