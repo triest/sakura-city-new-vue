@@ -195,6 +195,8 @@ class AnketController extends Controller
             array_push($anketInterest, $tag->name);
         }
 
+        $city = DB::table('cities')->where('id_city', '=', $girl->city_id)->first();
+    //    dump($city);
 
         //   $countries = collect(DB::select('select * from countries'));
         //$countries = collect(DB::select('select * from countries'));
@@ -209,6 +211,7 @@ class AnketController extends Controller
             'interests' => $interests,
             'anketInterests' => $anketInterest,
             'allInterests' => $allInterests,
+            'city' => $city,
         ]);
     }
 
@@ -259,7 +262,7 @@ class AnketController extends Controller
         }
 
         if ($request->has('city')) {
-            $girl->city_id=$request->city;
+            $girl->city_id = $request->city;
         }
 
         DB::table('girls')->where('id', $girl->id)->update(['age' => $request['age']]);

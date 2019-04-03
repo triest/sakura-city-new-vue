@@ -83,7 +83,7 @@
 
         <div id="country">
             <label>Город</label>
-            <input type="text" name="state" id="state" class="form-control">
+            <input type="text" name="state" id="state" class="form-control" value="{{$city->name}}">
         </div>
 
         <label>Город:
@@ -161,7 +161,7 @@
                         $('#city').empty();
                         $.each(data[0], function (index, subcatObj) {
 
-                            $('#city').append('<option value="' + subcatObj.id + '">' + subcatObj.name + '</option>');
+                            $('#city').append('<option value="' + subcatObj.id_city + '">' + subcatObj.name + '</option>');
                         })
                     }
                 )
