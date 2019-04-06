@@ -14,7 +14,7 @@
             <ul>
                 <li v-for="error in errors">{{ error }}</li>
             </ul>
-    
+
             <button class="btn btn-primary" v-on:click="sendSMS()">Подтвердить</button>
             <br><br>
             <div v-if="codeVisable">
@@ -85,7 +85,7 @@
                                         this.codeVisable = true;
                                         this.errors = [];
                                     } else {
-                                        console.log("faik");
+                                        //console.log("faik");
                                         this.errors.push("Этот телефон уже зарегистрирован");
                                     }
                                 })
