@@ -212,7 +212,7 @@ class MoneyController extends Controller
             return response('lowMoney');
         }
         $current_date = Carbon::now();// текушая дата
-        $end_vip = $user->end_search ;
+        $end_vip = $user->end_search;
         $days = $request->days;
         $days = floor($days); //кругляем полученнаы дни
         //
@@ -223,14 +223,14 @@ class MoneyController extends Controller
             $begin_vip = $current_date;
             $end_vip = $this->addDayswithdate($end_vip, $days);
         } else {
-            $begin_vip = $user->begin_search;
+            $begin_vip = $girl->begin_search;
             $end_vip = $this->addDayswithdate($end_vip, $days);
         }
 
 
-        $user->end_search = $end_vip;
-        $user->begin_search 	 = $begin_vip;
-        $user->save();
+        $girl->end_search = $end_vip;
+        $girl->begin_search = $begin_vip;
+        $girl->save();
 
         $new_money = $user->money - $toTop->price * $days;
         DB::table('users')->where('id', $user->id)->update(['money' => $new_money]);

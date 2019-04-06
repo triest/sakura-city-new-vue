@@ -13,7 +13,7 @@
         <b><a class="btn btn-primary" href="/power">Поднять анкету</a> </b><br><br>
         <b><a class="btn btn-info" href="/mypresents">Мои подарки</a> </b>
         <div v-if="numberApplicationPresents>0"><b>+{{numberApplicationPresents}}</b></div>
-
+        <br><br>
         <div v-if="inseach==true">
             <b>Ваша анкета отображаеться в поиске</b>
         </div>
@@ -44,6 +44,7 @@
                 ;
         },
         mounted() {
+            this.inSeach();
             Echo.private(`messages.${this.user.id}`)
                 .listen('NewMessage', (e) => {
                     console.log('NewMessage');
@@ -99,6 +100,7 @@
                     axios.get('/inseach')
                         .then((response) => {
                             if (response.data == "true") {
+                                //console.log("true");
                                 this.inseach = true;
                             }
                             else {

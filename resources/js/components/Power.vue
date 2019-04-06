@@ -22,23 +22,24 @@
 
         <br>
         <div v-if="inseach==true">
-            <h2>Ваша анкета отображаеться в поиске</h2>
+            <b><p>Ваша анкета отображаеться в поиске</p></b>
+
         </div>
         <div v-else>
             <b>Ваша анкета Не отображаеться в поиске</b><br>
 
-            <b> Поместить анкету в поиск сайта на
-                <input name="days_seach" id="days_seach" type="number" min="0"
-                       :max="maxSeachDays" :value="maxSeachDays" ref="inputDaysNumber"></b>
-            дней
+        </div>
 
-            <div v-if="money.money>=priseSeach">
-                <button class="btn-primary" v-on:click="toSeach()">Поместить</button>
-            </div>
-            <div v-else>
-                Недостаточно денег. Пополните счет.
-            </div>
+        <b> Поместить анкету в поиск сайта на
+            <input name="days_seach" id="days_seach" type="number" min="0"
+                   :max="maxSeachDays" :value="maxSeachDays" ref="inputDaysNumber"></b>
+        дней
 
+        <div v-if="money.money>=priseSeach">
+            <button class="btn-primary" v-on:click="toSeach()">Поместить</button>
+        </div>
+        <div v-else>
+            Недостаточно денег. Пополните счет.
         </div>
 
     </div>

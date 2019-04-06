@@ -8,7 +8,7 @@
     <title>{{$title}}</title>
 
 
-     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 
     <link href="{{asset('css/gallery-grid.css')}}">
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
 
     <!--table CSS -->
- <!--   <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet"> -->
+    <!--   <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- Bootstrap core CSS -->
 
@@ -76,6 +76,8 @@
             <p class="pull-right visible-xs">
                 <button type="button" class="menuButton" data-toggle="offcanvas"><b>Меню</b></button>
             </p>
+            <a class="btn btn-primary" href="{{route('main2')}}" role="link">Поиск анкет</a>
+            <br><br>
             <div class="row">
                 @yield('content')
             </div>

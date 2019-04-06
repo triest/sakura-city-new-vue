@@ -3352,6 +3352,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {
@@ -3977,6 +3978,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    this.inSeach();
     Echo.private("messages.".concat(this.user.id)).listen('NewMessage', function (e) {
       console.log('NewMessage');
       /*  axios.get('/getCountUnreaded')
@@ -4023,6 +4025,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/inseach').then(function (response) {
         if (response.data == "true") {
+          //console.log("true");
           _this4.inseach = true;
         } else {
           _this4.inseach = false;
@@ -53277,50 +53280,55 @@ var render = function() {
     _c("br"),
     _vm._v(" "),
     _vm.inseach == true
-      ? _c("div", [_c("h2", [_vm._v("Ваша анкета отображаеться в поиске")])])
+      ? _c("div", [_vm._m(0)])
       : _c("div", [
           _c("b", [_vm._v("Ваша анкета Не отображаеться в поиске")]),
-          _c("br"),
-          _vm._v(" "),
-          _c("b", [
-            _vm._v(" Поместить анкету в поиск сайта на\n            "),
-            _c("input", {
-              ref: "inputDaysNumber",
-              attrs: {
-                name: "days_seach",
-                id: "days_seach",
-                type: "number",
-                min: "0",
-                max: _vm.maxSeachDays
-              },
-              domProps: { value: _vm.maxSeachDays }
-            })
-          ]),
-          _vm._v("\n        дней\n\n        "),
-          _vm.money.money >= _vm.priseSeach
-            ? _c("div", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn-primary",
-                    on: {
-                      click: function($event) {
-                        return _vm.toSeach()
-                      }
-                    }
-                  },
-                  [_vm._v("Поместить")]
-                )
-              ])
-            : _c("div", [
-                _vm._v(
-                  "\n            Недостаточно денег. Пополните счет.\n        "
-                )
-              ])
+          _c("br")
+        ]),
+    _vm._v(" "),
+    _c("b", [
+      _vm._v(" Поместить анкету в поиск сайта на\n        "),
+      _c("input", {
+        ref: "inputDaysNumber",
+        attrs: {
+          name: "days_seach",
+          id: "days_seach",
+          type: "number",
+          min: "0",
+          max: _vm.maxSeachDays
+        },
+        domProps: { value: _vm.maxSeachDays }
+      })
+    ]),
+    _vm._v("\n    дней\n\n    "),
+    _vm.money.money >= _vm.priseSeach
+      ? _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn-primary",
+              on: {
+                click: function($event) {
+                  return _vm.toSeach()
+                }
+              }
+            },
+            [_vm._v("Поместить")]
+          )
+        ])
+      : _c("div", [
+          _vm._v("\n        Недостаточно денег. Пополните счет.\n    ")
         ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [_c("p", [_vm._v("Ваша анкета отображаеться в поиске")])])
+  }
+]
 render._withStripped = true
 
 
@@ -53844,6 +53852,9 @@ var render = function() {
           _c("b", [_vm._v("+" + _vm._s(_vm.numberApplicationPresents))])
         ])
       : _vm._e(),
+    _vm._v(" "),
+    _c("br"),
+    _c("br"),
     _vm._v(" "),
     _vm.inseach == true
       ? _c("div", [_c("b", [_vm._v("Ваша анкета отображаеться в поиске")])])
