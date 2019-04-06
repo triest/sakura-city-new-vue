@@ -37,6 +37,12 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/anket', 'GirlsController@index')->name('main');
+
+Route::get('/anket2', function () {
+    return view('index2');
+})->name('main2');
+
+
 Route::get('/createAnketPage', 'AnketController@createGirl')->name('createGirlPage')->middleware('auth');
 
 //создание анкеты
@@ -261,3 +267,7 @@ Route::post('/deletetargret', 'AdminController@deletetargret')->middleware('auth
 
 //поиск города
 Route::get('/findcity/{name}', 'AnketController@findcity')->middleware('auth');
+
+Route::get('/getargetslist', 'AdminController@gettargetslist')->middleware('auth');
+
+Route::get('/seach', 'AnketController@seach');

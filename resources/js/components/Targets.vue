@@ -76,7 +76,6 @@
                 axios.get('/targets')
                     .then((response) => {
                             this.targets = response.data;
-                            console.log(this.targets)
                         }
                     )
             },
@@ -84,7 +83,6 @@
                 this.id = item.id;
                 this.value_input = item.name;
                 this.item = item;
-                console.log(this.id);
                 $("#edit-modal").modal('show');
             },
             deleWindow(item) {
@@ -137,7 +135,6 @@
                 this.getTargets();
             },
             saveChange() {
-                console.log("change");
                 let formData = new FormData();
                 formData.append('name', this.item.name);
                 formData.append('id', this.id);

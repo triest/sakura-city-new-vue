@@ -23,7 +23,7 @@ Vue.use(VueCarousel);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
+Vue.component('index2', require('./components/index.vue').default);
 Vue.component('chat-app', require('./components/ChatApp.vue').default);
 Vue.component('chat-app2', require('./components/ChatApp2.vue').default);
 Vue.component('conversation', require('./components/Conversation.vue').default);
@@ -73,6 +73,13 @@ Vue.component('edit', require('./components/Edit.vue').default);
 Vue.component('phonecomponent', require('./components/phoneComponent.vue').default);
 
 Vue.component('selectcity', require('./components/SelectCity.vue').default);
+
+const index = new Vue({
+    el: '#index',
+    data: {
+        showModal: false
+    }
+});
 
 const app = new Vue({
     el: '#app',
@@ -146,6 +153,13 @@ const phoneApp = new Vue({
 
 const selectCityApp = new Vue({
     el: '#selectCityApp',
+    data: {
+        showModal: false
+    }
+});
+
+const indexvue = new Vue({
+    el: '#indexvue',
     data: {
         showModal: false
     }

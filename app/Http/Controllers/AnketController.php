@@ -16,6 +16,7 @@ use File;
 use Carbon\Carbon;
 
 use App\ImageResize;
+use Nexmo\Response;
 
 
 class AnketController extends Controller
@@ -667,5 +668,49 @@ class AnketController extends Controller
         $cities = DB::table('cities')->where('name', 'like', $name.'%')->get();
 
         return response()->json([$cities]);
+    }
+
+    public function seach(Request $request)
+    {
+      //  dump($request);
+        $who_met = $request->who_met;
+        $with_met = $request->with_met;
+
+
+        $girls = Girl::query();
+
+        $girls
+            ->where('sex', $with_met)
+            ->where('meet', $who_met)
+            ->where('age', '>=', $request->min_age)
+            ->where('age', '<=', $request->max_age)
+            ->get();
+
+      //  $tages=$request->
+
+        if ($request->get('targets')) {
+
+            $girls->whereHas('target', function ($query) use ($request) {
+                return $query->where('target_id', $request->targets);
+             })->get();
+
+             /*  $girls2 = DB::select('select * from girls gl
+                 where gl.sex = :sex and gl.meet=:meet and gl.age between :min_age and :max_age INNER JOIN girl_target tg on gl.id=tg.girl_id',*/
+          /*  $girls2 = DB::select('select * from `target` inner join `girl_target` on `target`.`id` = `girl_target`.`target_id` where `girls`.`id` = `girl_target`.`girl_id` and `id` in',
+                [
+                    'sex' => $with_met,
+                    'meet' => $who_met,
+                    'min_age' => $request->min_age,
+                    'max_age' => $request->max_age,
+                ]);*/
+
+
+        } else {
+            $girls = $girls->get();
+        }
+      //  dump($girls->get());
+
+        return response()->json($girls->get());
+
     }
 }
