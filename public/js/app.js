@@ -3330,6 +3330,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {
@@ -3343,17 +3366,29 @@ __webpack_require__.r(__webpack_exports__);
       prices: "",
       priceToTop: "",
       inputDays: "",
-      priceFirstPlase: ""
+      priceFirstPlase: "",
+      priseSeach: "",
+      inseach: false,
+      ButthonToSeashEnable: false //  max_days_seach: ''
+
     };
   },
   computed: {
     max2: function max2() {
-      //  return this.money.money / this.priceToTop[0][0].price
-      return this.money.money / 1;
+      return this.money.money / this.priceToTop.price; //  return this.money.money / 1
+    },
+    maxSeach: function maxSeach() {
+      if (this.priseSeach < this.money) {
+        this.ButthonToSeashEnable = true;
+      } else {
+        this.ButthonToSeashEnable = true;
+      }
+
+      return this.money / this.priseSeach;
     }
   },
   mounted: function mounted() {
-    this.getMoneut(), this.getPrices();
+    this.getMoneut(), this.getPrices(), this.inSeach(), this.getPrices();
   },
   methods: {
     getMoneut: function getMoneut() {
@@ -3371,18 +3406,15 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/getpricestotop').then(function (response) {
         _this2.priceToTop = response.data;
       });
-    },
-    toFirstPlase: function toFirstPlase() {
-      var _this3 = this;
-
-      var that = this;
-      axios.get('/tofirstplaсe').then(function (response) {
-        _this3.priceFirstPlase = response.data;
+      axios.get('/getpricetofirstplace').then(function (response) {
+        _this2.priceFirstPlase = response.data;
       });
-      that.getMoneut();
+      axios.get('/getpricetoseach').then(function (response) {
+        _this2.priseSeach = response.data;
+      });
     },
     toTop: function toTop() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.get('/totop', {
         params: {
@@ -3390,7 +3422,44 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         if (!response.data) {} else {
-          _this4.isOpen = false;
+          _this3.isOpen = false;
+        }
+      });
+      this.getMoneut();
+    },
+    inSeach: function inSeach() {
+      var _this4 = this;
+
+      axios.get('/inseach').then(function (response) {
+        _this4.inseach = response.data;
+
+        if (_this4.inseach == "true") {
+          _this4.inseach = true;
+
+          _this4.inSeachDate();
+        } else {
+          _this4.inseach = false;
+        }
+      });
+    },
+    inSeachDate: function inSeachDate() {
+      var _this5 = this;
+
+      axios.get('/inseachdate').then(function (response) {
+        _this5.begin_seach = response.begin;
+        _this5.end_seach = response.end;
+      });
+    },
+    toSeach: function toSeach() {
+      var _this6 = this;
+
+      axios.get('/toseach', {
+        params: {
+          days: this.$refs.inputDaysNumber.value
+        }
+      }).then(function (response) {
+        if (!response.data) {} else {
+          _this6.isOpen = false;
         }
       });
       this.getMoneut();
@@ -3890,6 +3959,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {
@@ -3953,7 +4023,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       axios.get('/inseach').then(function (response) {
-        _this4.inseach = response.data;
+        if (response.data == "true") {
+          _this4.inseach = true;
+        } else {
+          _this4.inseach = false;
+        }
       });
     }
   }
@@ -53156,7 +53230,7 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _vm.priceToTop < _vm.money
+    _vm.money.money >= _vm.priceToTop
       ? _c("div", [
           _c(
             "button",
@@ -53183,7 +53257,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm.money.money >= _vm.priceToTop.price
+    _vm.money.money >= _vm.priceFirstPlase
       ? _c("div", [
           _c(
             "button",
@@ -53199,6 +53273,51 @@ var render = function() {
         ])
       : _c("div", [
           _vm._v("\n        Недостаточно денег. Пополните счет.\n    ")
+        ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _vm.inseach == true
+      ? _c("div", [_c("h2", [_vm._v("Ваша анкета отображаеться в поиске")])])
+      : _c("div", [
+          _c("b", [_vm._v("Ваша анкета Не отображаеться в поиске")]),
+          _c("br"),
+          _vm._v(" "),
+          _c("b", [
+            _vm._v(" Поместить анкету в поиск сайта на\n            "),
+            _c("input", {
+              ref: "inputDaysNumber",
+              attrs: {
+                name: "days_seach",
+                id: "days_seach",
+                type: "number",
+                min: "0",
+                max: _vm.max2
+              },
+              domProps: { value: _vm.max2 }
+            })
+          ]),
+          _vm._v(" "),
+          _vm.money.money >= _vm.priseSeach
+            ? _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn-primary",
+                    on: {
+                      click: function($event) {
+                        return _vm.toSeach()
+                      }
+                    }
+                  },
+                  [_vm._v("Поместить")]
+                )
+              ])
+            : _c("div", [
+                _vm._v(
+                  "\n            Недостаточно денег. Пополните счет.\n        "
+                )
+              ])
         ])
   ])
 }
@@ -53729,7 +53848,12 @@ var render = function() {
     _vm._v(" "),
     _vm.inseach == true
       ? _c("div", [_c("b", [_vm._v("Ваша анкета отображаеться в поиске")])])
-      : _c("div", [_c("b", [_vm._v("Ваша анкета Не отображаеться в поиске")])])
+      : _c("div", [
+          _c("b", [_vm._v("Ваша анкета Не отображаеться в поиске")]),
+          _c("br"),
+          _vm._v(" "),
+          _vm._m(3)
+        ])
   ])
 }
 var staticRenderFns = [
@@ -53760,6 +53884,16 @@ var staticRenderFns = [
     return _c("b", [
       _c("a", { staticClass: "btn btn-info", attrs: { href: "/mypresents" } }, [
         _vm._v("Мои подарки")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("a", { attrs: { type: "btn primary", href: "/power" } }, [
+        _vm._v("Поместить анкету в поиск")
       ])
     ])
   }

@@ -67,16 +67,45 @@ class MoneyController extends Controller
     {
 
         $toTop = DB::select('select price from prices where price_name = :price_name', ['price_name' => 'to_top']);
-        $updatemainimage = DB::select('select price from prices where price_name = :price_name',
-            ['price_name' => 'update_main_image']);
-        $toFirstPlase = DB::select('select price from prices where price_name = :price_name',
-            ['price_name' => 'to_first_plase']);
+        //   $updatemainimage = DB::select('select price from prices where price_name = :price_name',
+        //     ['price_name' => 'update_main_image']);
+        // $toFirstPlase = DB::select('select price from prices where price_name = :price_name',
+        //   ['price_name' => 'to_first_plase']);
+        //    dump($toTop);
 
         return response()->json([
-            ["totop" => $toTop],
-            ["tofirstplace" => $toFirstPlase],
+            $toTop->price
+            //  ["tofirstplace" => $toFirstPlase],
         ]);
     }
+
+    public function getpricetofirstplase(Request $request)
+    {
+
+        // $toTop = DB::select('select price from prices where price_name = :price_name', ['price_name' => 'to_first_place']);
+        // $updatemainimage = DB::select('select price from prices where price_name = :price_name',
+        //   ['price_name' => 'update_main_image']);
+        /*   $toFirstPlase = DB::select('select price from prices where price_name = :price_name',
+               ['price_name' => 'to_first_plase']);*/
+        $toFirstPlase = DB::table('prices')->where('price_name', 'to_first_place')->first();
+
+        // dump($toFirstPlase);
+        return response()->json([
+            $toFirstPlase->price
+            //  ["tofirstplace" => $toFirstPlase],
+        ]);
+    }
+
+    public function getpricetoseach()
+    {
+        $toFirstPlase = DB::table('prices')->where('price_name', 'seach')->first();
+
+        return response()->json([
+            $toFirstPlase->price,
+
+        ]);
+    }
+
 
     public function toFirstPlase(Request $request)
     {

@@ -672,13 +672,9 @@ class AnketController extends Controller
 
     public function seach(Request $request)
     {
-        //  dump($request);
         $who_met = $request->who_met;
         $with_met = $request->with_met;
-
-
         $girls = Girl::query();
-
         $girls
             ->where('sex', $with_met)
             ->where('meet', $who_met)
@@ -705,9 +701,9 @@ class AnketController extends Controller
         $girl = Girl::select(['id', 'name', 'begin_search', 'end_search'])->where('user_id', $user->id)->first();
         $current_date = Carbon::now();
         if ($current_date >= $girl->begin_search and $current_date <= $girl->end_search) {
-            return true;
+            return response()->json("true");
         } else {
-            return false;
+            return response()->json("false");
         }
 
         /*

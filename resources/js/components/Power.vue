@@ -6,19 +6,42 @@
         <b> Поместить анкету в шапку сайта(сменяемое меню) на
             <input name="days" id="days" type="number" min="0"
                    :max="max2" :value="max2" ref="inputDaysNumber"></b>
-        <div v-if="priceToTop<money">
+        <div v-if="money.money>=priceToTop">
             <button class="btn-primary" v-on:click="toTop()">Поднять</button>
         </div>
         <div v-else>
             Недостаточно денег. Пополните счет.
         </div>
         <b>Поднять анкету на первое место за {{priceToTop.price}} рублей</b>
-        <div v-if="money.money>=priceToTop.price">
+        <div v-if="money.money>=priceFirstPlase">
             <button v-on:click="toFirstPlase()">Поднять</button>
         </div>
         <div v-else>
             Недостаточно денег. Пополните счет.
         </div>
+
+        <br>
+        <div v-if="inseach==true">
+            <h2>Ваша анкета отображаеться в поиске</h2>
+        </div>
+        <div v-else>
+            <b>Ваша анкета Не отображаеться в поиске</b><br>
+
+            <b> Поместить анкету в поиск сайта на
+                <input name="days_seach" id="days_seach" type="number" min="0"
+                       :max="max2" :value="max2" ref="inputDaysNumber"></b>
+          
+
+            <div v-if="money.money>=priseSeach">
+
+                <button class="btn-primary" v-on:click="toSeach()">Поместить</button>
+            </div>
+            <div v-else>
+                Недостаточно денег. Пополните счет.
+            </div>
+
+        </div>
+
     </div>
 </template>
 
@@ -39,19 +62,35 @@
                 prices: "",
                 priceToTop: "",
                 inputDays: "",
-                priceFirstPlase: ""
+                priceFirstPlase: "",
+                priseSeach: "",
+                inseach: false,
+                ButthonToSeashEnable: false
+                //  max_days_seach: ''
             };
         },
         computed: {
             max2: function () {
-                //  return this.money.money / this.priceToTop[0][0].price
-                return this.money.money / 1
+                return this.money.money / this.priceToTop.price
+                //  return this.money.money / 1
             },
+            maxSeach: function () {
+                if (this.priseSeach < this.money) {
+                    this.ButthonToSeashEnable = true;
+                }
+                else {
+                    this.ButthonToSeashEnable = true;
+                }
+
+                return this.money / this.priseSeach
+            }
 
 
         },
         mounted() {
             this.getMoneut(),
+                this.getPrices(),
+                this.inSeach(),
                 this.getPrices()
         },
         methods:
@@ -69,15 +108,16 @@
                         .then((response) => {
                             this.priceToTop = response.data;
                         });
-
-                },
-                toFirstPlase() {
-                    var that = this;
-                    axios.get('/tofirstplaсe')
+                    axios.get('/getpricetofirstplace')
                         .then((response) => {
                             this.priceFirstPlase = response.data;
                         });
-                    that.getMoneut()
+                    axios.get('/getpricetoseach')
+                        .then((response) => {
+                            this.priseSeach = response.data;
+                        });
+
+
                 },
                 toTop() {
 
@@ -96,7 +136,43 @@
                             }
                         });
                     this.getMoneut()
+                },
+                inSeach() {
+                    axios.get('/inseach')
+                        .then((response) => {
+                            this.inseach = response.data;
+                            if (this.inseach == "true") {
+                                this.inseach = true;
+                                this.inSeachDate();
+                            }
+                            else {
+                                this.inseach = false;
+                            }
+                        })
+                },
+                inSeachDate() {
+                    axios.get('/inseachdate')
+                        .then((response) => {
+                            this.begin_seach = response.begin;
+                            this.end_seach = response.end;
+                        })
+                },
+                toSeach() {
+                    axios.get('/toseach', {
+                        params: {
+                            days: this.$refs.inputDaysNumber.value
+                        }
+                    })
+                        .then((response) => {
+                            if (!response.data) {
 
+                            }
+                            else {
+                                this.isOpen = false;
+
+                            }
+                        });
+                    this.getMoneut()
                 }
             }
     }

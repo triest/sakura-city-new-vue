@@ -18,7 +18,8 @@
             <b>Ваша анкета отображаеться в поиске</b>
         </div>
         <div v-else>
-            <b>Ваша анкета Не отображаеться в поиске</b>
+            <b>Ваша анкета Не отображаеться в поиске</b><br>
+            <b><a type="btn primary" href="/power">Поместить анкету в поиск</a></b>
         </div>
 
 
@@ -97,7 +98,12 @@
                 inSeach() {
                     axios.get('/inseach')
                         .then((response) => {
-                            this.inseach = response.data;
+                            if (response.data == "true") {
+                                this.inseach = true;
+                            }
+                            else {
+                                this.inseach = false;
+                            }
                         })
                 }
 
