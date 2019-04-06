@@ -672,7 +672,7 @@ class AnketController extends Controller
 
     public function seach(Request $request)
     {
-      //  dump($request);
+        //  dump($request);
         $who_met = $request->who_met;
         $with_met = $request->with_met;
 
@@ -686,31 +686,43 @@ class AnketController extends Controller
             ->where('age', '<=', $request->max_age)
             ->get();
 
-      //  $tages=$request->
+        //  $tages=$request->
 
         if ($request->get('targets')) {
 
             $girls->whereHas('target', function ($query) use ($request) {
                 return $query->where('target_id', $request->targets);
-             })->get();
+            })->get();
 
-             /*  $girls2 = DB::select('select * from girls gl
-                 where gl.sex = :sex and gl.meet=:meet and gl.age between :min_age and :max_age INNER JOIN girl_target tg on gl.id=tg.girl_id',*/
-          /*  $girls2 = DB::select('select * from `target` inner join `girl_target` on `target`.`id` = `girl_target`.`target_id` where `girls`.`id` = `girl_target`.`girl_id` and `id` in',
-                [
-                    'sex' => $with_met,
-                    'meet' => $who_met,
-                    'min_age' => $request->min_age,
-                    'max_age' => $request->max_age,
-                ]);*/
-
-
-        } else {
-            $girls = $girls->get();
         }
-      //  dump($girls->get());
 
         return response()->json($girls->get());
+    }
+
+    public function inseach(Request $request)
+    {
+        $user = Auth::user();
+        $girl = Girl::select(['id', 'name', 'begin_search', 'end_search'])->where('user_id', $user->id)->first();
+        $current_date = Carbon::now();
+        if ($current_date >= $girl->begin_search and $current_date <= $girl->end_search) {
+            return true;
+        } else {
+            return false;
+        }
+
+        /*
+         *   $current_date = Carbon::now();
+        $users = User::select([                 //получаем пользователей
+            'id',
+            'name',
+            'beginvip',
+            'endvip',
+        ])
+            //  ->where('vip','=','1')
+            ->where('beginvip', '<', $current_date)
+            ->where('endvip', '>', $current_date)
+            ->orderBy('created_at', 'DESC')->get();
+         * */
 
     }
 }

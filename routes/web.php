@@ -271,3 +271,5 @@ Route::get('/findcity/{name}', 'AnketController@findcity')->middleware('auth');
 Route::get('/getargetslist', 'AdminController@gettargetslist')->middleware('auth');
 
 Route::get('/seach', 'AnketController@seach');
+
+Route::get('/inseach', 'AnketController@inseach');

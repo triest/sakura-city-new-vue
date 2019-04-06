@@ -3881,6 +3881,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {
@@ -3892,7 +3901,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       numberUnreaded: 0,
       numberApplication: 0,
-      numberApplicationPresents: 0
+      numberApplicationPresents: 0,
+      inseach: false
     };
   },
   mounted: function mounted() {
@@ -3937,6 +3947,13 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/getCountUnreadedPresents').then(function (response) {
         _this3.numberApplicationPresents = response.data;
+      });
+    },
+    inSeach: function inSeach() {
+      var _this4 = this;
+
+      axios.get('/inseach').then(function (response) {
+        _this4.inseach = response.data;
       });
     }
   }
@@ -53708,7 +53725,11 @@ var render = function() {
       ? _c("div", [
           _c("b", [_vm._v("+" + _vm._s(_vm.numberApplicationPresents))])
         ])
-      : _vm._e()
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.inseach == true
+      ? _c("div", [_c("b", [_vm._v("Ваша анкета отображаеться в поиске")])])
+      : _c("div", [_c("b", [_vm._v("Ваша анкета Не отображаеться в поиске")])])
   ])
 }
 var staticRenderFns = [

@@ -13,6 +13,15 @@
         <b><a class="btn btn-primary" href="/power">Поднять анкету</a> </b><br><br>
         <b><a class="btn btn-info" href="/mypresents">Мои подарки</a> </b>
         <div v-if="numberApplicationPresents>0"><b>+{{numberApplicationPresents}}</b></div>
+
+        <div v-if="inseach==true">
+            <b>Ваша анкета отображаеться в поиске</b>
+        </div>
+        <div v-else>
+            <b>Ваша анкета Не отображаеться в поиске</b>
+        </div>
+
+
     </div>
 </template>
 
@@ -29,7 +38,9 @@
                 numberUnreaded: 0,
                 numberApplication: 0,
                 numberApplicationPresents: 0,
-            };
+                inseach: false
+            }
+                ;
         },
         mounted() {
             Echo.private(`messages.${this.user.id}`)
@@ -83,6 +94,12 @@
                             this.numberApplicationPresents = response.data;
                         })
                 },
+                inSeach() {
+                    axios.get('/inseach')
+                        .then((response) => {
+                            this.inseach = response.data;
+                        })
+                }
 
             }
     }
