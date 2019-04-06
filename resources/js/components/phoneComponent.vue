@@ -14,7 +14,7 @@
             <ul>
                 <li v-for="error in errors">{{ error }}</li>
             </ul>
-            </p>
+    
             <button class="btn btn-primary" v-on:click="sendSMS()">Подтвердить</button>
             <br><br>
             <div v-if="codeVisable">
