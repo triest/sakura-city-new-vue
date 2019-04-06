@@ -676,14 +676,14 @@ class AnketController extends Controller
         $with_met = $request->with_met;
         $girls = Girl::query();
         $current_date = Carbon::now();// текушая дата
-      //  dump($current_date);
+        //  dump($current_date);
         $girls
             ->where('sex', $with_met)
             ->where('meet', $who_met)
             ->where('age', '>=', $request->min_age)
             ->where('age', '<=', $request->max_age)
-            ->where('begin_search','<',$current_date)
-            ->where('end_search','>',$current_date)
+            ->where('begin_search', '<', $current_date)
+            ->where('end_search', '>', $current_date)
             ->get();
 
 
@@ -691,8 +691,14 @@ class AnketController extends Controller
             $girls->whereHas('target', function ($query) use ($request) {
                 return $query->where('target_id', $request->targets);
             })->get();
-
         }
+
+        if ($request->get('interests')) {
+            $girls->whereHas('interest', function ($query) use ($request) {
+                return $query->where('interest_id', $request->interests);
+            })->get();
+        }
+
 
         return response()->json($girls->get());
     }

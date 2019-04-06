@@ -23,6 +23,7 @@
         до:
         <input type="number" v-model="max_age" id="max_age" min="18" value="18">
 
+        <br><br>
         Цель знакомства:
 
         <li v-for="target in targets">
@@ -30,6 +31,16 @@
             <input type="checkbox" v-bind:value="target.id" v-model="selected"
                    @click="check($event)">
         </li>
+        <br><br>
+        Интересы:
+        <li v-for="target in interests">
+            <label>{{target.name}}</label>
+            <input type="checkbox" v-bind:value="target.id" v-model="interestsSelected"
+                   @click="check($event)">
+        </li>
+
+
+
         <button v-on:click="seach">Найти</button>
 
         <div v-for="anket in anketList">
@@ -49,6 +60,7 @@
         mounted() {
             console.log('index');
             this.getTargets();
+            this.getInterest();
          //   this.seach();
         },
         data() {
@@ -56,11 +68,13 @@
                 who_met: "woman",
                 with_met: "man",
                 targets: "",
+                interests:"",
                 checkedTargets: [],
                 selected: [],
                 max_age: '40',
                 min_age: '18',
                 anketList: '',
+                interestsSelected:[]
             }
         },
         methods: {
@@ -69,6 +83,13 @@
                     .then((response) => {
                         //console.log(response.data)
                         this.targets = response.data;
+                    });
+            },
+            getInterest() {
+                axios.get('/getinterestslist')
+                    .then((response) => {
+                        //console.log(response.data)
+                        this.interests = response.data;
                     });
             },
             check: function (e) {
@@ -84,7 +105,8 @@
                         with_met: this.with_met,
                         targets: this.selected,
                         max_age: this.max_age,
-                        min_age: this.min_age
+                        min_age: this.min_age,
+                        interests:this.interestsSelected
                     }
                 }).then((response) => {
                     //console.log(response.data)

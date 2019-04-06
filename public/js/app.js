@@ -4280,22 +4280,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'edit',
   mounted: function mounted() {
     console.log('index');
-    this.getTargets(); //   this.seach();
+    this.getTargets();
+    this.getInterest(); //   this.seach();
   },
   data: function data() {
     return {
       who_met: "woman",
       with_met: "man",
       targets: "",
+      interests: "",
       checkedTargets: [],
       selected: [],
       max_age: '40',
       min_age: '18',
-      anketList: ''
+      anketList: '',
+      interestsSelected: []
     };
   },
   methods: {
@@ -4307,13 +4321,21 @@ __webpack_require__.r(__webpack_exports__);
         _this.targets = response.data;
       });
     },
+    getInterest: function getInterest() {
+      var _this2 = this;
+
+      axios.get('/getinterestslist').then(function (response) {
+        //console.log(response.data)
+        _this2.interests = response.data;
+      });
+    },
     check: function check(e) {
       if (e.target.checked) {
         console.log(e.target.value);
       }
     },
     seach: function seach() {
-      var _this2 = this;
+      var _this3 = this;
 
       console.log("seach");
       axios.get('/seach', {
@@ -4322,11 +4344,12 @@ __webpack_require__.r(__webpack_exports__);
           with_met: this.with_met,
           targets: this.selected,
           max_age: this.max_age,
-          min_age: this.min_age
+          min_age: this.min_age,
+          interests: this.interestsSelected
         }
       }).then(function (response) {
         //console.log(response.data)
-        _this2.anketList = response.data;
+        _this3.anketList = response.data;
       });
     }
   }
@@ -54369,7 +54392,10 @@ var render = function() {
           }
         }
       }),
-      _vm._v("\n\n    Цель знакомства:\n\n    "),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
+      _vm._v("\n    Цель знакомства:\n\n    "),
       _vm._l(_vm.targets, function(target) {
         return _c("li", [
           _c("label", [_vm._v(_vm._s(target.name))]),
@@ -54411,6 +54437,57 @@ var render = function() {
                   }
                 } else {
                   _vm.selected = $$c
+                }
+              }
+            }
+          })
+        ])
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
+      _vm._v("\n    Интересы:\n    "),
+      _vm._l(_vm.interests, function(target) {
+        return _c("li", [
+          _c("label", [_vm._v(_vm._s(target.name))]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.interestsSelected,
+                expression: "interestsSelected"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              value: target.id,
+              checked: Array.isArray(_vm.interestsSelected)
+                ? _vm._i(_vm.interestsSelected, target.id) > -1
+                : _vm.interestsSelected
+            },
+            on: {
+              click: function($event) {
+                return _vm.check($event)
+              },
+              change: function($event) {
+                var $$a = _vm.interestsSelected,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = target.id,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.interestsSelected = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.interestsSelected = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.interestsSelected = $$c
                 }
               }
             }
