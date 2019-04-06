@@ -139,6 +139,8 @@ Route::get('/tofirstplaсe', 'MoneyController@toFirstPlase')->middleware('auth')
 
 Route::get('/totop', 'MoneyController@totop')->middleware('auth');
 
+Route::get('/toseach', 'MoneyController@toseach')->middleware('auth');
+
 
 //получаем картинки для карусели
 Route::get('/getdataforcarousel', 'AnketController@getdataforcarousel');

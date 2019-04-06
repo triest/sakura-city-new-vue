@@ -5,7 +5,7 @@
         <br>
         <b> Поместить анкету в шапку сайта(сменяемое меню) на
             <input name="days" id="days" type="number" min="0"
-                   :max="max2" :value="max2" ref="inputDaysNumber"></b>
+                   :max="maxToTopDays" :value="maxToTopDays" ref="inputDaysNumber"></b>
         <div v-if="money.money>=priceToTop">
             <button class="btn-primary" v-on:click="toTop()">Поднять</button>
         </div>
@@ -29,11 +29,10 @@
 
             <b> Поместить анкету в поиск сайта на
                 <input name="days_seach" id="days_seach" type="number" min="0"
-                       :max="max2" :value="max2" ref="inputDaysNumber"></b>
-          
+                       :max="maxSeachDays" :value="maxSeachDays" ref="inputDaysNumber"></b>
+            дней
 
             <div v-if="money.money>=priseSeach">
-
                 <button class="btn-primary" v-on:click="toSeach()">Поместить</button>
             </div>
             <div v-else>
@@ -70,11 +69,11 @@
             };
         },
         computed: {
-            max2: function () {
-                return this.money.money / this.priceToTop.price
+            maxToTopDays: function () {
+                return this.money.money / this.priceToTop
                 //  return this.money.money / 1
             },
-            maxSeach: function () {
+            maxSeachDays: function () {
                 if (this.priseSeach < this.money) {
                     this.ButthonToSeashEnable = true;
                 }
@@ -82,7 +81,7 @@
                     this.ButthonToSeashEnable = true;
                 }
 
-                return this.money / this.priseSeach
+                return this.money.money / this.priseSeach
             }
 
 

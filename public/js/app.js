@@ -3352,7 +3352,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {
@@ -3374,17 +3373,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    max2: function max2() {
-      return this.money.money / this.priceToTop.price; //  return this.money.money / 1
+    maxToTopDays: function maxToTopDays() {
+      return this.money.money / this.priceToTop; //  return this.money.money / 1
     },
-    maxSeach: function maxSeach() {
+    maxSeachDays: function maxSeachDays() {
       if (this.priseSeach < this.money) {
         this.ButthonToSeashEnable = true;
       } else {
         this.ButthonToSeashEnable = true;
       }
 
-      return this.money / this.priseSeach;
+      return this.money.money / this.priseSeach;
     }
   },
   mounted: function mounted() {
@@ -53224,9 +53223,9 @@ var render = function() {
           id: "days",
           type: "number",
           min: "0",
-          max: _vm.max2
+          max: _vm.maxToTopDays
         },
-        domProps: { value: _vm.max2 }
+        domProps: { value: _vm.maxToTopDays }
       })
     ]),
     _vm._v(" "),
@@ -53292,12 +53291,12 @@ var render = function() {
                 id: "days_seach",
                 type: "number",
                 min: "0",
-                max: _vm.max2
+                max: _vm.maxSeachDays
               },
-              domProps: { value: _vm.max2 }
+              domProps: { value: _vm.maxSeachDays }
             })
           ]),
-          _vm._v(" "),
+          _vm._v("\n        дней\n\n        "),
           _vm.money.money >= _vm.priseSeach
             ? _c("div", [
                 _c(
