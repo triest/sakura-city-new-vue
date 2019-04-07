@@ -281,3 +281,6 @@ Route::get('/getinterestslist', 'AdminController@getinteresslist')->middleware('
 Route::get('/seach', 'AnketController@seach');
 
 Route::get('/inseach', 'AnketController@inseach');
+
+
+Route::get('/eventtest', 'PresentController@eventtest');

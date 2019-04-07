@@ -3534,6 +3534,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     id: {
@@ -3542,7 +3543,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getPresentsList(), console.log(this.id), this.getUserMoney();
+    this.getPresentsList(), this.getUserMoney();
   },
   data: function data() {
     return {
@@ -3573,8 +3574,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get('/getMoney').then(function (response) {
-        _this2.money = response.data.money;
-        console.log(_this2.money);
+        _this2.userMoney = response.data.money;
+        console.log('user money ' + _this2.money);
       });
     }
   }
@@ -4603,8 +4604,7 @@ __webpack_require__.r(__webpack_exports__);
                 _this.codeVisable = true;
                 _this.errors = [];
               } else {
-                console.log("faik");
-
+                //console.log("faik");
                 _this.errors.push("Этот телефон уже зарегистрирован");
               }
             }).catch(this.errors.push("Этот телефон уже зарегистрирован"));
@@ -54758,26 +54758,25 @@ var render = function() {
                 return _c("li", [_vm._v(_vm._s(error))])
               }),
               0
-            )
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.sendSMS()
+                  }
+                }
+              },
+              [_vm._v("Подтвердить")]
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _c("br")
           ])
         : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.sendSMS()
-            }
-          }
-        },
-        [_vm._v("Подтвердить")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
       _vm.codeVisable
         ? _c("div", [
             _c("label", { attrs: { for: "code" } }, [
