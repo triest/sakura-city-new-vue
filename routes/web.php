@@ -29,6 +29,7 @@ Route::get('/contacts', 'ContactsController@get');
 Route::get('/contacts2', 'ContactsController@get2');
 Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
 Route::post('/conversation/send', 'ContactsController@send');
+Route::post('/conversation/sendModal', 'ContactsController@sendModal');
 
 Route::get('/join/', 'CustomUserController@index')->name('join');
 

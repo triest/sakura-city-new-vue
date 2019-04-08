@@ -48,10 +48,10 @@
             Echo.private(`messages.${this.user.id}`)
                 .listen('NewMessage', (e) => {
                     console.log('NewMessage');
-                    /*  axios.get('/getCountUnreaded')
+                      axios.get('/getCountUnreaded')
                           .then((response) => {
                               this.numberUnreaded = response.data;
-                          })*/
+                          });
                     this.getNumberUnreadedMessages();
                 });
             Echo.private(`requwests.${this.user.id}`)
@@ -64,7 +64,7 @@
                 });
             Echo.private(`gifs.${this.user.id}`)
                 .listen('eventPreasent', (e) => {
-                    console.log('NewPresent');
+                    this.getNumberUnreadedPresents();
                 });
 
 

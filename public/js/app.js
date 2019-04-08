@@ -3129,7 +3129,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       //   console.log(this.MessageText)
-      axios.post('/conversation/send', {
+      axios.post('/conversation/sendModal', {
         contact_id: this.id,
         text: this.MessageText
       }).then(function (response) {
@@ -3982,10 +3982,9 @@ __webpack_require__.r(__webpack_exports__);
     this.inSeach();
     Echo.private("messages.".concat(this.user.id)).listen('NewMessage', function (e) {
       console.log('NewMessage');
-      /*  axios.get('/getCountUnreaded')
-            .then((response) => {
-                this.numberUnreaded = response.data;
-            })*/
+      axios.get('/getCountUnreaded').then(function (response) {
+        _this.numberUnreaded = response.data;
+      });
 
       _this.getNumberUnreadedMessages();
     });
@@ -3996,7 +3995,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     });
     Echo.private("gifs.".concat(this.user.id)).listen('eventPreasent', function (e) {
-      console.log('NewPresent');
+      _this.getNumberUnreadedPresents();
     });
     axios.get('/getCountUnreaded').then(function (response) {
       _this.numberUnreaded = response.data;

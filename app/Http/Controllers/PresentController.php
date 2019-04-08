@@ -200,11 +200,13 @@ class PresentController extends Controller
 
     public function eventtest(Request $request)
     {
-        $giftAct = GiftAct::select(['id', 'present_id', 'who_id', 'target_id'])->where('id', 1)->first();
-        dump($giftAct);
-        broadcast(new eventPreasent($giftAct));
+     //   $giftAct = GiftAct::select(['id', 'present_id', 'who_id', 'target_id'])->where('id', 1)->first();
+     //   dump($giftAct);
+     //   $giftAct->save();
+      //  broadcast(new eventPreasent($giftAct));
 
         $text="sss";
+
 
         $message = Message::create([
             'from' => auth()->id(),
@@ -212,7 +214,7 @@ class PresentController extends Controller
             'text' =>$text,
         ]);
 
-        dump($giftAct);
+     //   dump($giftAct);
 
         broadcast(new NewMessage($message));
     }
