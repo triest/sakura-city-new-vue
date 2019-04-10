@@ -34,15 +34,14 @@
                     <div v-for="application in myapplications">
 
                         <div class="avatar">
-                            <img :src="'images/upload/'+application.image" :alt="application.who_name" height="150">
-                            <br> {{application.who_name}}
+                            <img :src="'images/upload/'+application.main_image" :alt="application.who_name"
+                                 height="150">
+                            <br> {{application.name}}
                             <div v-if="application.status==null">Не рассмотрен</div>
                             <div v-if="application.status=='confirmed'">Подтвержден</div>
                             <div v-if="application.status=='denide'">Отклонен</div>
                         </div>
                         <div class="contact">
-                            <p class="name">{{ application.name }}</p>
-
                         </div>
                     </div>
                 </div>

@@ -1833,7 +1833,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {
@@ -4524,6 +4523,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -51562,7 +51562,7 @@ var render = function() {
                     _c("div", { staticClass: "avatar" }, [
                       _c("img", {
                         attrs: {
-                          src: "images/upload/" + application.image,
+                          src: "images/upload/" + application.main_image,
                           alt: application.who_name,
                           height: "150"
                         }
@@ -51571,7 +51571,7 @@ var render = function() {
                       _c("br"),
                       _vm._v(
                         " " +
-                          _vm._s(application.who_name) +
+                          _vm._s(application.name) +
                           "\n                        "
                       ),
                       application.status == null
@@ -51587,11 +51587,7 @@ var render = function() {
                         : _vm._e()
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "contact" }, [
-                      _c("p", { staticClass: "name" }, [
-                        _vm._v(_vm._s(application.name))
-                      ])
-                    ])
+                    _c("div", { staticClass: "contact" })
                   ])
                 })
               ],
@@ -54760,7 +54756,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _vm.errors.length
-        ? _c("p", [
+        ? _c("div", [
             _c("b", [_vm._v("Пожалуйста исправьте указанные ошибки:")]),
             _vm._v(" "),
             _c(
@@ -54769,25 +54765,26 @@ var render = function() {
                 return _c("li", [_vm._v(_vm._s(error))])
               }),
               0
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.sendSMS()
-                  }
-                }
-              },
-              [_vm._v("Подтвердить")]
-            ),
-            _vm._v(" "),
-            _c("br"),
-            _c("br")
+            )
           ])
         : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              return _vm.sendSMS()
+            }
+          }
+        },
+        [_vm._v("Подтвердить")]
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
       _vm.codeVisable
         ? _c("div", [
             _c("label", { attrs: { for: "code" } }, [

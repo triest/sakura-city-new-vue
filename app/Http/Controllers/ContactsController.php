@@ -32,7 +32,7 @@ class ContactsController extends Controller
         foreach ($dialogs as $dialog) {
             $other = $dialog->other_id;
             $user = DB::table('users')->join('girls', 'girls.user_id', '=', 'users.id')
-                ->select('users.id','users.name','girls.main_image')
+                ->select('users.id', 'users.name', 'girls.main_image')
                 ->where('users.id', $other)->first();
             // $user=DB::table('users')->join('gitls')
             array_push($contacts, $user);
@@ -187,19 +187,24 @@ class ContactsController extends Controller
 
         $user = Auth::user();
         //  $request = collect(DB::select('select * from requwest where target_id=?', [$user->id]));
-        $request = MyRequwest::select('id',
-            'who_id',
-            'target_id', 'who_name', 'image', 'status', 'readed')->where('who_id', $user->id)
-            //->where('readed', 0)
-            ->get();
-        $array = [];
-        /*  foreach ($request as $item) {
-              $girl = Girl::select(['id', 'name', 'main_image'])->where('user_id', $item->who_id)->first();
-              array_push($array, $girl);
-          }*/
+        /* $request = MyRequwest::select('id',
+             'who_id',
+             'target_id', 'who_name', 'image', 'status', 'readed')->where('who_id', $user->id)
+             //->where('readed', 0)
+             ->get();*/
+
+        /* $request = DB::table('requwest')->join('girls', 'girls.user_id', '=', 'users.id')
+             ->select('users.id','users.name','girls.main_image')
+             ->where('who_id', $user->id)->first();*/
+        $requwest = collect(DB::select('select r.id,r.status,r.created_at,u.name,g.main_image from requwest r 
+                    left join users u on u.id=r.target_id
+                    left join girls g on u.id=g.user_id
+                      where r.who_id=?', [$user->id]));
+
+        // $array = [];
 
         //  return response()->json(, $request);
-        return $request;
+        return $requwest;
     }
 
     public function denideAccess(Request $request)

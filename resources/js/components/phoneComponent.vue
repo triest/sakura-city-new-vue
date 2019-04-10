@@ -9,11 +9,12 @@
                 Первая цифра-код страны. Для россии это 7. Пример: 79001234567;
                 Номер должен быть указан в формате 79001234567. <br></b>
             <input type="phone" name="phone" id="phone" v-model="phone" placeholder="79001234567" required>
-            <p v-if="errors.length">
+            <div v-if="errors.length">
                 <b>Пожалуйста исправьте указанные ошибки:</b>
-            <ul>
-                <li v-for="error in errors">{{ error }}</li>
-            </ul>
+                <ul>
+                    <li v-for="error in errors">{{ error }}</li>
+                </ul>
+            </div>
 
             <button class="btn btn-primary" v-on:click="sendSMS()">Подтвердить</button>
             <br><br>
@@ -50,8 +51,8 @@
                 errors: [],
                 codeErors: [],
                 codeVisable: false,
-                nextButtonVisable:false,
-                next:false
+                nextButtonVisable: false,
+                next: false
             }
         },
         methods: {
