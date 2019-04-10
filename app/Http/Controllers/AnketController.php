@@ -25,6 +25,12 @@ class AnketController extends Controller
     function createGirl()
     {
         $user = Auth::user();
+
+        $girl = Girl::select(['id', 'name', 'user_id'])->where('user_id', $user->id)->first();
+        if ($girl != null) {
+            return redirect('/edit');
+        }
+
         $targets = Target::select(['id', 'name'])->get();
         $interests = Interest::select(['id', 'name'])->get();
         //add check phone is confurnd

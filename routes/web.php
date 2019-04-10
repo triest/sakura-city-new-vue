@@ -44,7 +44,7 @@ Route::get('/anket2', function () {
 })->name('main2');
 
 
-Route::get('/createAnketPage', 'AnketController@createGirl')->name('createGirlPage')->middleware('auth');
+
 
 //создание анкеты
 Route::get('/createAnketPage', 'AnketController@createGirl')->name('createGirlPage')->middleware('auth');;
