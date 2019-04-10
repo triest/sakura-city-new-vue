@@ -118,10 +118,8 @@
             </div>
         </div>
     </div><!--/span-->
-</div><!--/row-->
-
-
 </div>
+
 <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
 <script src="http://bootstrap-3.ru/examples/offcanvas/offcanvas.js"></script>
 <!-- скрипт для галлереи -->

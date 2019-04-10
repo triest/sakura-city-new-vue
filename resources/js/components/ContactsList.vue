@@ -4,11 +4,10 @@
             <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)"
                 :class="{ 'selected': contact == selected }">
                 <div class="avatar">
-                    <img :src="contact.main_image" :alt="contact.name">
+                    <img :src="'images/small/'+contact.main_image" :alt="contact.name">
                 </div>
                 <div class="contact">
                     <p class="name">{{ contact.name }}</p>
-                    <p class="email">{{ contact.email }}</p>
                 </div>
                 <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>
             </li>
@@ -65,7 +64,7 @@
                 display: flex;
                 padding: 0px;
                 border-bottom: 1px solid #aaaaaa;
-                height: 80px;
+                height: 60px;
                 position: relative;
                 cursor: pointer;
 
@@ -96,15 +95,15 @@
                     align-items: center;
 
                     img {
-                        width: 35px;
-                        border-radius: 50%;
+                        width: 50px;
+                        border-radius: 70%;
                         margin: 0 auto;
                     }
                 }
 
                 .contact {
                     flex: 3;
-                    font-size: 10px;
+                    font-size: 14px;
                     overflow: hidden;
                     display: flex;
                     flex-direction: column;

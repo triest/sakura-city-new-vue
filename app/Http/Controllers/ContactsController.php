@@ -31,7 +31,10 @@ class ContactsController extends Controller
         $contacts = [];
         foreach ($dialogs as $dialog) {
             $other = $dialog->other_id;
-            $user = User::select()->where('id', $other)->first();
+            $user = DB::table('users')->join('girls', 'girls.user_id', '=', 'users.id')
+                ->select('users.id','users.name','girls.main_image')
+                ->where('users.id', $other)->first();
+            // $user=DB::table('users')->join('gitls')
             array_push($contacts, $user);
         }
 
@@ -101,7 +104,6 @@ class ContactsController extends Controller
         $girl = Girl::select(['id', 'user_id'])->where('id', $request->contact_id)->first();
 
 
-
         /*  $message = Message::create([
               'from' => auth()->id(),
               'to' => $girl->user_id,
@@ -109,16 +111,16 @@ class ContactsController extends Controller
           ]);
         */
         $message = new Message();
-        $message->from= auth()->id();
-        $message->to= $girl->user_id;
-        $message->text=$request->text;
+        $message->from = auth()->id();
+        $message->to = $girl->user_id;
+        $message->text = $request->text;
         $message->save();
         broadcast(new NewMessage($message));
 
 
         $user = Auth::user();
         $id2 = $girl->user_id;
-        $dialog = Dialog::select(['id', 'my_id', 'other_id'])->where('my_id',auth()->id())->where('other_id',
+        $dialog = Dialog::select(['id', 'my_id', 'other_id'])->where('my_id', auth()->id())->where('other_id',
             $id2)->first();
 
         if ($dialog == null) {
@@ -127,7 +129,7 @@ class ContactsController extends Controller
             $dialog3->other_id = $id2;
             $dialog3->save();
         }
-        $dialog2 = Dialog::select(['id', 'my_id', 'other_id'])->where('other_id',auth()->id())->where('my_id',
+        $dialog2 = Dialog::select(['id', 'my_id', 'other_id'])->where('other_id', auth()->id())->where('my_id',
             $id2)->first();
         if ($dialog2 == null) {
             $dialog4 = new Dialog();
@@ -135,7 +137,7 @@ class ContactsController extends Controller
             $dialog4->my_id = $id2;
             $dialog4->save();
         }
-      
+
 
         broadcast($message);
 
