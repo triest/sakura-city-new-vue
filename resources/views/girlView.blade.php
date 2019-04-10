@@ -68,12 +68,6 @@
 
         <p class="card-text"><b> {!!$girl->description  !!}</b></p>
 
-        @if($girl->private!=null)
-            <label>Приватное сообщение:</label>
-            <p class="card-text>"><b>{!!$girl->private  !!}<</b></p>
-        @endif
-        <br>
-
         <br>
         <div class="container gallery-container">
             <div class="tz-gallery">

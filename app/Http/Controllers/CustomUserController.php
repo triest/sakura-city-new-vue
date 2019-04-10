@@ -15,7 +15,6 @@ use App\Repositories\ImageRepository;
 use App\User;
 
 
-
 use settype;
 use Hash;
 
@@ -33,8 +32,10 @@ class CustomUserController extends Controller
                 return view('custom.resetSMS');
             }
         }
+
         return view('custom.registration');
     }
+
     public function join(Request $request)
     {
         $validatedData = $request->validate([
@@ -47,11 +48,22 @@ class CustomUserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-       /* $user->you = $request->you;
-        $user->kogo = $request->kogo;*/
+
+        /* $user->you = $request->you;
+         $user->kogo = $request->kogo;*/
         $user->password = bcrypt($request->password);
+
+        //генерируем код
+        do {
+            $token = str_random(40);;
+            $code = 'EN'.$token.substr(strftime("%Y", time()), 2);
+            $user_code = User::where('account', $code)->get();
+        } while (!$user_code->isEmpty());
+        $user->account = $user_code;
+
         $user->save();
         Auth::loginUsingId($user->id);
+
         return view('custom.resetSMS2');
     }
 }

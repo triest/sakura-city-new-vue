@@ -23,10 +23,26 @@ class MoneyController extends Controller
 
     public function reciverMoney(Request $request)
     {
+        //secret 66zzO9164xWnEsNEX6K73nFo
+
         $date = Carbon::now();
         File::append(base_path().'/public/file.txt', 'data2'.PHP_EOL);
         File::append(base_path().'/public/file.txt',
             'oprration_id:'.$request['operation_id'].','.'datetime: '.$request['datetime'].','.$request['sha1_hash'].','.$request['withdraw_amount'].',label:'.$request['label'].','.$date.PHP_EOL);
+
+
+        $str = $_POST['notification_type'].'&'.
+            $_POST['operation_id'].'&'.
+            $_POST['amount'].'&'.
+            $_POST['currency'].'&'.
+            $_POST['datetime'].'&'.
+            $_POST['sender'].'&'.
+            $_POST['codepro'].'&66zzO9164xWnEsNEX6K73nFo&'.
+            $_POST['label'];
+
+        if (sha1($str) != $_POST['sha1_hash']) {
+            return null;
+        }
 
         $operation_id = $request['operation_id'];
         if ($operation_id == 'test-notification') {
@@ -39,11 +55,10 @@ class MoneyController extends Controller
             } catch (IOException $exceptione) {
             }
         }
-        $user = User::select(['id', 'email', 'name', 'money'])->where(['email' => $request->label])->first();
+        $user = User::select(['id', 'email', 'name', 'money'])->where(['account' => $request->label])->first();
         $ammount = $request->amount;
         $user_money = $user->money;
         if ($user != null && $user_money != null && $user_money > 0) {
-            echo 'check money';
             $user_money_database = $user->money;
             $user_money_database += $ammount;
             $user->money = $user_money_database;
