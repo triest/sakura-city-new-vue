@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use File;
 use App\ImageResize;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 class AdminController extends Controller
@@ -159,7 +160,7 @@ class AdminController extends Controller
 
         $girl = Girl::select(['id', 'name', 'user_id', 'banned'])->where('user_id', $request->id)->first();
 
-     //   dump($girl);
+        //   dump($girl);
         if ($girl->banned == 1) {
             $girl->banned = 0;
             $girl->save();
@@ -170,5 +171,19 @@ class AdminController extends Controller
         $girl->save();
 
         return response()->json("true");
+    }
+
+    public function getuserslist(Request $request)
+    {
+        $girl = Girl::select(['id', 'name', 'user_id', 'banned','created_at','updated_at','begin_search','end_search'])->get();
+       /* $girl=DB::table('girls')
+            ->join('users', 'users.id', '=', 'girls.user_id')
+            ->select('users.id ad id','users.name','girls.id as girl_id','users.money')
+            ->get();*/
+      //  $girl = collect(DB::select('select * from girls'))->get();
+        $results = DB::select('select * from users u left join girls gl on gl.user_id=u.id');
+//        dump($results);
+
+        return response()->json($girl);
     }
 }

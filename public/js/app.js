@@ -4378,95 +4378,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 //'./components/delModal.vue'
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
   components: {},
   mounted: function mounted() {
-    this.getNewPresentsForMe(), this.getNewPresentsHistory(), this.getNewPresentsFromMe(), this.currentTab = 'new';
+    this.getUsers();
   },
   data: function data() {
     return {
-      presents: [],
-      presentsHistoryFoME: [],
-      presentsHistoryFromMe: [],
-      name: '',
-      price: '',
-      file1: '',
-      isDisabled: true,
-      showModal: false,
-      //currentTab: 'foMe',
-      currentTab: 'new'
+      users: ''
     };
   },
   methods: {
-    getNewPresentsForMe: function getNewPresentsForMe() {
+    getUsers: function getUsers() {
       var _this = this;
 
-      this.presents = null;
-      axios.get('/getpresentsforMe').then(function (response) {
-        _this.presents = response.data[0];
+      this.users = null;
+      axios.get('/getuserslist').then(function (response) {
+        _this.users = response.data;
       });
-    },
-    getNewPresentsFromMe: function getNewPresentsFromMe() {
-      var _this2 = this;
-
-      this.presents = null;
-      axios.get('/getpresentsFromMe').then(function (response) {
-        _this2.presentsHistoryFromMe = response.data[0];
-      });
-    },
-    getNewPresentsHistory: function getNewPresentsHistory() {
-      var _this3 = this;
-
-      this.presents = null;
-      axios.get('/getpresentsHistoryforMe').then(function (response) {
-        _this3.presentsHistoryFoME = response.data[0];
-      });
-    },
-    handleFileUpload: function handleFileUpload() {
-      this.file = this.$refs.file.files[0];
-    },
-    mark_as_readed: function mark_as_readed(id) {
-      var formData = new FormData();
-      formData.append('present_id', id);
-      axios.post('/markpresentasreaded', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then().catch();
-      this.getNewPresentsForMe();
-    },
-    submitPresent: function submitPresent() {
-      var _this4 = this;
-
-      var that = this;
-      var formData = new FormData();
-      formData.append('file', this.file);
-      formData.append('name', this.name);
-      formData.append('price', this.price);
-      axios.post('/createpresent', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(function (response) {
-        if (response.data == "ok") {
-          _this4.name = "";
-          _this4.price = "";
-          _this4.file = "";
-        }
-      }).catch(function () {});
-      this.getPresents();
-    },
-    deleWindow: function deleWindow(item) {
-      this.id = item;
-      console.log(item);
-      this.showModal = true;
-      axios.post('/delpresent', {
-        id: item
-      }).then(function (response) {}).catch(function () {});
-      this.getPresents();
     }
   }
 });
@@ -54648,137 +54579,50 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("ul", { staticClass: "nav nav-tabs" }, [
-      _c(
-        "li",
-        {
-          attrs: { role: "presentation" },
-          on: {
-            click: function($event) {
-              _vm.currentTab = "new"
-            }
-          }
-        },
-        [_vm._m(0)]
-      ),
+    _c("table", { staticClass: "table table-condensed" }, [
+      _vm._m(0),
       _vm._v(" "),
       _c(
-        "li",
-        {
-          attrs: { role: "presentation" },
-          on: {
-            click: function($event) {
-              _vm.currentTab = "history"
-            }
-          }
-        },
-        [_vm._m(1)]
-      ),
-      _vm._v(" "),
-      _c(
-        "li",
-        {
-          attrs: { role: "presentation" },
-          on: {
-            click: function($event) {
-              _vm.currentTab = "fromMe"
-            }
-          }
-        },
-        [_vm._m(2)]
+        "tbody",
+        _vm._l(_vm.users, function(item) {
+          return _c("tr", [
+            _c("td", [_vm._v(" " + _vm._s(item.id))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                "\n                " + _vm._s(item.name) + "\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "a",
+                { attrs: { href: "http://sakura-city.info/anket/" + item.id } },
+                [_vm._v(" Анкета")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v("\n                состояние счета\n            ")
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              item.banned == 1
+                ? _c("div", [
+                    _vm._v(
+                      "\n                    Заблокарован\n                "
+                    )
+                  ])
+                : _c("div", [
+                    _vm._v(
+                      "\n                    Разблокирован\n                "
+                    )
+                  ])
+            ])
+          ])
+        }),
+        0
       )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "tab-content" }, [
-      _vm.currentTab == "new"
-        ? _c(
-            "div",
-            _vm._l(_vm.presents, function(present) {
-              return _c("div", [
-                _c("b", [_vm._v("От:" + _vm._s(present.who_name))]),
-                _c("br"),
-                _vm._v(" "),
-                _c("img", {
-                  attrs: {
-                    src: "presents/upload/" + present.pres_image,
-                    height: "200"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.mark_as_readed(present.act_id)
-                      }
-                    }
-                  },
-                  [_vm._v("Получен")]
-                )
-              ])
-            }),
-            0
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.currentTab == "history"
-        ? _c(
-            "div",
-            _vm._l(_vm.presentsHistoryFoME, function(present) {
-              return _c("div", [
-                _c("b", [_vm._v("От:" + _vm._s(present.who_name))]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v("\n                " + _vm._s(present.sended)),
-                _c("br"),
-                _vm._v(" "),
-                _c("img", {
-                  attrs: {
-                    src: "presents/upload/" + present.pres_image,
-                    height: "200"
-                  }
-                })
-              ])
-            }),
-            0
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.currentTab == "fromMe"
-        ? _c(
-            "div",
-            _vm._l(_vm.presentsHistoryFromMe, function(present) {
-              return _c("div", [
-                _c("b", [_vm._v("От:" + _vm._s(present.who_name))]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v("\n                " + _vm._s(present.sended)),
-                _c("br"),
-                _vm._v(" "),
-                _c("img", {
-                  attrs: {
-                    src: "presents/upload/" + present.pres_image,
-                    height: "200"
-                  }
-                }),
-                _vm._v(" "),
-                (present.resded = 1)
-                  ? _c("div", [
-                      _vm._v(
-                        "\n                    Просмотрен\n                "
-                      )
-                    ])
-                  : _c("div", [
-                      _vm._v(
-                        "\n                    Не просмотрен\n                "
-                      )
-                    ])
-              ])
-            }),
-            0
-          )
-        : _vm._e()
     ])
   ])
 }
@@ -54787,24 +54631,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("b", [_vm._v("Новые подарки")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("b", [_vm._v("История подарков")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("b", [_vm._v("Подарки от меня")])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("id")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Пользовтель")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Анкета")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Счет")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Состояние")])
+      ])
     ])
   }
 ]

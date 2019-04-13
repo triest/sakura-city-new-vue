@@ -164,6 +164,9 @@ Route::group(['middleware' => 'admin'], function () {
         return view('admin.usersControll');
     })->name('usersControll');
 
+    // пользователи
+    Route::get('/getuserslist', 'AdminController@getuserslist')->middleware('auth', 'admin');
+    //конец пользователей
     //получаем список интересов
 
     Route::get('/interess', 'AdminController@getinteresslist')->middleware('auth', 'admin');
