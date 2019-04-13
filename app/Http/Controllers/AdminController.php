@@ -122,4 +122,53 @@ class AdminController extends Controller
         $target = Interest::select(['id', 'name'])->where('id', $request->id)->first();
         $target->delete();
     }
+
+    public function isAdmin(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->is_admin == 1) {
+            return response()->json("true");
+        } else {
+            return response()->json("false");
+        }
+    }
+
+    public function bannedorNot(Request $request)
+    {
+        //    dump($request);
+        $validatedData = $request->validate([
+            'id' => 'required',
+        ]);
+
+        $girl = Girl::select(['id', 'name', 'user_id', 'banned'])->where('user_id', $request->id)->first();
+        //  dump($girl);
+        if ($girl->banned == 1) {
+            return response()->json("true");
+        } else {
+            return response()->json("false");
+        }
+
+    }
+
+    public function makebunned(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'id' => 'required',
+        ]);
+
+        $girl = Girl::select(['id', 'name', 'user_id', 'banned'])->where('user_id', $request->id)->first();
+
+     //   dump($girl);
+        if ($girl->banned == 1) {
+            $girl->banned = 0;
+            $girl->save();
+        } elseif ($girl->banned == 0) {
+            $girl->banned = 1;
+            $girl->save();
+        }
+        $girl->save();
+
+        return response()->json("true");
+    }
 }

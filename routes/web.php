@@ -44,8 +44,6 @@ Route::get('/anket2', function () {
 })->name('main2');
 
 
-
-
 //создание анкеты
 Route::get('/createAnketPage', 'AnketController@createGirl')->name('createGirlPage')->middleware('auth');;
 
@@ -162,6 +160,10 @@ Route::group(['middleware' => 'admin'], function () {
         return view('admin.interesControl');
     })->name('interetsControll');
 
+    Route::get('/usersControll', function () {
+        return view('admin.usersControll');
+    })->name('usersControll');
+
     //получаем список интересов
 
     Route::get('/interess', 'AdminController@getinteresslist')->middleware('auth', 'admin');
@@ -172,8 +174,13 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::post('/deleteinteress', 'AdminController@deleteinteress')->middleware('auth', 'admin');
 
+    Route::get('/bannedorNot', 'AdminController@bannedorNot')->middleware('auth', 'admin');
+    //работа с анкетами пользовател
+    Route::post('/makebunned','AdminController@makebunned')->middleware('auth', 'admin');
 
 });
+
+Route::get('/isAdmin', 'AdminController@isAdmin')->middleware('auth');
 
 Route::get('/getpresents', 'PresentController@getpresents');
 
@@ -228,7 +235,7 @@ Route::get('/sendSMS2', function () {
     $user->actice_code = $activeCode;
     $user->save();
     //2) отправляем его в смс
-     App::call('App\Http\Controllers\GirlsController@sendSMS', [$phone, $activeCode]);
+    App::call('App\Http\Controllers\GirlsController@sendSMS', [$phone, $activeCode]);
 
     return response()->json(['result' => 'ok']);
 }

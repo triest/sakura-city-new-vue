@@ -76,6 +76,9 @@ class GirlsController extends Controller
             $city = null;
         }
 
+        //интересы
+        $interes=$girl->interest()->get();
+     
         //проверяем, что просматривающий пользователь зареген.
         if ($AythUser != null) {
             //  $girl_user_id=$girl->user_id;
@@ -110,6 +113,7 @@ class GirlsController extends Controller
             'privatephotos' => $privatephoto,
             'targets' => $targets,
             'city' => $city,
+            'interes'=>$interes
         ]);
     }
 

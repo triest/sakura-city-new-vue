@@ -8,5 +8,5 @@
 
     <b><a class="btn btn-primary" href="{{route('interetsControll')}}">Управление интересами</a> </b>
 
-
+    <b><a class="btn btn-primary" href="{{route('usersControll')}}">Управление пользователями</a> </b>
 @endsection

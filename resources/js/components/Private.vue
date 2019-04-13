@@ -14,6 +14,10 @@
         <modal v-if="showModal===true" :id="id" v-on:close="showModal = false">></modal>
         <button class="btn-success" v-on:click="showPresentModal=true">Отправить подарок</button>
         <br>
+        <div v-if="isAdmin==true">
+            <button class="btn-danger" v-on:click="showAdminModal=true">Действия администратора</button>
+        </div>
+        <admin v-if="showAdminModal" :id="user_id" @clouseAdminModal='clouseAdminModal()'></admin>
         <present v-if="showPresentModal" :id="user_id" @closeRequest='close()'></present>
     </div>
 </template>
@@ -21,6 +25,8 @@
 <script>
     import modal from './ModalComponent.vue';
     import present from './PresentModal.vue'
+    import admin from './Admin.vue'
+    import Admin from "./Admin";
 
     export default {
         props: {
@@ -34,13 +40,13 @@
             },
         },
         components: {
+            Admin,
             modal, present
         },
         mounted() {
-            console.log('private');
-            console.log(this.id);
             this.getuserid();
             this.khowHasPrivateOrNot();
+            this.isAdminCheck();
 
         },
         data() {
@@ -52,6 +58,8 @@
                 showModal: false,
                 showPresentModal: false,
                 userId: '',
+                isAdmin: false,
+                showAdminModal:false
             }
         },
         methods: {
@@ -137,7 +145,6 @@
                     )
             },
             itemClicked: function () {
-                console.log("modal");
                 $("#my-modal").modal('show');
             },
             showModal() {
@@ -146,12 +153,28 @@
             closeModal() {
                 this.isModalVisible = false;
             },
+            clouseAdminModal(){
+                this.showAdminModal=false;
+            },
             showMessageWindow() {
                 this.showModal = true
             },
             close() {
-                console.log("false");
                 this.showPresentModal = false;
+            },
+            isAdminCheck() {
+                axios.get('/isAdmin', {})
+                    .then((response) => {
+                        var data_response = response.data;
+                        if (data_response == "true") {
+                            console.log("is admin");
+                            this.isAdmin = true;
+                        }
+                        else {
+                            console.log("not admin");
+                            this.isAdmin = false;
+                        }
+                    })
             }
         }
     }

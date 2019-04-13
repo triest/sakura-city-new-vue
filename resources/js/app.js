@@ -74,6 +74,8 @@ Vue.component('phonecomponent', require('./components/phoneComponent.vue').defau
 
 Vue.component('selectcity', require('./components/SelectCity.vue').default);
 
+Vue.component('userscontroll', require('./components/Userscontroll.vue').default);
+
 const index = new Vue({
     el: '#index',
     data: {

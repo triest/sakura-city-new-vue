@@ -90,7 +90,7 @@ class AnketController extends Controller
             copy($temp_file, $small);
 
             $image = new ImageResize($small);
-            $image->resizeToHeight(150);
+            $image->resizeToHeight(300);
             $image->save($small);
         }
         $girl->save();
@@ -271,7 +271,9 @@ class AnketController extends Controller
         }
 
         if ($request->has('city')) {
-            $girl->city_id = $request->city;
+            if ($request->city != "-") {
+                $girl->city_id = $request->city;
+            }
         }
 
         DB::table('girls')->where('id', $girl->id)->update(['age' => $request['age']]);
@@ -343,7 +345,7 @@ class AnketController extends Controller
             $small = base_path().'/public/images/small/'.strtolower($image_new_name);
             copy($temp_file, $small);
             $image = new ImageResize($small);
-            $image->resizeToHeight(150);
+            $image->resizeToHeight(300);
 
 
             $user->money = $user->money - $price;
@@ -678,6 +680,7 @@ class AnketController extends Controller
 
     public function seach(Request $request)
     {
+       
         $who_met = $request->who_met;
         $with_met = $request->with_met;
         $girls = Girl::query();

@@ -23,12 +23,16 @@
                     <input type="number" name="code" id="code" v-model="code" required>
                 </label>
                 <button class="btn btn-primary" v-on:click="sendCode()">Введите код</button>
+                <div v-if="codeErors.length">
+                    <b>Пожалуйста исправьте указанные ошибки:</b>
+                    <ul>
+                        <li v-for="error in errors">{{ error }}</li>
+                    </ul>
+                </div>
             </div>
             <div v-if="next">
                 <a class="btn btn-primary" href="/createAnketPage">Создать анкету</a>
             </div>
-
-
         </div>
     </div>
 </template>
