@@ -181,9 +181,9 @@ class AdminController extends Controller
             ->select('users.id ad id','users.name','girls.id as girl_id','users.money')
             ->get();*/
       //  $girl = collect(DB::select('select * from girls'))->get();
-        $results = DB::select('select * from users u left join girls gl on gl.user_id=u.id');
+        $results = DB::select('select gl.id,u.id,u.name,u.money,gl.banned from users u left join girls gl on gl.user_id=u.id');
 //        dump($results);
 
-        return response()->json($girl);
+        return response()->json($results);
     }
 }

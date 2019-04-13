@@ -4378,6 +4378,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 //'./components/delModal.vue'
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
@@ -54603,7 +54604,9 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("td", [
-              _vm._v("\n                состояние счета\n            ")
+              _vm._v(
+                "\n                " + _vm._s(item.money) + "\n            "
+              )
             ]),
             _vm._v(" "),
             _c("td", [
