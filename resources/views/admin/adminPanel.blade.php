@@ -9,4 +9,8 @@
     <b><a class="btn btn-primary" href="{{route('interetsControll')}}">Управление интересами</a> </b>
 
     <b><a class="btn btn-primary" href="{{route('usersControll')}}">Управление пользователями</a> </b>
+
+    <br><br>
+
+    <b><a class="btn btn-success" href="{{route('moneyControll')}}">Управление ценами</a> </b>
 @endsection

@@ -164,6 +164,10 @@ Route::group(['middleware' => 'admin'], function () {
         return view('admin.usersControll');
     })->name('usersControll');
 
+    Route::get('/moneyControll', function () {
+        return view('admin.moneyControll');
+    })->name('moneyControll');
+
     // пользователи
     Route::get('/getuserslist', 'AdminController@getuserslist')->middleware('auth', 'admin');
     //конец пользователей
@@ -179,7 +183,13 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('/bannedorNot', 'AdminController@bannedorNot')->middleware('auth', 'admin');
     //работа с анкетами пользовател
-    Route::post('/makebunned','AdminController@makebunned')->middleware('auth', 'admin');
+    Route::post('/makebunned', 'AdminController@makebunned')->middleware('auth', 'admin');
+
+    Route::get('/seachAdmin', 'AdminController@seachAdmin')->middleware('auth', 'admin');
+
+    Route::get('/bannedorNot', 'AdminController@bannedorNot')->middleware('auth', 'admin');
+
+
 
 });
 

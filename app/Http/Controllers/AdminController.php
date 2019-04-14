@@ -175,15 +175,56 @@ class AdminController extends Controller
 
     public function getuserslist(Request $request)
     {
-        $girl = Girl::select(['id', 'name', 'user_id', 'banned','created_at','updated_at','begin_search','end_search'])->get();
-       /* $girl=DB::table('girls')
-            ->join('users', 'users.id', '=', 'girls.user_id')
-            ->select('users.id ad id','users.name','girls.id as girl_id','users.money')
-            ->get();*/
-      //  $girl = collect(DB::select('select * from girls'))->get();
-        $results = DB::select('select gl.id,u.id,u.name,u.money,gl.banned from users u left join girls gl on gl.user_id=u.id');
+        $girl = Girl::select([
+            'id',
+            'name',
+            'user_id',
+            'banned',
+            'created_at',
+            'updated_at',
+            'begin_search',
+            'end_search',
+        ])->get();
+        /* $girl=DB::table('girls')
+             ->join('users', 'users.id', '=', 'girls.user_id')
+             ->select('users.id ad id','users.name','girls.id as girl_id','users.money')
+             ->get();*/
+        //  $girl = collect(DB::select('select * from girls'))->get();
+        $results = DB::select('select gl.id,u.name,u.money,gl.banned from users u left join girls gl on gl.user_id=u.id');
+
 //        dump($results);
 
         return response()->json($results);
+    }
+
+    public function seachAdmin(Request $request)
+    {
+        //   dump($request);
+        $baned = $request->banned;
+        //dump($baned);
+        if ($baned == 'banned') {
+            $baned = 1;
+        } elseif ($baned == 'unbanned') {
+            $baned = 0;
+        } else {
+            $baned = 3;
+        }
+    //    dump($baned);
+
+        $girls = Girl::query();
+
+        //если есть имя
+        if ($request->has('seachName')) {
+            $girls
+                ->where('name','like', '%' .$request->seachName. '%')
+                ->get();
+        }
+        if ($baned != 3) {
+         //   echo $baned;
+            $girls->where('banned', $baned)->get();
+        }
+
+
+        return response()->json($girls->get());
     }
 }

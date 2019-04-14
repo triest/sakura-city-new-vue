@@ -166,3 +166,10 @@ const indexvue = new Vue({
         showModal: false
     }
 });
+
+const moneyApp = new Vue({
+    el: '#moneyApp',
+    data: {
+        showModal: false
+    }
+});

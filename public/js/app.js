@@ -1767,93 +1767,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    id: {
-      type: '',
-      required: true
-    }
-  },
-  mounted: function mounted() {
-    this.bannedOrNot();
-  },
-  data: function data() {
-    return {
-      banned: false
-    };
-  },
-  methods: {
-    close: function close() {
-      this.$emit('clouseAdminModal');
-    },
-    bannedOrNot: function bannedOrNot() {
-      var _this = this;
-
-      console.log(this.id);
-      axios.get('/bannedorNot', {
-        params: {
-          id: this.id
-        }
-      }).then(function (response) {
-        var answer = response.data;
-
-        if (answer == "true") {
-          _this.banned = true;
-        } else {
-          _this.banned = false;
-        }
-      });
-    },
-    makeBunned: function makeBunned() {
-      var _this2 = this;
-
-      var that = this;
-      var formData = new FormData();
-      formData.append('id', this.id);
-      axios.post('/makebunned', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(function (response) {
-        if (response.data == "true") {
-          _this2.bannedOrNot();
-        }
-      }).catch(function () {});
-      this.bannedOrNot();
-    }
-  }
+  name: "Admin"
 });
 
 /***/ }),
@@ -4379,6 +4294,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //'./components/delModal.vue'
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
@@ -4388,7 +4320,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      users: ''
+      users: '',
+      seachName: '',
+      anketExist: true,
+      banned: 'unbanned'
     };
   },
   methods: {
@@ -4398,6 +4333,25 @@ __webpack_require__.r(__webpack_exports__);
       this.users = null;
       axios.get('/getuserslist').then(function (response) {
         _this.users = response.data;
+      });
+    },
+    seach: function seach() {
+      var _this2 = this;
+
+      console.log("seach");
+      console.log(this.seachName);
+      console.log(this.anketExist);
+      console.log(this.banned);
+      this.users = null;
+      axios.get('/seachAdmin', {
+        params: {
+          seachName: this.seachName,
+          anketExist: this.anketExist,
+          banned: this.banned
+        }
+      }).then(function (response) {
+        //console.log(response.data)
+        _this2.users = response.data;
       });
     }
   }
@@ -51706,101 +51660,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "transition",
-    {
-      attrs: { name: "admin" },
-      on: {
-        close: function($event) {
-          _vm.showModal = false
-        }
-      }
-    },
-    [
-      _c("div", { staticClass: "modal-mask" }, [
-        _c("div", { staticClass: "modal-wrapper" }, [
-          _c("div", { staticClass: "modal-container" }, [
-            _c(
-              "div",
-              { staticClass: "modal-header" },
-              [
-                _vm._t("header", [_c("b", [_vm._v("Действия администратора")])])
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "modal-body" },
-              [
-                _vm._t("body", [
-                  _vm.banned == true
-                    ? _c("div", [
-                        _vm._v(
-                          "\n                            Заблокирован\n                            "
-                        ),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn-danger",
-                            on: {
-                              click: function($event) {
-                                return _vm.makeBunned()
-                              }
-                            }
-                          },
-                          [_vm._v("Разблокировать")]
-                        )
-                      ])
-                    : _c("div", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn-danger",
-                            on: {
-                              click: function($event) {
-                                return _vm.makeBunned()
-                              }
-                            }
-                          },
-                          [_vm._v("Заблокировать")]
-                        )
-                      ])
-                ])
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "modal-footer" },
-              [
-                _vm._t("footer", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "modal-default-button",
-                      on: {
-                        click: function($event) {
-                          return _vm.close()
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                            Закрыть\n                        "
-                      )
-                    ]
-                  )
-                ])
-              ],
-              2
-            )
-          ])
-        ])
-      ])
-    ]
-  )
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54580,6 +54440,139 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm._v("\n    Фильтр:\n    "),
+    _c("label", [_vm._v("Имя")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.seachName,
+          expression: "seachName"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.seachName },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.seachName = $event.target.value
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("Есть анкета")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.anketExist,
+          expression: "anketExist"
+        }
+      ],
+      attrs: { type: "checkbox" },
+      domProps: {
+        checked: Array.isArray(_vm.anketExist)
+          ? _vm._i(_vm.anketExist, null) > -1
+          : _vm.anketExist
+      },
+      on: {
+        change: function($event) {
+          var $$a = _vm.anketExist,
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false
+          if (Array.isArray($$a)) {
+            var $$v = null,
+              $$i = _vm._i($$a, $$v)
+            if ($$el.checked) {
+              $$i < 0 && (_vm.anketExist = $$a.concat([$$v]))
+            } else {
+              $$i > -1 &&
+                (_vm.anketExist = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            }
+          } else {
+            _vm.anketExist = $$c
+          }
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("label", [_vm._v("Статус:")]),
+    _c("br"),
+    _vm._v(" "),
+    _c("label", { attrs: { for: "unbanned" } }, [_vm._v("Разблокирован")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.banned,
+          expression: "banned"
+        }
+      ],
+      attrs: { type: "radio", id: "unbanned", value: "unbanned", checked: "" },
+      domProps: { checked: _vm._q(_vm.banned, "unbanned") },
+      on: {
+        change: function($event) {
+          _vm.banned = "unbanned"
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("label", { attrs: { for: "banned" } }, [_vm._v("Заблокирован")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.banned,
+          expression: "banned"
+        }
+      ],
+      attrs: { type: "radio", id: "banned", value: "banned" },
+      domProps: { checked: _vm._q(_vm.banned, "banned") },
+      on: {
+        change: function($event) {
+          _vm.banned = "banned"
+        }
+      }
+    }),
+    _c("br"),
+    _vm._v(" "),
+    _c("label", { attrs: { for: "never_mind" } }, [_vm._v("Неважно")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.banned,
+          expression: "banned"
+        }
+      ],
+      attrs: { type: "radio", id: "never_mind", value: "never_mind" },
+      domProps: { checked: _vm._q(_vm.banned, "never_mind") },
+      on: {
+        change: function($event) {
+          _vm.banned = "never_mind"
+        }
+      }
+    }),
+    _c("br"),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.seach } }, [_vm._v("Найти")]),
+    _vm._v(" "),
     _c("table", { staticClass: "table table-condensed" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -54596,11 +54589,19 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("td", [
-              _c(
-                "a",
-                { attrs: { href: "http://sakura-city.info/anket/" + item.id } },
-                [_vm._v(" Анкета")]
-              )
+              item.id != null
+                ? _c("div", [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "http://sakura-city.info/anket/" + item.id
+                        }
+                      },
+                      [_vm._v(" Анкета")]
+                    )
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("td", [
@@ -67662,6 +67663,12 @@ var selectCityApp = new Vue({
 });
 var indexvue = new Vue({
   el: '#indexvue',
+  data: {
+    showModal: false
+  }
+});
+var moneyApp = new Vue({
+  el: '#moneyApp',
   data: {
     showModal: false
   }
