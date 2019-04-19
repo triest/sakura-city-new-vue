@@ -1767,6 +1767,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Admin"
 });
@@ -3162,6 +3164,138 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.$emit('close');
       this.close();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Moneycontroll.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Moneycontroll.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    console.log("moneyControll");
+    this.getPrices();
+  },
+  data: function data() {
+    return {
+      to_first_place: "",
+      to_top: "",
+      change_main_image: "",
+      seach: ""
+    };
+  },
+  comments: {},
+  methods: {
+    getPrices: function getPrices() {
+      var _this = this;
+
+      axios.get('/getpricestotop').then(function (response) {
+        //console.log(response.data);
+        _this.to_top = response.data[0];
+      });
+      axios.get('/getpricetoseach').then(function (response) {
+        //console.log(response.data)
+        _this.seach = response.data[0];
+      });
+      axios.get('/getpricetofirstplace').then(function (response) {
+        _this.to_first_place = response.data[0];
+      });
+      axios.get('/getpricechangemainimage').then(function (response) {
+        _this.change_main_image = response.data[0];
+      });
+    },
+    ChangePriceToFirstPlase: function ChangePriceToFirstPlase() {
+      var formData = new FormData();
+      formData.append('pricename', 'to_first_place');
+      formData.append('price', this.pricefirstplays);
+      axios.post('/changePrice', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function () {
+        console.log('SUCCESS!!');
+        getmainImage();
+      }).catch(function () {
+        getmainImage();
+      });
+    },
+    ChangePriceToTop: function ChangePriceToTop() {
+      var formData = new FormData();
+      formData.append('pricename', 'to_top');
+      formData.append('price', this.to_top);
+      axios.post('/changePrice', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function () {
+        console.log('SUCCESS!!');
+        getmainImage();
+      }).catch(function () {
+        getmainImage();
+      });
+    },
+    ChangePriceToChange: function ChangePriceToChange() {
+      var formData = new FormData();
+      formData.append('pricename', 'change_main_image');
+      formData.append('price', this.change_main_image);
+      axios.post('/changePrice', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function () {
+        console.log('SUCCESS!!');
+        getmainImage();
+      }).catch(function () {
+        getmainImage();
+      });
+    },
+    ChangePriceToSeach: function ChangePriceToSeach() {
+      var formData = new FormData();
+      formData.append('pricename', 'seach');
+      formData.append('price', this.seach);
+      axios.post('/changePrice', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function () {
+        console.log('SUCCESS!!');
+        getmainImage();
+      }).catch(function () {
+        getmainImage();
+      });
     }
   }
 });
@@ -4661,7 +4795,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/getMyAnketData').then(function (response) {
         _this.anket = response.data;
-        console.log(_this.anket);
       });
     },
     getTopPhotos: function getTopPhotos() {
@@ -53284,6 +53417,163 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Moneycontroll.vue?vue&type=template&id=2bdf7394&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Moneycontroll.vue?vue&type=template&id=2bdf7394&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("b", [_vm._v("Цен за перенос анкеты на первое место: ")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.to_first_place,
+          expression: "to_first_place"
+        }
+      ],
+      attrs: {
+        name: "pricefirstplays",
+        id: "pricefirstplays",
+        type: "number",
+        min: "0"
+      },
+      domProps: { value: _vm.to_first_place },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.to_first_place = $event.target.value
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.ChangePriceToFirstPlase } }, [
+      _vm._v("Сохранить")
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("b", [_vm._v("Цен за перенос поещение анкеты в шапку сайта: ")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.to_top,
+          expression: "to_top"
+        }
+      ],
+      attrs: { name: "priceToTop", id: "priceToTop", type: "number", min: "0" },
+      domProps: { value: _vm.to_top },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.to_top = $event.target.value
+        }
+      }
+    }),
+    _c("br"),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.ChangePriceToTop } }, [
+      _vm._v("Сохранить")
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("b", [_vm._v("Цен за смену аватара: ")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.change_main_image,
+          expression: "change_main_image"
+        }
+      ],
+      attrs: {
+        name: "priceToChange",
+        id: "priceToChange",
+        type: "number",
+        min: "0"
+      },
+      domProps: { value: _vm.change_main_image },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.change_main_image = $event.target.value
+        }
+      }
+    }),
+    _c("br"),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.ChangePriceToChange } }, [
+      _vm._v("Сохранить")
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("b", [_vm._v("Цен за помещение анкеты в поиск: ")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.seach,
+          expression: "seach"
+        }
+      ],
+      attrs: {
+        name: "priceToSeach",
+        id: "priceToSeach",
+        type: "number",
+        min: "0"
+      },
+      domProps: { value: _vm.seach },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.seach = $event.target.value
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.ChangePriceToSeach } }, [
+      _vm._v("Сохранить")
+    ]),
+    _vm._v(" "),
+    _c("br")
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/MyPresents.vue?vue&type=template&id=b17780e2&scoped=true&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/MyPresents.vue?vue&type=template&id=b17780e2&scoped=true& ***!
@@ -67589,6 +67879,7 @@ Vue.component('edit', __webpack_require__(/*! ./components/Edit.vue */ "./resour
 Vue.component('phonecomponent', __webpack_require__(/*! ./components/phoneComponent.vue */ "./resources/js/components/phoneComponent.vue").default);
 Vue.component('selectcity', __webpack_require__(/*! ./components/SelectCity.vue */ "./resources/js/components/SelectCity.vue").default);
 Vue.component('userscontroll', __webpack_require__(/*! ./components/Userscontroll.vue */ "./resources/js/components/Userscontroll.vue").default);
+Vue.component('moneycontroll', __webpack_require__(/*! ./components/Moneycontroll.vue */ "./resources/js/components/Moneycontroll.vue").default);
 var index = new Vue({
   el: '#index',
   data: {
@@ -69141,6 +69432,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalComponent_vue_vue_type_template_id_4b2d100a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalComponent_vue_vue_type_template_id_4b2d100a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Moneycontroll.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/Moneycontroll.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Moneycontroll_vue_vue_type_template_id_2bdf7394_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Moneycontroll.vue?vue&type=template&id=2bdf7394&scoped=true& */ "./resources/js/components/Moneycontroll.vue?vue&type=template&id=2bdf7394&scoped=true&");
+/* harmony import */ var _Moneycontroll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Moneycontroll.vue?vue&type=script&lang=js& */ "./resources/js/components/Moneycontroll.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Moneycontroll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Moneycontroll_vue_vue_type_template_id_2bdf7394_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Moneycontroll_vue_vue_type_template_id_2bdf7394_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "2bdf7394",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Moneycontroll.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Moneycontroll.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Moneycontroll.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Moneycontroll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Moneycontroll.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Moneycontroll.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Moneycontroll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Moneycontroll.vue?vue&type=template&id=2bdf7394&scoped=true&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/Moneycontroll.vue?vue&type=template&id=2bdf7394&scoped=true& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Moneycontroll_vue_vue_type_template_id_2bdf7394_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Moneycontroll.vue?vue&type=template&id=2bdf7394&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Moneycontroll.vue?vue&type=template&id=2bdf7394&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Moneycontroll_vue_vue_type_template_id_2bdf7394_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Moneycontroll_vue_vue_type_template_id_2bdf7394_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

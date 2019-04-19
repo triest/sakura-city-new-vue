@@ -9,6 +9,10 @@
     <img width="200" src="<?php echo asset("/images/upload/$girl->main_image")?>">
     {{$girl->status}}
     @if (Auth::guest())
+        <br>
+        <b><a href="{{ url('/login') }}">Войдите</a></b> или
+        <b><a href="{{ url('/join') }}">зарегистрируйтесь</a></b>
+        что-бы писать сообщения, смотреть скрытую информацию и скрытые фотографии.
     @else
         @if($girl->user_id!=auth()->user()->id)
             <br>
@@ -118,5 +122,13 @@
     <br>
     <a class="btn btn-primary" href="{{route('main')}}" role="link" onclick=" relocate_home()">К списку анкет</a>
 
+
+    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script> -->
+
+
+
+    <script>
+        baguetteBox.run('.tz-gallery');
+    </script>
 
 @endsection

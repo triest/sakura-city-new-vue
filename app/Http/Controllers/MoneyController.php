@@ -80,15 +80,7 @@ class MoneyController extends Controller
 
     public function getpricestotop(Request $request)
     {
-
-        /*  $toTop = DB::select('select price from prices where price_name = :price_name',
-              ['price_name' => 'to_top'])->first();*/
-        //   $updatemainimage = DB::select('select price from prices where price_name = :price_name',
-        //     ['price_name' => 'update_main_image']);
-        // $toFirstPlase = DB::select('select price from prices where price_name = :price_name',
-        //   ['price_name' => 'to_first_plase']);
         $toTop = DB::table('prices')->where('price_name', 'to_top')->first();
-
 
         return response()->json([
             $toTop->price
@@ -98,18 +90,10 @@ class MoneyController extends Controller
 
     public function getpricetofirstplase(Request $request)
     {
-
-        // $toTop = DB::select('select price from prices where price_name = :price_name', ['price_name' => 'to_first_place']);
-        // $updatemainimage = DB::select('select price from prices where price_name = :price_name',
-        //   ['price_name' => 'update_main_image']);
-        /*   $toFirstPlase = DB::select('select price from prices where price_name = :price_name',
-               ['price_name' => 'to_first_plase']);*/
         $toFirstPlase = DB::table('prices')->where('price_name', 'to_first_place')->first();
 
-        // dump($toFirstPlase);
         return response()->json([
-            $toFirstPlase->price
-            //  ["tofirstplace" => $toFirstPlase],
+            $toFirstPlase->price,
         ]);
     }
 
@@ -123,6 +107,15 @@ class MoneyController extends Controller
         ]);
     }
 
+    public function getpricechangemainimage()
+    {
+        $toFirstPlase = DB::table('prices')->where('price_name', 'change_main_image')->first();
+
+        return response()->json([
+            $toFirstPlase->price,
+
+        ]);
+    }
 
     public function toFirstPlase(Request $request)
     {
@@ -251,6 +244,11 @@ class MoneyController extends Controller
         DB::table('users')->where('id', $user->id)->update(['money' => $new_money]);
 
         return response('seach');
+    }
+
+    public function changePrice(Request $request)
+    {
+        dump($request);
     }
 
 

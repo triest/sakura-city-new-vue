@@ -124,8 +124,9 @@
 <!--<script src="http://bootstrap-3.ru/examples/offcanvas/offcanvas.js"></script>-->
 <script src="{{ asset('js/offcanvas.js') }}" defer></script>
 <!-- скрипт для галлереи -->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
 <script src="{{ asset('js/baguetteBox.min.js') }}" ></script>
+<script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
 <script>
     baguetteBox.run('.tz-gallery');
 

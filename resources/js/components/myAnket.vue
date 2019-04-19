@@ -81,7 +81,7 @@
                     axios.get('/getMyAnketData')
                         .then((response) => {
                             this.anket = response.data;
-                            console.log(this.anket)
+                          
                         })
                 },
                 getTopPhotos() {

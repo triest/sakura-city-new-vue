@@ -76,6 +76,8 @@ Vue.component('selectcity', require('./components/SelectCity.vue').default);
 
 Vue.component('userscontroll', require('./components/Userscontroll.vue').default);
 
+Vue.component('moneycontroll', require('./components/Moneycontroll.vue').default);
+
 const index = new Vue({
     el: '#index',
     data: {

@@ -134,6 +134,8 @@ Route::get('/getpricetoseach', 'MoneyController@getpricetoseach')->middleware('a
 
 Route::get('/getpricetofirstplace', 'MoneyController@getpricetofirstplase')->middleware('auth');
 
+Route::get('/getpricechangemainimage', 'MoneyController@getpricechangemainimage')->middleware('auth');
+
 Route::get('/tofirstplaсe', 'MoneyController@toFirstPlase')->middleware('auth');
 
 Route::get('/totop', 'MoneyController@totop')->middleware('auth');
@@ -168,6 +170,7 @@ Route::group(['middleware' => 'admin'], function () {
         return view('admin.moneyControll');
     })->name('moneyControll');
 
+
     // пользователи
     Route::get('/getuserslist', 'AdminController@getuserslist')->middleware('auth', 'admin');
     //конец пользователей
@@ -189,8 +192,12 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('/bannedorNot', 'AdminController@bannedorNot')->middleware('auth', 'admin');
 
+    Route::get('/seachAdmin', 'AdminController@seachAdmin')->middleware('auth', 'admin');
 
+    Route::get('/getPrices', 'MoneyController@getPrices')->middleware('auth', 'admin');
 
+    //changeprice
+    Route::post('/changePrice', 'MoneyController@changePrice')->middleware('auth', 'admin');
 });
 
 Route::get('/isAdmin', 'AdminController@isAdmin')->middleware('auth');
@@ -295,9 +302,9 @@ Route::post('/deletetargret', 'AdminController@deletetargret')->middleware('auth
 //поиск города
 Route::get('/findcity/{name}', 'AnketController@findcity')->middleware('auth');
 
-Route::get('/getargetslist', 'AdminController@gettargetslist')->middleware('auth');
+Route::get('/getargetslist', 'AdminController@gettargetslist');
 
-Route::get('/getinterestslist', 'AdminController@getinteresslist')->middleware('auth');
+Route::get('/getinterestslist', 'AdminController@getinteresslist');
 
 Route::get('/seach', 'AnketController@seach');
 

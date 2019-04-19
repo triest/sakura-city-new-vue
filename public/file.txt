@@ -26,3 +26,5 @@ data2
 oprration_id:1,datetime: 01-01-2001-03-05,p2p-incoming&1234567&300.00&643&2011-07-01T09:00:00.000+04:00&41001XXXXXXXX&false&01234567890ABCDEF01234567890&YM.label.12345,,label:sakura-cuty@yandex.ru,2019-04-12 09:51:31
 data2
 oprration_id:5,datetime: 2018-08-06T08:00:52Z,q2VBTkW+vsXFrIOApk1/eaFB,,label:triest21@gmail.com,2019-04-12 09:51:45
+data2
+oprration_id:,datetime: ,,,label:,2019-04-17 09:45:32
