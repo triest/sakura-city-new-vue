@@ -54,7 +54,13 @@ class User extends Authenticatable
 
     public function finfUserById($id)
     {
-
         dump($id);
     }
+
+
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->id);
+    }
+
 }

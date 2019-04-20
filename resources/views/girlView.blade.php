@@ -28,7 +28,13 @@
         @endif
     @endif
 
-
+    <div class="card-body" id="likesApp">
+        @if (Auth::guest())
+            <likes></likes>
+        @else
+            <likes :user="{{auth()->user()}}"></likes>
+        @endif
+    </div>
 
     <h4 class="card-title">
         {{$girl->name}}
@@ -132,3 +138,10 @@
     </script>
 
 @endsection
+<script>
+    import Likes from "./likes";
+
+    export default {
+        components: {Likes}
+    }
+</script>

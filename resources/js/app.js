@@ -78,6 +78,15 @@ Vue.component('userscontroll', require('./components/Userscontroll.vue').default
 
 Vue.component('moneycontroll', require('./components/Moneycontroll.vue').default);
 
+Vue.component('likes', require('./components/likes.vue').default);
+
+const likesApp = new Vue({
+    el: '#likesApp',
+    data: {
+        showModal: false
+    }
+});
+
 const index = new Vue({
     el: '#index',
     data: {
