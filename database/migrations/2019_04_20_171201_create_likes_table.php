@@ -15,7 +15,7 @@ class CreateLikesTable extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('girl_id')->unsigned()->index();
+            $table->integer('who_id')->unsigned()->index();
             $table->integer('target_id')->unsigned()->index();
         });
     }

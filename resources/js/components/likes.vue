@@ -1,14 +1,17 @@
 <template>
     <div>
-        <div v-if="auth==true">
-            <p>Auch</p>
-            <button v-on:click="newLike()">
-                <img height="20" src="/images/heart.png">
-            </button>
+        <img height="20" src="/images/heart.png"> {{likesNunber}}
+        <div v-if="auth">
+            <div v-if="showSendLike">
+                <button v-on:click="newLike()">
+                    <img height="20" src="/images/heart.png" alt="Постивить отметку">
+                </button>
+            </div>
+            <div v-else>
+                <p>Вы уже поставили отметку! </p>
+            </div>
         </div>
-        <div v-else>
-            <p>Not auth</p>
-        </div>
+
     </div>
 </template>
 
@@ -18,15 +21,28 @@
             user: {
                 type: Object,
                 required: false
+            },
+            girlid: {
+                type: Number,
+                required: true
             }
         },
         mounted() {
             console.log("likes");
             this.authOrNot();
+            console.log("girl id: " + this.girlid)
+            this.getLikesNumber();
+            if (this.user != null) {
+                this.checkLike();
+            }
         },
         data() {
             return {
-                auth: false
+                auth: false,
+                likesNunber: 0,
+                likeSended: false,
+                responseSender: '',
+                showSendLike: false
             }
         },
         methods: {
@@ -41,11 +57,58 @@
                 }
             },
             newLike() {
-                console.log("new like")
-            }
+                console.log("new like");
+                console.log(this.girlid);
+                axios.get('/newlike', {
+                    params: {
+                        girl_id: this.girlid
+                    }
+                })
+                    .then((response) => {
+                        if (!response.data) {
 
+                        }
+                        else {
+                            this.isOpen = false;
+
+                        }
+                    });
+            },
+            getLikesNumber() {
+                axios.get('/getLikesNumber', {
+                    params: {
+                        girl_id: this.girlid
+                    }
+                })
+                    .then((response) => {
+
+                        // this.likesNunber = response.data;
+                        //    console.log(response.data)
+                        //console.log("likes number "+response.data['likeNumber']);
+                        this.likesNunber = response.data['likeNumber']
+                    });
+                console.log("likes number " + this.likesNunber)
+            },
+            checkLike() { //проверяет, отправлен ли like
+                axios.get('/likeSended', {
+                    params: {
+                        girl_id: this.girlid
+                    }
+                })
+                    .then((response) => {
+                        //console.log(response.data())
+                        this.responseSender = response.data();
+                        if (this.responseSender == "not") {
+                            this.showSendLike = true;
+                        } else {
+                            this.showSendLike = false;
+                        }
+                    });
+
+            }
         }
     }
+
 </script>
 
 <style scoped>

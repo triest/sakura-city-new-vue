@@ -312,3 +312,10 @@ Route::get('/inseach', 'AnketController@inseach');
 
 
 Route::get('/eventtest', 'PresentController@eventtest');
+
+
+//лайки
+Route::get('/newlike', 'LikeController@newLike');
+Route::get('/getLikesNumber', 'LikeController@getLikesNumber');
+//likeSendedl
+Route::get('/likeSended', 'LikeController@likeSended');

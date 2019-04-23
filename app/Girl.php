@@ -27,13 +27,18 @@ class Girl extends Model
     public function target()
     {
         //return $this->hasOne('App\Target');
-        return $this->belongsToMany('App\Target','girl_target','girl_id');
+        return $this->belongsToMany('App\Target', 'girl_target', 'girl_id');
     }
 
     public function interest()
     {
         //return $this->hasOne('App\Target');
-        return $this->belongsToMany('App\Interest','girl_interess');
+        return $this->belongsToMany('App\Interest', 'girl_interess');
+    }
+
+    public function like()
+    {
+        return $this->hasOne('App\Girl');
     }
 }
 

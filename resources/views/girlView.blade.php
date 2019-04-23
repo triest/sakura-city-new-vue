@@ -10,9 +10,7 @@
     {{$girl->status}}
     @if (Auth::guest())
         <br>
-        <b><a href="{{ url('/login') }}">Войдите</a></b> или
-        <b><a href="{{ url('/join') }}">зарегистрируйтесь</a></b>
-        что-бы писать сообщения, смотреть скрытую информацию и скрытые фотографии.
+
     @else
         @if($girl->user_id!=auth()->user()->id)
             <br>
@@ -31,8 +29,10 @@
     <div class="card-body" id="likesApp">
         @if (Auth::guest())
             <likes></likes>
+            Войдите или зарегистрируйтесь
         @else
-            <likes :user="{{auth()->user()}}"></likes>
+            <likes :user="{{auth()->user()}}" :girlid="{{$girl->id}}"></likes>
+
         @endif
     </div>
 
