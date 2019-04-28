@@ -19,10 +19,22 @@
         <div class="control-group2" ng-class="{true: 'error'}[submitted && form.pas.$invalid]">
             <div class="form-group">
                 <label for="phone">Ваш телефон:</label>
-                <!--   <input type="tel" class="form-control" id="phone" name="phone" pattern="^\(\d{3}\)\d{3}-\d{2}-\d{2}$" required></input>-->
-
+                <br>
+                <input type="tel" class="form-control" id="phone" name="phone" pattern="^\(\d{3}\)\d{3}-\d{2}-\d{2}$"
+                       value="{{$phone}}" required disabled></input>
             </div>
         </div>
+
+        Видимость телефона:
+        <br>
+        @foreach($phone_setting as $item)
+            <input type="radio" id="phone_settings"
+                   name="phone_settings" value="{{$item->id}}" checked>
+            <label for="phone_settings">{{$item->name}}</label>
+            <br>
+        @endforeach
+
+        <br>
         <b> Пол:</b> <br>
         <input type="radio" id="contactChoice1"
                name="sex" value="famele" checked>

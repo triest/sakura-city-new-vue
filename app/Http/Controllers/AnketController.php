@@ -37,10 +37,19 @@ class AnketController extends Controller
         if ($user->phone == null or $user->phone_confirmed == 0) {
             return view("custom.resetSMS2");
         }
+        // dump($user);
 
+        $phone_setting = collect(DB::select('select * from phone_settings'));
+        $phone = $user->phone;
+
+        // dump($phone);
         return view('createAnket')
             ->with(
-                ['username' => $user->name, 'tagrets' => $targets, 'interests' => $interests]);
+                ['username' => $user->name,
+                    'tagrets' => $targets,
+                    'interests' => $interests,
+                    'phone' => $phone,
+                    'phone_setting'=>$phone_setting]);
     }
 
     function store(Request $request)
@@ -64,6 +73,7 @@ class AnketController extends Controller
         }
 
         $girl = new Girl();
+       // $girl->id=$user->id;
         $girl->name = $request->name;
         $girl->sex = $request->sex;
         $girl->meet = $request->met;
@@ -73,6 +83,7 @@ class AnketController extends Controller
         $girl->description = $request->description;
         $girl->private = $request->private;
         $girl->user_id = $user->id;
+        $girl->phone_settings=$request->phone_settings;
         $girl->save();
 
 
@@ -98,6 +109,7 @@ class AnketController extends Controller
         if (Auth::guest()) {
             return redirect('/login');
         }
+        dump($request);
 
         if (Input::hasFile('images')) {
             $count = 0;
@@ -113,15 +125,18 @@ class AnketController extends Controller
             }
         }
 
-        foreach ($request->privateimages as $key) {
-            $image_extension = $request->file('file')->getClientOriginalExtension();
-            $image_new_name = md5(microtime(true));
-            $key->move(public_path().'/images/upload/', strtolower($image_new_name.'.'.$image_extension));
-            $id = $girl['id'];
-            $photo = new Privatephoto();
-            $photo['photo_name'] = $image_new_name.'.'.$image_extension;
-            $photo['girl_id'] = $id;
-            $photo->save();
+
+        if (Input::hasFile('privateimages')) {
+            foreach ($request->privateimages as $key) {
+                $image_extension = $request->file('file')->getClientOriginalExtension();
+                $image_new_name = md5(microtime(true));
+                $key->move(public_path().'/images/upload/', strtolower($image_new_name.'.'.$image_extension));
+                $id = $girl['id'];
+                $photo = new Privatephoto();
+                $photo['photo_name'] = $image_new_name.'.'.$image_extension;
+                $photo['girl_id'] = $id;
+                $photo->save();
+            }
         }
 
         //цели
@@ -137,11 +152,12 @@ class AnketController extends Controller
         if ($request->has('city')) {
             $girl->city_id = $request->city;
         }
-
-        foreach ($request->interest as $item) {
-            $target = Interest::select(['id', 'name'])->where('id', $item)->first();
-            if ($target != null) {
-                $girl->interest()->attach($target);
+        if ($request->has('interest')) {
+            foreach ($request->interest as $item) {
+                $target = Interest::select(['id', 'name'])->where('id', $item)->first();
+                if ($target != null) {
+                    $girl->interest()->attach($target);
+                }
             }
         }
 
@@ -680,7 +696,7 @@ class AnketController extends Controller
 
     public function seach(Request $request)
     {
-       
+
         $who_met = $request->who_met;
         $with_met = $request->with_met;
         $girls = Girl::query();

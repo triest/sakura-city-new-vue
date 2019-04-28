@@ -26,6 +26,8 @@
         @endif
     @endif
 
+
+
     <div class="card-body" id="likesApp">
         @if (Auth::guest())
             <likes></likes>
@@ -50,6 +52,16 @@
     @endif
     <br>
 
+    Телефон
+
+    @if($phone_settings==1)
+        {{$girl->phone}}
+    @elseif($phone_settings==2)
+        <div id="phoneRequwestApp">
+            <phonerequwest :id="{{$girl->id}}" :user_id="{{$girl->user_id}}"></phonerequwest>
+        </div>
+
+    @endif
     <p class="card-text"><b>Рост : {{$girl->height}}</b>
     <p class="card-text"><b>Вес : {{$girl->weight}}</b>
     <p class="card-text"><b>Возраст : {{$girl->age}}</b>
@@ -142,6 +154,9 @@
     import Likes from "./likes";
 
     export default {
-        components: {Likes}
+        components: {
+
+            Likes
+        }
     }
 </script>

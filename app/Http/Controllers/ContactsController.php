@@ -11,6 +11,7 @@ use App\Dialog;
 use Illuminate\Http\Request;
 use App\User;
 use App\Message;
+use App\Phonerequwest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Nexmo\Response;
@@ -380,5 +381,123 @@ class ContactsController extends Controller
         // return  response()->json($id);
     }
 
+    public function getsendregphoneornot(Request $request)
+    {
+        //phonerequwest ссылаеться на girl
+        $id = $request->input('id');
+        $auth = Auth::user();
+        // dump($auth);
+        $girlAuth = Girl::select(['id', 'name'])->where('user_id', $auth->id)->first();
+        //  dump($girlAuth);
+        $targetGirl = Girl::select(['id', 'name'])->where('id', $id)->first();
+        // dump($targetGirl);
+
+
+        $myrequest = Phonerequwest::select(
+            'who_id',
+            'target_id', 'status', 'readed')->where('who_id', $girlAuth->id)
+            ->where('target_id', $targetGirl->id)->first();
+        if ($myrequest == null) {
+            return response()->json('not');
+        } elseif ($myrequest->readed == 0) {
+            return response()->json(['notreaded']);
+        } elseif ($myrequest->status == 'notreaded') {
+            return response()->json(['readed' => 1]);
+        } elseif ($myrequest->readed == 1) {
+            return response()->json(['status' => $myrequest->status]);
+        }
+
+
+    }
+
+    public function sendregphone(Request $request)
+    {
+
+        $id = $request->input('id');
+        $girl = Girl::select(['id', 'user_id'])->where('id', $id)->first();
+
+        $id = $girl->user_id;
+
+
+        $AythUser = Auth::user();
+
+        // dump($AythUser);
+        $girl2 = Girl::select(['id', 'name', 'main_image'])->where('user_id', $AythUser['id'])->first();
+        $myrequest = new PhoneRequwest();
+
+        //  dump($girl2);
+        $myrequest->who_id = $girl2->id;
+
+        $myrequest->target_id = $girl->id;
+        $myrequest->who_name = $girl2->name;
+        $myrequest->image = $girl2->main_image;
+        $myrequest->save();
+
+        //broadcast(new newApplication($myrequest));
+
+        return response()->json('ok');
+    }
+
+    //список заявок на открытие телефон
+    public function getrequwesttoopenphone(Request $request)
+    {
+        $AythUser = Auth::user();
+        //  dump($AythUser);
+        $girl = Girl::select(['id', 'user_id'])->where('user_id', $AythUser->id)->first();
+         if ($girl == null) {
+             return \response()->json('error');
+         }
+     
+
+        $req = Phonerequwest::select()->where('target_id', $girl->id)->where('readed', 0)->get();
+
+        // dump($req);
+
+        return response()->json($req);
+    }
+
+
+    //доступ к телефону черкез user_id
+    public function getnewphonaaplication(Request $request)
+    {
+        $user = Auth();
+        $user = Auth::user();
+        $application = Phonerequwest::select('id', 'who_id', 'target_id', 'readed', 'status', 'who_name', 'image',
+            'created_at', 'updated_at')
+            ->where('id', $request->id)->first();
+        if ($application == null) {
+            return null;
+        }
+        //иныуке
+
+        //girl-open_phone_girl ссылаетьс нв girl_id, а из запроса приходит user_id
+        $girl = Girl::select('id', 'user_id')->where('user_id', $user->getAuthIdentifier())->first();
+        $target = Girl::select('id', 'user_id')->where('user_id', $request->id)->first();
+        if ($girl == null) {
+            return response()->json('fail');
+        } else {
+
+            $application->readed = 1;
+            $application->status = 'accepted';
+            $application->save();
+            DB::table('girl_open_phone_girl')->insert(['target_id' => $girl->id, 'girl_id' => $target->id]);
+
+            return response()->json('ok');
+        }
+    }
+
+    public function denidephoneaplication(Request $request)
+    {
+        $application = Phonerequwest::select('id', 'who_id', 'target_id', 'readed', 'status', 'who_name', 'image',
+            'created_at', 'updated_at')
+            ->where('id', $request->id)->first();
+        if ($application == null) {
+            return null;
+        }
+        $application->readed = 1;
+        $application->status = 'rejected';
+        $application->save();
+
+    }
 
 }

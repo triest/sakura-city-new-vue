@@ -88,7 +88,7 @@ class LikeController extends Controller
 
     public function likeSended(Request $request)
     {
-       // dump($request);
+        // dump($request);
         $targetGirl = Girl::select([
             'name',
             'id',
@@ -117,7 +117,11 @@ class LikeController extends Controller
         if ($whoGirl == null) {
             return response()->json(['not']);
         }
-        $like = Like::select(['id'])->where('who_id', $user->id)->where('target_id', $targetGirl->id)->first();
+       // dump($request);
+       // dump($whoGirl);
+       // dump($targetGirl);
+
+        $like = Like::select(['id'])->where('who_id', $whoGirl->id)->where('target_id', $targetGirl->id)->first();
         if ($like != null) {
             return response()->json('alredy');
         } else {

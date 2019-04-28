@@ -2,13 +2,13 @@
     <div>
         <img height="20" src="/images/heart.png"> {{likesNunber}}
         <div v-if="auth">
-            <div v-if="showSendLike">
+            <div v-if="showSendLike=='false'">
+                <p>Вам нравиться эта анкета</p>
+            </div>
+            <div v-else>
                 <button v-on:click="newLike()">
                     <img height="20" src="/images/heart.png" alt="Постивить отметку">
                 </button>
-            </div>
-            <div v-else>
-                <p>Вы уже поставили отметку! </p>
             </div>
         </div>
 
@@ -73,6 +73,8 @@
 
                         }
                     });
+                this.checkLike();
+                this.getLikesNumber();
             },
             getLikesNumber() {
                 axios.get('/getLikesNumber', {
@@ -97,11 +99,13 @@
                 })
                     .then((response) => {
                         //console.log(response.data())
-                        this.responseSender = response.data();
-                        if (this.responseSender == "not") {
-                            this.showSendLike = true;
+                        this.responseSender = response.data;
+                        if (this.responseSender == "alredy") {
+                            console.log("alredy");
+                            this.showSendLike = "false";
+
                         } else {
-                            this.showSendLike = false;
+                            this.showSendLike = "true";
                         }
                     });
 

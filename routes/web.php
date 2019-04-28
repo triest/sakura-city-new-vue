@@ -24,7 +24,6 @@ Route::get('/messages', 'HomeController@index')->name('home');
 
 Route::get('/messages2', 'HomeController@index2')->name('home2');
 
-
 Route::get('/contacts', 'ContactsController@get');
 Route::get('/contacts2', 'ContactsController@get2');
 Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
@@ -67,6 +66,14 @@ Route::get('/getmyapplication', 'ContactsController@myApplication')->middleware(
 Route::get('/whohaveaccesstomyanket', 'ContactsController@whoHavaAccessToMyAnket')->middleware('auth');
 //закрыть доступ
 Route::get('/clouseaccess', 'ContactsController@clouseaccess')->middleware('auth');
+//заявки на открытие телефон
+Route::get('/getrequwesttoopenphone', 'ContactsController@getrequwesttoopenphone')->middleware('auth');
+
+//предоставление доступа к телефону
+Route::get('/getnewphonaaplication', 'ContactsController@getnewphonaaplication')->middleware('auth');
+
+
+
 
 //отклонить доступ
 Route::get('/denideaccess', 'ContactsController@denideAccess')->middleware('auth');
@@ -83,6 +90,14 @@ Route::get('/getsendregornot', 'ContactsController@sendornot')->middleware('auth
 
 //отправляем запрос:
 Route::get('/sendreg', 'ContactsController@sendreg')->middleware('auth');
+
+//отправлен ли запрос на открытие телефона
+Route::get('/getsendregphoneornot', 'ContactsController@getsendregphoneornot')->middleware('auth');
+
+Route::get('/denidephoneaplication', 'ContactsController@denidephoneaplication')->middleware('auth');
+
+//
+Route::get('/sendregphone', 'ContactsController@sendregphone')->middleware('auth');
 
 //редактирование галлереи
 Route::get('/editimages', function () {
@@ -170,6 +185,9 @@ Route::group(['middleware' => 'admin'], function () {
         return view('admin.moneyControll');
     })->name('moneyControll');
 
+    Route::get('/phoneSettings', function () {
+        return view('admin.phoneSettings');
+    })->name('phoneSettings');
 
     // пользователи
     Route::get('/getuserslist', 'AdminController@getuserslist')->middleware('auth', 'admin');
@@ -310,7 +328,6 @@ Route::get('/seach', 'AnketController@seach');
 
 Route::get('/inseach', 'AnketController@inseach');
 
-
 Route::get('/eventtest', 'PresentController@eventtest');
 
 
@@ -319,3 +336,4 @@ Route::get('/newlike', 'LikeController@newLike');
 Route::get('/getLikesNumber', 'LikeController@getLikesNumber');
 //likeSendedl
 Route::get('/likeSended', 'LikeController@likeSended');
+

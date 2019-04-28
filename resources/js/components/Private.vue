@@ -12,7 +12,11 @@
         <button class="btn-default" v-on:click="showMessageWindow()">Написать сообщение</button>
         <br>
         <modal v-if="showModal===true" :id="id" v-on:close="showModal = false">></modal>
-        <button class="btn-success" v-on:click="showPresentModal=true">Отправить подарок</button>
+       <!--<div v-on:click="showPresentModal=true">
+            <img width="200" src="/images/gift.png")?>">
+        </div>
+        -->
+        <button class="btn-success" v-on:click="showPresentModal=true" alt="Отправить подарок">Отправить подарок</button>
         <br>
         <div v-if="isAdmin==true">
             <button class="btn-danger" v-on:click="showAdminModal=true">Действия администратора</button>

@@ -13,4 +13,6 @@
     <br><br>
 
     <b><a class="btn btn-success" href="{{route('moneyControll')}}">Управление ценами</a> </b>
+
+    <b><a class="btn btn-success" href="{{route('moneyControll')}}">Настройки </a> </b>
 @endsection

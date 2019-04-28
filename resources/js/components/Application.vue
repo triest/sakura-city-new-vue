@@ -5,6 +5,7 @@
             <li role="presentation" @click="currentTab = 'application'"><a href="#"><b>Мои запросы на открытие
                 анкеты</b></a></li>
             <li role="presentation" @click="currentTab = 'who'"><a href="#"><b>Кто может смотреть мою анкету</b></a>
+            <li role="presentation" @click="currentTab = 'phone'"><a href="#"><b>Просьба открыть телефон</b></a>
             </li>
         </ul>
 
@@ -61,6 +62,21 @@
                             </button>
                         </div>
                     </div>
+                    <div v-if="currentTab == 'phone'">
+                        Просьбы открыть телефон
+                        <div v-for="application in requwesttoopenphone">
+                            <div class="avatar">
+                                <img :src="'images/upload/'+application.image" :alt="application.name"
+                                     height="150">
+                            </div>
+                            <div class="contact">
+                                <p class="name">{{ application.name }}</p>
+                            </div>
+                            <button v-on:click="getNewPhoneApplication(application.id)">Предоставить доступ</button>
+                            <button v-on:click="denidePhoneApplication(application.id)">Закрыть доступ</button>
+                        </div>
+                    </div>
+
                 </b>
 
             </div>
@@ -81,13 +97,15 @@
                 applications: [],
                 myapplications: [],
                 whocansee: [],
-                currentTab: 'main'
+                currentTab: 'main',
+                requwesttoopenphone: ''
             };
         },
         mounted() {
             this.getApplications(),
                 this.getMyApplications(),
-                this.getWhoHavwAccessToMyAnket()
+                this.getWhoHavwAccessToMyAnket(),
+                this.getreqtopenphone()
 
         },
         methods:
@@ -156,8 +174,38 @@
                                 this.getWhoHavwAccessToMyAnket();
                             }
                         })
-                }
+                },
+                getreqtopenphone() {
+                    axios.get('/getrequwesttoopenphone', {})
+                        .then((response) => {
+                            //console.log(response.data)
+                            this.requwesttoopenphone = response.data;
+                        })
+                },
+                getNewPhoneApplication(id) {
+                    axios.get('/getnewphonaaplication', {
+                        params: {
+                            id: id,
+                        }
+                    })
+                        .then((response) => {
+                            console.log(response.data)
 
+                        });
+                    this.getreqtopenphone();
+                },
+                denidePhoneApplication(id) {
+                    axios.get('/denidephoneaplication', {
+                        params: {
+                            id: id,
+                        }
+                    })
+                        .then((response) => {
+                            //console.log(response.data)
+                            this.requwesttoopenphone = response.data;
+                        });
+                    this.getreqtopenphone();
+                }
 
             }
     }

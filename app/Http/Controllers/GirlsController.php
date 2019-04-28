@@ -41,6 +41,7 @@ class GirlsController extends Controller
         return view('index')->with(['girls' => $girls]);
     }
 
+
     public function showGirl($id)
     {
         $girl = Girl::select([
@@ -58,6 +59,8 @@ class GirlsController extends Controller
             'city_id',
             'banned',
             'user_id',
+            'phone',
+            'phone_settings',
             'status',
         ])->where('id', $id)->first();
         if ($girl == null) {
@@ -77,11 +80,10 @@ class GirlsController extends Controller
         }
 
         //интересы
-        $interes=$girl->interest()->get();
-     
+        $interes = $girl->interest()->get();
+
         //проверяем, что просматривающий пользователь зареген.
         if ($AythUser != null) {
-            //  $girl_user_id=$girl->user_id;
             $user3 = DB::table('user_user')
                 ->where('my_id', $AythUser->id)
                 ->where('other_id', $girl->user_id)->first();
@@ -96,14 +98,36 @@ class GirlsController extends Controller
                     'weight',
                     'height',
                     'age',
+                    'phone',
                     'country_id',
                     'region_id',
                     'city_id',
                     'banned',
                     'user_id',
                     'private',
+                    'phone_settings',
                 ])->where('id', $id)->first();
                 $privatephoto = $girl->privatephotos()->get();
+            }
+        }
+        $phone_settings = $girl->phone_settings;
+        if ($phone_settings == 1) {
+            $phone = $girl->phone;
+        } else {
+            if ($AythUser != null) {
+                $auth_girl = Girl::select('id', 'user_id')->where('user_id', $AythUser->id)->first();
+                $girl_in_table = DB::table('girl_open_phone_girl')
+                    ->where('girl_id', $auth_girl->id)
+                    ->where('target_id', $girl->id)->first();
+                if ($girl_in_table != null) {
+                    $girl2 = Girl::select([
+                        'id',
+                        'phone',
+                    ])->where('id', $id)->first();;
+                    $phone = $girl2->phone;
+                } else {
+                    $phone = null;
+                }
             }
         }
 
@@ -113,7 +137,9 @@ class GirlsController extends Controller
             'privatephotos' => $privatephoto,
             'targets' => $targets,
             'city' => $city,
-            'interes'=>$interes
+            'interes' => $interes,
+            'phone_settings' => $phone_settings,
+            'phone' => $phone,
         ]);
     }
 
@@ -140,6 +166,7 @@ class GirlsController extends Controller
         //2) отправляем его в смс
         // App::call('App\Http\Controllers\GirlsController@sendSMS', [$phone, $activeCode]);
         $this->sendSMS($phone, $activeCode);
+
         return response()->json(['result' => 'ok']);
     }
 
@@ -175,10 +202,10 @@ class GirlsController extends Controller
             </authentification>
             <message>
             <sender>SMS</sender>
-            <text>' . $text . '</text>
+            <text>'.$text.'</text>
             </message>
             <numbers>
-            <number messageID="msg11">' . $phone . '</number>
+            <number messageID="msg11">'.$phone.'</number>
             </numbers>
         </SMS>';
         $Curl = curl_init();

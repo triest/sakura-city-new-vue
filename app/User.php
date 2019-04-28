@@ -60,7 +60,13 @@ class User extends Authenticatable
 
     public function isOnline()
     {
-        return Cache::has('user-is-online-' . $this->id);
+        return Cache::has('user-is-online-'.$this->id);
+    }
+
+    public function get_gitl_id()
+    {
+        $girl=Girl::select('id','girl_id')->where('user_id',$this->id)->first();
+        return $girl->id;
     }
 
 }

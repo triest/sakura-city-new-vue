@@ -17,7 +17,7 @@
 
     <!-- galeray -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
-
+    <link href="{{asset('css/baguetteBox.min.css')}}">
     <!--table CSS -->
     <!--   <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet"> -->
 
@@ -29,7 +29,7 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
           rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
+
     <!-- Custom styles for this template -->
     <link href="http://bootstrap-3.ru/examples/offcanvas/offcanvas.css" rel="stylesheet">
 

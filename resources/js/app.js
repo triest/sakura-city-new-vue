@@ -80,6 +80,15 @@ Vue.component('moneycontroll', require('./components/Moneycontroll.vue').default
 
 Vue.component('likes', require('./components/likes.vue').default);
 
+Vue.component('phonerequwest', require('./components/phoneRequwest.vue').default);
+
+const phoneRequwestApp = new Vue({
+    el: '#phoneRequwestApp',
+    data: {
+        showModal: false
+    }
+});
+
 const likesApp = new Vue({
     el: '#likesApp',
     data: {
