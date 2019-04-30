@@ -89,6 +89,8 @@
     <b>Город:</b> <br>
     @if($city!=null)
         {{$city->name}}
+    @else
+        Не указан
     @endif
 
 

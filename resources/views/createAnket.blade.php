@@ -88,15 +88,52 @@
 
         <div id="country">
             <label>Город</label>
-            <input type="text" name="state" id="state" class="form-control">
+            <input name="cityname" id="cityname" oninput="findCity();" type="text"/>
         </div>
 
-        <label>Город:
+
+        <label>Выбирите из списка:
             <select id="city" class="city" style="width: 200px" name="city">
                 <option value="-">-</option>
             </select>
         </label>
         <br>
+
+        <script>
+          /*  function findCity() {
+                var inputcity = document.getElementById('cityname').value;
+                console.log(inputcity);
+                var x = document.getElementById("city");
+                var option = document.createElement("option");
+                axios.get('/findcity/' + inputcity, {
+                    params: {}
+                })
+                    .then((response) => {
+                        var data = response.data;
+                        for (var i = 0; i <= data.length; i++) {
+                        }
+                    });
+            }*/
+        </script>
+        <script>
+            function findCity() {
+                var inputcity = document.getElementById('cityname').value;
+                console.log(inputcity);
+                var x = document.getElementById("city");
+                var option = document.createElement("option");
+                axios.get('/findcity/' + inputcity, {
+                    params: {}
+                })
+                    .then((response) => {
+                        var data = response.data;
+                        $('#city').empty();
+                        for (var i = 0; i <= data[0].length; i++) {
+                            $('#city').append('<option value="' + data[0][i].id + '">' + data[0][i].name + '</option>');
+                        }
+                    });
+            }
+
+        </script>
 
         <label>Выберите заглавную фотографию</label>
 
@@ -177,19 +214,11 @@
     </form>
 
     <script>
-        $('#state').on('input', function (e) {
-            var state_id = e.target.value;
-            $.get(
-                "/findcity/" + state_id,
-                function (data, status) {
-                    $('#city').empty();
-                    $.each(data[0], function (index, subcatObj) {
-
-                        $('#city').append('<option value="' + subcatObj.id_city + '">' + subcatObj.name + '</option>');
-                    })
-                }
-            )
+        $('#state').bind('input', function () {
+            $(this).next().stop(true, true).fadeIn(0).html('[input event fired!]: ' + $(this).val()).fadeOut(2000);
         });
+
+
     </script>
 
 @endsection

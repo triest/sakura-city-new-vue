@@ -5178,6 +5178,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //'./components/delModal.vue'
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
@@ -5185,11 +5213,99 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {},
   data: function data() {
     return {
-      phoneOpen: false,
-      phone: ''
+      phone: "",
+      code: "",
+      errors: [],
+      codeErors: [],
+      codeVisable: false,
+      nextButtonVisable: false,
+      next: false
     };
   },
-  methods: {}
+  methods: {
+    sendSMS: function sendSMS() {
+      var _this = this;
+
+      this.errors = [];
+      console.log("sendSMS");
+
+      if (!this.phone) {
+        this.errors.push('Введите телефон.');
+      } else {
+        this.errors = [];
+        console.log(this.phone);
+
+        if (this.phone.match(/\d{11}/)) {
+          console.log("работает");
+          var formData = new FormData();
+          formData.append('phone', this.phone);
+
+          try {
+            axios.post('/inputPhone', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }).then(function (response) {
+              console.log(response.data);
+
+              if (response.data.result == "ok") {
+                console.log("ok");
+                _this.codeVisable = true;
+                _this.errors = [];
+              } else {
+                console.log("faik");
+
+                _this.errors.push("Этот телефон уже зарегистрирован");
+              }
+            }).catch(this.errors.push("Этот телефон уже зарегистрирован"));
+          } catch (e) {
+            this.errors.push("Этот телефон уже зарегистрирован");
+          }
+        } else {
+          this.errors.push('Введите телефон  указанном формате.');
+        }
+      }
+    },
+    sendCode: function sendCode() {
+      var _this2 = this;
+
+      this.errors = [];
+      console.log("sendCode");
+
+      if (!this.code) {
+        this.codeErors.push('Введите телефон.');
+      } else {
+        this.errors = [];
+        console.log(this.code);
+
+        if (this.code.match(/\d{4}/)) {
+          console.log("работает");
+          var formData = new FormData();
+          formData.append('code', this.code);
+
+          try {
+            axios.post('/inputCode', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }).then(function (response) {
+              if (response.data.result == "ok") {
+                console.log("okConfurmPhone");
+                _this2.next = true;
+                _this2.nextButtonVisable = [];
+              } else {
+                _this2.codeErors.push("Неверный код");
+              }
+            }).catch(this.codeErors.push("Неверный код"));
+          } catch (e) {
+            this.codeErors.push("Неверный код");
+          }
+        } else {
+          this.nextButtonVisable.push('Неверный код');
+        }
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -10160,7 +10276,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.delmodal[data-v-cbe28a8c] {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, 0.7);\n    display: table;\n    transition: opacity .3s ease;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.delmodal[data-v-cbe28a8c] {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, 0.7);\n    display: table;\n    transition: opacity .3s ease;\n}\n", ""]);
 
 // exports
 
@@ -56207,9 +56323,149 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c("div", { staticClass: "col-sm-10" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.phone,
+            expression: "phone"
+          }
+        ],
+        attrs: {
+          type: "phone",
+          name: "phone",
+          id: "phone",
+          placeholder: "79001234567",
+          required: ""
+        },
+        domProps: { value: _vm.phone },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.phone = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _vm.errors.length
+        ? _c("p", [
+            _c("b", [_vm._v("Пожалуйста исправьте указанные ошибки:")]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              _vm._l(_vm.errors, function(error) {
+                return _c("li", [_vm._v(_vm._s(error))])
+              }),
+              0
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              return _vm.sendSMS()
+            }
+          }
+        },
+        [_vm._v("Подтвердить")]
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
+      _vm.codeVisable
+        ? _c("div", [
+            _c("label", { attrs: { for: "code" } }, [
+              _vm._v(" Введите код:\n                "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.code,
+                    expression: "code"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  name: "code",
+                  id: "code",
+                  required: ""
+                },
+                domProps: { value: _vm.code },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.code = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.sendCode()
+                  }
+                }
+              },
+              [_vm._v("Введите код")]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.next
+        ? _c("div", [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { href: "/createAnketPage" }
+              },
+              [_vm._v("Создать анкету")]
+            )
+          ])
+        : _vm._e()
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _vm._v(
+        "Для продолжения регистрации необходимо подтвердить Ваш телефонный номер. Именно этот номер будут видеть\n            только\n            пользователи, которым вы предоставите такую возможность."
+      ),
+      _c("br"),
+      _vm._v("\n            Изменить номер нельзя."),
+      _c("br"),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(
+        "\n            Первая цифра-код страны. Для россии это 7. Пример: 79001234567;\n            Номер должен быть указан в формате 79001234567. "
+      ),
+      _c("br")
+    ])
+  }
+]
 render._withStripped = true
 
 

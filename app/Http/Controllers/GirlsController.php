@@ -131,6 +131,8 @@ class GirlsController extends Controller
             }
         }
 
+
+
         return view('girlView')->with([
             'girl' => $girl,
             'images' => $images,

@@ -112,6 +112,7 @@ class AnketController extends Controller
         dump($request);
 
         if (Input::hasFile('images')) {
+
             $count = 0;
             foreach ($request->images as $key) {
                 $image_extension = $request->file('file')->getClientOriginalExtension();
@@ -148,6 +149,8 @@ class AnketController extends Controller
                 }
             }
         }
+
+
 
         if ($request->has('city')) {
             $girl->city_id = $request->city;
