@@ -79,11 +79,39 @@ class LikeController extends Controller
             'user_id',
             'status',
         ])->where('id', $request->girl_id)->first();
-
-        //    $likes = Like::select(['id'])->where(['target_id', $request->girl_id])->get();
         $nmberLikes = DB::table('likes')->where('target_id', $request->girl_id)->get()->count();
 
         return response()->json(['likeNumber' => $nmberLikes]);
+    }
+
+    public function getLikesNumberAuch(Request $request)
+    {
+        $targetGirl = Girl::select([
+            'name',
+            'id',
+            'description',
+            'main_image',
+            'sex',
+            'meet',
+            'weight',
+            'height',
+            'age',
+            'country_id',
+            'region_id',
+            'city_id',
+            'banned',
+            'user_id',
+            'status',
+        ])->where('id', $request->girl_id)->first();
+        $user = Auth::user();  // и если админ
+        $id = $user->get_gitl_id();
+        if ($id != null) {
+            $nmberLikes = DB::table('likes')->where('target_id', $id)->get()->count();
+
+            return response()->json(['likeNumber' => $nmberLikes]);
+        } else {
+            return response()->json(['null']);
+        }
     }
 
     public function likeSended(Request $request)
@@ -117,9 +145,9 @@ class LikeController extends Controller
         if ($whoGirl == null) {
             return response()->json(['not']);
         }
-       // dump($request);
-       // dump($whoGirl);
-       // dump($targetGirl);
+        // dump($request);
+        // dump($whoGirl);
+        // dump($targetGirl);
 
         $like = Like::select(['id'])->where('who_id', $whoGirl->id)->where('target_id', $targetGirl->id)->first();
         if ($like != null) {

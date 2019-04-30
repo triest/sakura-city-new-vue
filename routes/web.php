@@ -334,6 +334,7 @@ Route::get('/eventtest', 'PresentController@eventtest');
 //лайки
 Route::get('/newlike', 'LikeController@newLike');
 Route::get('/getLikesNumber', 'LikeController@getLikesNumber');
+Route::get('/getLikesNumberAuch', 'LikeController@getLikesNumberAuch')->middleware('auth');
 //likeSendedl
 Route::get('/likeSended', 'LikeController@likeSended');
 

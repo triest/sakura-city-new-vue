@@ -45,11 +45,13 @@ class AnketController extends Controller
         // dump($phone);
         return view('createAnket')
             ->with(
-                ['username' => $user->name,
+                [
+                    'username' => $user->name,
                     'tagrets' => $targets,
                     'interests' => $interests,
                     'phone' => $phone,
-                    'phone_setting'=>$phone_setting]);
+                    'phone_setting' => $phone_setting,
+                ]);
     }
 
     function store(Request $request)
@@ -73,7 +75,7 @@ class AnketController extends Controller
         }
 
         $girl = new Girl();
-       // $girl->id=$user->id;
+        // $girl->id=$user->id;
         $girl->name = $request->name;
         $girl->sex = $request->sex;
         $girl->meet = $request->met;
@@ -83,7 +85,7 @@ class AnketController extends Controller
         $girl->description = $request->description;
         $girl->private = $request->private;
         $girl->user_id = $user->id;
-        $girl->phone_settings=$request->phone_settings;
+        $girl->phone_settings = $request->phone_settings;
         $girl->save();
 
 
@@ -151,7 +153,7 @@ class AnketController extends Controller
         }
 
 
-
+        dump($request);
         if ($request->has('city')) {
             $girl->city_id = $request->city;
         }

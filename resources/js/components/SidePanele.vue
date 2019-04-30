@@ -1,5 +1,6 @@
 <template>
     <div>
+        <img height="20" src="/images/heart.png"> {{likesNunber}} <br>
         <b><a href="/messages">Сообщения
             <div v-if="numberUnreaded>0">+{{numberUnreaded}}</div>
         </a>
@@ -39,7 +40,8 @@
                 numberUnreaded: 0,
                 numberApplication: 0,
                 numberApplicationPresents: 0,
-                inseach: false
+                inseach: false,
+                likesNunber: 0,
             }
                 ;
         },
@@ -48,10 +50,10 @@
             Echo.private(`messages.${this.user.id}`)
                 .listen('NewMessage', (e) => {
                     console.log('NewMessage');
-                      axios.get('/getCountUnreaded')
-                          .then((response) => {
-                              this.numberUnreaded = response.data;
-                          });
+                    axios.get('/getCountUnreaded')
+                        .then((response) => {
+                            this.numberUnreaded = response.data;
+                        });
                     this.getNumberUnreadedMessages();
                 });
             Echo.private(`requwests.${this.user.id}`)
@@ -76,8 +78,8 @@
                 .then((response) => {
                     this.numberApplication = response.data;
                 }),
-                this.getNumberUnreadedPresents()
-
+                this.getNumberUnreadedPresents();
+                this.getLikesNumber();
         },
         methods:
             {
@@ -107,6 +109,21 @@
                                 this.inseach = false;
                             }
                         })
+                },
+                getLikesNumber() {
+                    axios.get('/getLikesNumberAuch', {
+                        params: {
+                            girl_id: this.girlid
+                        }
+                    })
+                        .then((response) => {
+
+                            // this.likesNunber = response.data;
+                            //    console.log(response.data)
+                            //console.log("likes number "+response.data['likeNumber']);
+                            this.likesNunber = response.data['likeNumber']
+                        });
+                    console.log("likes number " + this.likesNunber)
                 }
 
             }

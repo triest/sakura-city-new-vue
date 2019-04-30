@@ -65,8 +65,12 @@ class User extends Authenticatable
 
     public function get_gitl_id()
     {
-        $girl=Girl::select('id','girl_id')->where('user_id',$this->id)->first();
-        return $girl->id;
+        $girl = Girl::select('id', 'user_id')->where('user_id', $this->id)->first();
+        if ($girl == null) {
+            return null;
+        } else {
+            return $girl->id;
+        }
     }
 
 }

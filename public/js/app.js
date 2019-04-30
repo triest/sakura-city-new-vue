@@ -4371,6 +4371,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {
@@ -4383,7 +4384,8 @@ __webpack_require__.r(__webpack_exports__);
       numberUnreaded: 0,
       numberApplication: 0,
       numberApplicationPresents: 0,
-      inseach: false
+      inseach: false,
+      likesNunber: 0
     };
   },
   mounted: function mounted() {
@@ -4413,6 +4415,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/getCountUnreadedRequwest').then(function (response) {
       _this.numberApplication = response.data;
     }), this.getNumberUnreadedPresents();
+    this.getLikesNumber();
   },
   methods: {
     getNumberUnreadedMessages: function getNumberUnreadedMessages() {
@@ -4441,6 +4444,21 @@ __webpack_require__.r(__webpack_exports__);
           _this4.inseach = false;
         }
       });
+    },
+    getLikesNumber: function getLikesNumber() {
+      var _this5 = this;
+
+      axios.get('/getLikesNumberAuch', {
+        params: {
+          girl_id: this.girlid
+        }
+      }).then(function (response) {
+        // this.likesNunber = response.data;
+        //    console.log(response.data)
+        //console.log("likes number "+response.data['likeNumber']);
+        _this5.likesNunber = response.data['likeNumber'];
+      });
+      console.log("likes number " + this.likesNunber);
     }
   }
 });
@@ -55162,6 +55180,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("img", { attrs: { height: "20", src: "/images/heart.png" } }),
+    _vm._v(" " + _vm._s(_vm.likesNunber) + " "),
+    _c("br"),
+    _vm._v(" "),
     _c("b", [
       _c("a", { attrs: { href: "/messages" } }, [
         _vm._v("Сообщения\n        "),

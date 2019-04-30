@@ -116,23 +116,25 @@ class GirlsController extends Controller
         } else {
             if ($AythUser != null) {
                 $auth_girl = Girl::select('id', 'user_id')->where('user_id', $AythUser->id)->first();
-                $girl_in_table = DB::table('girl_open_phone_girl')
-                    ->where('girl_id', $auth_girl->id)
-                    ->where('target_id', $girl->id)->first();
-                if ($girl_in_table != null) {
-                    $girl2 = Girl::select([
-                        'id',
-                        'phone',
-                    ])->where('id', $id)->first();;
-                    $phone = $girl2->phone;
+                if ($auth_girl != null) {
+                    $girl_in_table = DB::table('girl_open_phone_girl')
+                        ->where('girl_id', $auth_girl->id)
+                        ->where('target_id', $girl->id)->first();
+                    if ($girl_in_table != null) {
+                        $girl2 = Girl::select([
+                            'id',
+                            'phone',
+                        ])->where('id', $id)->first();;
+                        $phone = $girl2->phone;
+                    } else {
+                        $phone = null;
+                    }
                 } else {
                     $phone = null;
                 }
             }
         }
-
-
-
+        
         return view('girlView')->with([
             'girl' => $girl,
             'images' => $images,
