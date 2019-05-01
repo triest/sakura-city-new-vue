@@ -1,6 +1,7 @@
 <template>
     <div>
-        <img height="20" src="/images/heart.png"> {{likesNunber}} <br>
+
+        <img height="20" src="/images/heart.png" v-on:mouseover="showLikeModal=true"> {{likesNunber}} <br>
         <b><a href="/messages">Сообщения
             <div v-if="numberUnreaded>0">+{{numberUnreaded}}</div>
         </a>
@@ -22,18 +23,25 @@
             <b>Ваша анкета Не отображаеться в поиске</b><br>
             <b><a type="btn primary" href="/power">Поместить анкету в поиск</a></b>
         </div>
-
+        <likemodal v-if="showLikeModal" @closeLikeModalEmit='closeLikeModal()'></likemodal>
 
     </div>
 </template>
 
 <script>
+    import likemodal from './LikeModal'
+
+
     export default {
+
         props: {
             user: {
                 type: Object,
                 required: true
             }
+        },
+        components: {
+            likemodal
         },
         data() {
             return {
@@ -42,9 +50,11 @@
                 numberApplicationPresents: 0,
                 inseach: false,
                 likesNunber: 0,
+                showLikeModal: false
             }
                 ;
         },
+
         mounted() {
             this.inSeach();
             this.getAllDataForSidePanel();
@@ -84,6 +94,9 @@
         },
         methods:
             {
+                closeLikeModal() {
+                    this.showLikeModal = false;
+                },
                 getNumberUnreadedMessages() {
                     axios.get('/getCountUnreaded')
                         .then((response) => {
@@ -131,7 +144,12 @@
                             this.numberUnreaded = data.countMessages;
                             this.numberApplication = data.countRequwest;
                         });
+                },
+                clouseLikeModal() {
+                    console.log("clouseLikeModal");
+                    this.showLikeModal = false;
                 }
+
             }
     }
 </script>

@@ -56,6 +56,8 @@ Vue.component('interes', require('./components/Interes.vue').default);
 
 Vue.component('mypresents', require('./components/MyPresents.vue').default);
 
+Vue.component('likemodal', require('./components/LikeModal.vue').default);
+
 //модальное окно для отправки сообщения
 //Vue.component('modal', require('./components/ModalComponent.vue'));
 Vue.component('delmodal', require('./components/delModal.vue').default);

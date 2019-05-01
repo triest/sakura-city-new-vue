@@ -64,7 +64,7 @@
             }
         },
         mounted() {
-            this.getPresentsList(),
+            this.getPresentsList();
                 this.getUserMoney();
         },
         data() {

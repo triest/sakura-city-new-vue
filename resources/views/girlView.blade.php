@@ -57,10 +57,11 @@
     @if($phone_settings==1)
         {{$girl->phone}}
     @elseif($phone_settings==2)
-        <div id="phoneRequwestApp">
-            <phonerequwest :id="{{$girl->id}}" :user_id="{{$girl->user_id}}"></phonerequwest>
-        </div>
-
+        @if($girl->user_id!=auth()->user()->id)
+            <div id="phoneRequwestApp">
+                <phonerequwest :id="{{$girl->id}}" :user_id="{{$girl->user_id}}"></phonerequwest>
+            </div>
+        @endif
     @endif
     <p class="card-text"><b>Рост : {{$girl->height}}</b>
     <p class="card-text"><b>Вес : {{$girl->weight}}</b>

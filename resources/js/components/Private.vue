@@ -12,6 +12,7 @@
         <button class="btn-default" v-on:click="showMessageWindow()">Написать сообщение</button>
         <br>
         <modal v-if="showModal===true" :id="id" v-on:close="showModal = false">></modal>
+
        <!--<div v-on:click="showPresentModal=true">
             <img width="200" src="/images/gift.png")?>">
         </div>

@@ -337,6 +337,9 @@ Route::get('/getLikesNumber', 'LikeController@getLikesNumber');
 Route::get('/getLikesNumberAuch', 'LikeController@getLikesNumberAuch')->middleware('auth');
 //likeSendedl
 Route::get('/likeSended', 'LikeController@likeSended');
+//список тех, кто поставил мне лайки
+Route::get('/getLikesList', 'LikeController@getLikesList');
+
 
 
 //боковая панель, все данные

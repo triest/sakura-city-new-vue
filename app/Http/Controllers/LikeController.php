@@ -156,4 +156,39 @@ class LikeController extends Controller
             return response()->json('not');
         }
     }
+
+    public function getLikesList(Request $request)
+    {
+        $user = Auth::user();
+
+        $targetGirl = Girl::select([
+            'name',
+            'id',
+            'description',
+            'main_image',
+            'sex',
+            'meet',
+            'weight',
+            'height',
+            'age',
+            'country_id',
+            'region_id',
+            'city_id',
+            'banned',
+            'user_id',
+            'status',
+        ])->where('user_id', $user->id)->first();
+
+        if ($targetGirl != null) {
+            $nmberLikes = DB::table('likes')
+                ->join('girls', 'likes.who_id', '=', 'girls.id')
+                ->where('target_id', $targetGirl->id)
+                ->orderBy('likes.updated_at','DESC')
+                ->get();
+
+            return response()->json($nmberLikes);
+        } else {
+            return response()->json(['nolakes']);
+        }
+    }
 }
