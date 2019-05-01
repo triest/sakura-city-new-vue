@@ -54072,7 +54072,7 @@ var render = function() {
                       _c("a", { attrs: { href: "/anket/" + like.id } }, [
                         _c("img", {
                           attrs: {
-                            src: "images/upload/" + like.main_image,
+                            src: "/images/small/" + like.main_image,
                             height: "100"
                           }
                         }),
