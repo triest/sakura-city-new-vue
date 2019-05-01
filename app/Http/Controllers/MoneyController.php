@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\newApplication;
 use App\Girl;
 use App\User;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ class MoneyController extends Controller
     {
         //secret 66zzO9164xWnEsNEX6K73nFo
 
+
         $date = Carbon::now();
         File::append(base_path().'/public/file.txt', 'data2'.PHP_EOL);
         File::append(base_path().'/public/file.txt',
@@ -40,9 +42,10 @@ class MoneyController extends Controller
             $_POST['codepro'].'&66zzO9164xWnEsNEX6K73nFo&'.
             $_POST['label'];
 
-        if (sha1($str) != $_POST['sha1_hash']) {
-            return null;
-        }
+                if (sha1($str) != $_POST['sha1_hash']) {
+                    return null;
+                }
+        
 
         $operation_id = $request['operation_id'];
         if ($operation_id == 'test-notification') {
@@ -53,17 +56,28 @@ class MoneyController extends Controller
                     'amount' => $request->amount,
                 ]);
             } catch (IOException $exceptione) {
+                echo $exceptione;
             }
         }
+
+
         $user = User::select(['id', 'email', 'name', 'money'])->where(['account' => $request->label])->first();
+        if ($user == null) {
+            return null;
+        }
         $ammount = $request->amount;
         $user_money = $user->money;
-        if ($user != null && $user_money != null && $user_money > 0) {
+       // dump($user);
+        //dump($user);
+        //dump($user_money);
+        if ($user != null and $user_money >= 0) {
+            echo "user get";
             $user_money_database = $user->money;
             $user_money_database += $ammount;
             $user->money = $user_money_database;
             $user->save();
         }
+
         // вставляем историю
         try {
             DB::table('money_history')->insert([
@@ -71,8 +85,10 @@ class MoneyController extends Controller
                 'user_email' => $user->email,
                 'received' => $ammount,
                 'operation_id' => $operation_id,
+                'user_name'=>$user->name
             ]);
         } catch (IOException $exceptione) {
+            echo $exceptione;
         }
 
         return response('OK', 200);
