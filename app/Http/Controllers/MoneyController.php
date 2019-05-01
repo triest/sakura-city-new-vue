@@ -42,10 +42,10 @@ class MoneyController extends Controller
             $_POST['codepro'].'&66zzO9164xWnEsNEX6K73nFo&'.
             $_POST['label'];
 
-                if (sha1($str) != $_POST['sha1_hash']) {
+         /*       if (sha1($str) != $_POST['sha1_hash']) {
                     return null;
                 }
-        
+        */
 
         $operation_id = $request['operation_id'];
         if ($operation_id == 'test-notification') {
@@ -71,7 +71,6 @@ class MoneyController extends Controller
         //dump($user);
         //dump($user_money);
         if ($user != null and $user_money >= 0) {
-            echo "user get";
             $user_money_database = $user->money;
             $user_money_database += $ammount;
             $user->money = $user_money_database;
