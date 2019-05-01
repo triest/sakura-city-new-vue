@@ -1,19 +1,19 @@
 <template>
 
     <div>
-        <b>Текущее состояние счета: {{money.money}}</b>
+        <b>Текущее состояние счета: {{money}}</b>
         <br>
         <b> Поместить анкету в шапку сайта(сменяемое меню) на
             <input name="days" id="days" type="number" min="0"
                    :max="maxToTopDays" :value="maxToTopDays" ref="inputDaysNumber"></b>
-        <div v-if="money.money>=priceToTop">
+        <div v-if="money>=priceToTop">
             <button class="btn-primary" v-on:click="toTop()">Поднять</button>
         </div>
         <div v-else>
             Недостаточно денег. Пополните счет.
         </div>
         <b>Поднять анкету на первое место за {{priceToTop.price}} рублей</b>
-        <div v-if="money.money>=priceFirstPlase">
+        <div v-if="money>=priceFirstPlase">
             <button v-on:click="toFirstPlase()">Поднять</button>
         </div>
         <div v-else>
@@ -35,7 +35,7 @@
                    :max="maxSeachDays" :value="maxSeachDays" ref="inputDaysNumber"></b>
         дней
 
-        <div v-if="money.money>=priseSeach">
+        <div v-if="money>=priseSeach">
             <button class="btn-primary" v-on:click="toSeach()">Поместить</button>
         </div>
         <div v-else>
@@ -88,15 +88,16 @@
 
         },
         mounted() {
-            this.getMoneut(),
-                this.getPrices(),
-                this.inSeach(),
-                this.getPrices()
+            /*  this.getMoneut(),
+                  this.getPrices(),
+                  this.inSeach(),
+                  this.getPrices()*/
+            this.getAlldataforpower();
         },
         methods:
             {
                 getMoneut() {
-                    console.log("getMoney");
+                    //console.log("getMoney");
                     axios.get('/getMoney')
                         .then((response) => {
                             this.money = response.data;
@@ -173,6 +174,18 @@
                             }
                         });
                     this.getMoneut()
+                },
+                getAlldataforpower() {
+                    axios.get('/gatalldataforpower')
+                        .then((response) => {
+                            //console.log(response.data);
+                            var data = response.data;
+                            this.money = data.money;
+                            console.log("money "+this.money);
+                            this.priceToTop = data.toTop.price;
+                            this.priceFirstPlase = data.toFirstPlase.price;
+                            this.priseSeach = data.toseachPlase.price;
+                        });
                 }
             }
     }

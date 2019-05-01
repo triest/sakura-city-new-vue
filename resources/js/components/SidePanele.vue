@@ -100,7 +100,6 @@
                     axios.get('/inseach')
                         .then((response) => {
                             if (response.data == "true") {
-                                //console.log("true");
                                 this.inseach = true;
                             }
                             else {
@@ -115,10 +114,6 @@
                         }
                     })
                         .then((response) => {
-
-                            // this.likesNunber = response.data;
-                            //    console.log(response.data)
-                            //console.log("likes number "+response.data['likeNumber']);
                             this.likesNunber = response.data['likeNumber']
                         });
                     console.log("likes number " + this.likesNunber)
@@ -130,21 +125,12 @@
                         }
                     })
                         .then((response) => {
-                            //console.log(response.data);
                             var data = response.data;
-                            console.log(data);
                             this.likesNunber = data.likeNumber;
                             this.numberApplicationPresents = data.countGift;
-                            //this.countMessages=
                             this.numberUnreaded = data.countMessages;
-                           
-                            //this.likesNunber = re
-                            // this.likesNunber = response.data;
-                            //    console.log(response.data)
-                            //console.log("likes number "+response.data['likeNumber']);
-                            // this.likesNunber = response.data['likeNumber']
+                            this.numberApplication = data.countRequwest;
                         });
-                    //console.log("likes number " + this.likesNunber)
                 }
             }
     }

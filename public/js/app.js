@@ -3765,13 +3765,17 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getMoneut(), this.getPrices(), this.inSeach(), this.getPrices();
+    /*  this.getMoneut(),
+          this.getPrices(),
+          this.inSeach(),
+          this.getPrices()*/
+    this.getAlldataforpower();
   },
   methods: {
     getMoneut: function getMoneut() {
       var _this = this;
 
-      console.log("getMoney");
+      //console.log("getMoney");
       axios.get('/getMoney').then(function (response) {
         _this.money = response.data;
       });
@@ -3840,6 +3844,19 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       this.getMoneut();
+    },
+    getAlldataforpower: function getAlldataforpower() {
+      var _this7 = this;
+
+      axios.get('/gatalldataforpower').then(function (response) {
+        //console.log(response.data);
+        var data = response.data;
+        _this7.money = data.money;
+        console.log("money " + _this7.money);
+        _this7.priceToTop = data.toTop.price;
+        _this7.priceFirstPlase = data.toFirstPlase.price;
+        _this7.priseSeach = data.toseachPlase.price;
+      });
     }
   }
 });
@@ -4442,7 +4459,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/inseach').then(function (response) {
         if (response.data == "true") {
-          //console.log("true");
           _this4.inseach = true;
         } else {
           _this4.inseach = false;
@@ -4457,9 +4473,6 @@ __webpack_require__.r(__webpack_exports__);
           girl_id: this.girlid
         }
       }).then(function (response) {
-        // this.likesNunber = response.data;
-        //    console.log(response.data)
-        //console.log("likes number "+response.data['likeNumber']);
         _this5.likesNunber = response.data['likeNumber'];
       });
       console.log("likes number " + this.likesNunber);
@@ -4472,18 +4485,12 @@ __webpack_require__.r(__webpack_exports__);
           girl_id: this.girlid
         }
       }).then(function (response) {
-        //console.log(response.data);
         var data = response.data;
-        console.log(data);
         _this6.likesNunber = data.likeNumber;
-        _this6.numberApplicationPresents = data.countGift; //this.countMessages=
-
-        _this6.numberUnreaded = data.countMessages; //this.likesNunber = re
-        // this.likesNunber = response.data;
-        //    console.log(response.data)
-        //console.log("likes number "+response.data['likeNumber']);
-        // this.likesNunber = response.data['likeNumber']
-      }); //console.log("likes number " + this.likesNunber)
+        _this6.numberApplicationPresents = data.countGift;
+        _this6.numberUnreaded = data.countMessages;
+        _this6.numberApplication = data.countRequwest;
+      });
     }
   }
 });
@@ -54570,7 +54577,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("b", [_vm._v("Текущее состояние счета: " + _vm._s(_vm.money.money))]),
+    _c("b", [_vm._v("Текущее состояние счета: " + _vm._s(_vm.money))]),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
@@ -54589,7 +54596,7 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _vm.money.money >= _vm.priceToTop
+    _vm.money >= _vm.priceToTop
       ? _c("div", [
           _c(
             "button",
@@ -54616,7 +54623,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm.money.money >= _vm.priceFirstPlase
+    _vm.money >= _vm.priceFirstPlase
       ? _c("div", [
           _c(
             "button",
@@ -54658,7 +54665,7 @@ var render = function() {
       })
     ]),
     _vm._v("\n    дней\n\n    "),
-    _vm.money.money >= _vm.priseSeach
+    _vm.money >= _vm.priseSeach
       ? _c("div", [
           _c(
             "button",

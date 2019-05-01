@@ -775,4 +775,24 @@ class AnketController extends Controller
             "likeNumber" => $nmberLikes,
         ]);
     }
+
+    //все данныые для power
+    public function gatalldataforpower(Request $request)
+    {
+        //деньги
+        $user = Auth::user();
+        $money = $user->money;
+        $toTop = DB::table('prices')->where('price_name', 'to_top')->first();
+        $toFirstPlase = DB::table('prices')->where('price_name', 'to_first_place')->first();
+        $toseachPlase = DB::table('prices')->where('price_name', 'seach')->first();
+        $chageMainImage = DB::table('prices')->where('price_name', 'change_main_image')->first();
+
+        return response()->json([
+            'money' => $money,
+            'toTop' => $toTop,
+            'toFirstPlase' => $toFirstPlase,
+            'toseachPlase' => $toseachPlase,
+            'changeMainImage' => $chageMainImage,
+        ]);
+    }
 }
