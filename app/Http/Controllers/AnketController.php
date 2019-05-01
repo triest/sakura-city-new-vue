@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\GiftAct;
 use App\Girl;
+use App\Message;
+use App\MyRequwest;
 use App\Photo;
 use App\Target;
 use App\User;
@@ -743,6 +746,33 @@ class AnketController extends Controller
         } else {
             return response()->json("false");
         }
+    }
 
+    //получить все данные для боковой панели
+    public function getalldataforsidepanel(Request $request)
+    {
+        $user = Auth::user();
+        //число непрочитанных сообщения
+        $messages = Message::where('to', $user->id)->where('readed', 0)->get();
+        $countMessage = count($messages);
+        // подарка
+        $gift = GiftAct::select('id')->where('target_id', $user->id)->where('readed', 0)->get();
+        $countGift = count($gift);
+        //запросы
+        $myrequest = MyRequwest::select('id',
+            'who_id',
+            'target_id', 'status', 'readed')->where('target_id', $user->id)
+            ->where('readed', 0)
+            ->get();
+        $countRequwest = count($myrequest);
+        $id = $user->get_gitl_id();
+        $nmberLikes = DB::table('likes')->where('target_id', $id)->get()->count();
+
+        return response()->json([
+            "countMessages" => $countMessage,
+            "countGift" => $countGift,
+            "countRequwest" => $countRequwest,
+            "likeNumber" => $nmberLikes,
+        ]);
     }
 }

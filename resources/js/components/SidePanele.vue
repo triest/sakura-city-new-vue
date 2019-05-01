@@ -47,9 +47,10 @@
         },
         mounted() {
             this.inSeach();
+            this.getAllDataForSidePanel();
             Echo.private(`messages.${this.user.id}`)
                 .listen('NewMessage', (e) => {
-                    console.log('NewMessage');
+                    //console.log('NewMessage');
                     axios.get('/getCountUnreaded')
                         .then((response) => {
                             this.numberUnreaded = response.data;
@@ -58,7 +59,7 @@
                 });
             Echo.private(`requwests.${this.user.id}`)
                 .listen('newApplication', (e) => {
-                    console.log('NewRequwest');
+                    // console.log('NewRequwest');
                     axios.get('/getCountUnreadedRequwest')
                         .then((response) => {
                             this.numberApplication = response.data;
@@ -70,16 +71,16 @@
                 });
 
 
-            axios.get('/getCountUnreaded')
-                .then((response) => {
-                    this.numberUnreaded = response.data;
-                });
-            axios.get('/getCountUnreadedRequwest')
+            /*  axios.get('/getCountUnreaded')
+                  .then((response) => {
+                      this.numberUnreaded = response.data;
+                  });*/
+            /*axios.get('/getCountUnreadedRequwest')
                 .then((response) => {
                     this.numberApplication = response.data;
                 }),
                 this.getNumberUnreadedPresents();
-                this.getLikesNumber();
+            this.getLikesNumber();*/
         },
         methods:
             {
@@ -88,9 +89,6 @@
                         .then((response) => {
                             this.numberUnreaded = response.data;
                         })
-                },
-                chechAnketExist() {
-
                 },
                 getNumberUnreadedPresents() {
                     axios.get('/getCountUnreadedPresents')
@@ -124,8 +122,30 @@
                             this.likesNunber = response.data['likeNumber']
                         });
                     console.log("likes number " + this.likesNunber)
+                },
+                getAllDataForSidePanel() {
+                    axios.get('/getalldataforsidepanel', {
+                        params: {
+                            girl_id: this.girlid
+                        }
+                    })
+                        .then((response) => {
+                            //console.log(response.data);
+                            var data = response.data;
+                            console.log(data);
+                            this.likesNunber = data.likeNumber;
+                            this.numberApplicationPresents = data.countGift;
+                            //this.countMessages=
+                            this.numberUnreaded = data.countMessages;
+                           
+                            //this.likesNunber = re
+                            // this.likesNunber = response.data;
+                            //    console.log(response.data)
+                            //console.log("likes number "+response.data['likeNumber']);
+                            // this.likesNunber = response.data['likeNumber']
+                        });
+                    //console.log("likes number " + this.likesNunber)
                 }
-
             }
     }
 </script>

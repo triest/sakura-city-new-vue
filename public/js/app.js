@@ -4392,8 +4392,9 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.inSeach();
+    this.getAllDataForSidePanel();
     Echo.private("messages.".concat(this.user.id)).listen('NewMessage', function (e) {
-      console.log('NewMessage');
+      //console.log('NewMessage');
       axios.get('/getCountUnreaded').then(function (response) {
         _this.numberUnreaded = response.data;
       });
@@ -4401,7 +4402,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.getNumberUnreadedMessages();
     });
     Echo.private("requwests.".concat(this.user.id)).listen('newApplication', function (e) {
-      console.log('NewRequwest');
+      // console.log('NewRequwest');
       axios.get('/getCountUnreadedRequwest').then(function (response) {
         _this.numberApplication = response.data;
       });
@@ -4409,13 +4410,17 @@ __webpack_require__.r(__webpack_exports__);
     Echo.private("gifs.".concat(this.user.id)).listen('eventPreasent', function (e) {
       _this.getNumberUnreadedPresents();
     });
-    axios.get('/getCountUnreaded').then(function (response) {
-      _this.numberUnreaded = response.data;
-    });
-    axios.get('/getCountUnreadedRequwest').then(function (response) {
-      _this.numberApplication = response.data;
-    }), this.getNumberUnreadedPresents();
-    this.getLikesNumber();
+    /*  axios.get('/getCountUnreaded')
+          .then((response) => {
+              this.numberUnreaded = response.data;
+          });*/
+
+    /*axios.get('/getCountUnreadedRequwest')
+        .then((response) => {
+            this.numberApplication = response.data;
+        }),
+        this.getNumberUnreadedPresents();
+    this.getLikesNumber();*/
   },
   methods: {
     getNumberUnreadedMessages: function getNumberUnreadedMessages() {
@@ -4425,7 +4430,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.numberUnreaded = response.data;
       });
     },
-    chechAnketExist: function chechAnketExist() {},
     getNumberUnreadedPresents: function getNumberUnreadedPresents() {
       var _this3 = this;
 
@@ -4459,6 +4463,27 @@ __webpack_require__.r(__webpack_exports__);
         _this5.likesNunber = response.data['likeNumber'];
       });
       console.log("likes number " + this.likesNunber);
+    },
+    getAllDataForSidePanel: function getAllDataForSidePanel() {
+      var _this6 = this;
+
+      axios.get('/getalldataforsidepanel', {
+        params: {
+          girl_id: this.girlid
+        }
+      }).then(function (response) {
+        //console.log(response.data);
+        var data = response.data;
+        console.log(data);
+        _this6.likesNunber = data.likeNumber;
+        _this6.numberApplicationPresents = data.countGift; //this.countMessages=
+
+        _this6.numberUnreaded = data.countMessages; //this.likesNunber = re
+        // this.likesNunber = response.data;
+        //    console.log(response.data)
+        //console.log("likes number "+response.data['likeNumber']);
+        // this.likesNunber = response.data['likeNumber']
+      }); //console.log("likes number " + this.likesNunber)
     }
   }
 });

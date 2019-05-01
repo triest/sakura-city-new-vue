@@ -338,3 +338,7 @@ Route::get('/getLikesNumberAuch', 'LikeController@getLikesNumberAuch')->middlewa
 //likeSendedl
 Route::get('/likeSended', 'LikeController@likeSended');
 
+
+//боковая панель, все данные
+//getalldataforsidepanel
+Route::get('/getalldataforsidepanel', 'AnketController@getalldataforsidepanel')->middleware('auth');
