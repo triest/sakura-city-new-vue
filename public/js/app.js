@@ -3752,7 +3752,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     maxToTopDays: function maxToTopDays() {
-      return this.money.money / this.priceToTop; //  return this.money.money / 1
+      return this.money / this.priceToTop; //  return this.money.money / 1
     },
     maxSeachDays: function maxSeachDays() {
       if (this.priseSeach < this.money) {
@@ -3761,7 +3761,7 @@ __webpack_require__.r(__webpack_exports__);
         this.ButthonToSeashEnable = true;
       }
 
-      return this.money.money / this.priseSeach;
+      return this.money / this.priseSeach;
     }
   },
   mounted: function mounted() {
@@ -3854,7 +3854,9 @@ __webpack_require__.r(__webpack_exports__);
         _this7.money = data.money;
         console.log("money " + _this7.money);
         _this7.priceToTop = data.toTop.price;
+        console.log("priceToTop " + _this7.priceToTop);
         _this7.priceFirstPlase = data.toFirstPlase.price;
+        console.log("priceFirstPlase", _this7.priceFirstPlase);
         _this7.priseSeach = data.toseachPlase.price;
       });
     }
@@ -54595,7 +54597,7 @@ var render = function() {
         domProps: { value: _vm.maxToTopDays }
       })
     ]),
-    _vm._v(" "),
+    _vm._v(" всего за " + _vm._s(_vm.priceToTop) + " рублей\n    "),
     _vm.money >= _vm.priceToTop
       ? _c("div", [
           _c(

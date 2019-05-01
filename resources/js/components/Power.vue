@@ -5,7 +5,7 @@
         <br>
         <b> Поместить анкету в шапку сайта(сменяемое меню) на
             <input name="days" id="days" type="number" min="0"
-                   :max="maxToTopDays" :value="maxToTopDays" ref="inputDaysNumber"></b>
+                   :max="maxToTopDays" :value="maxToTopDays" ref="inputDaysNumber"></b> всего за {{priceToTop}} рублей
         <div v-if="money>=priceToTop">
             <button class="btn-primary" v-on:click="toTop()">Поднять</button>
         </div>
@@ -71,7 +71,7 @@
         },
         computed: {
             maxToTopDays: function () {
-                return this.money.money / this.priceToTop
+                return this.money / this.priceToTop
                 //  return this.money.money / 1
             },
             maxSeachDays: function () {
@@ -82,7 +82,7 @@
                     this.ButthonToSeashEnable = true;
                 }
 
-                return this.money.money / this.priseSeach
+                return this.money / this.priseSeach
             }
 
 
@@ -183,7 +183,9 @@
                             this.money = data.money;
                             console.log("money "+this.money);
                             this.priceToTop = data.toTop.price;
+                            console.log("priceToTop "+this.priceToTop);
                             this.priceFirstPlase = data.toFirstPlase.price;
+                            console.log("priceFirstPlase",this.priceFirstPlase);
                             this.priseSeach = data.toseachPlase.price;
                         });
                 }
