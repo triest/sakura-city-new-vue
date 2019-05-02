@@ -9,7 +9,6 @@
     <img width="200" src="<?php echo asset("/images/upload/$girl->main_image")?>">
     {{$girl->status}}
     @if (Auth::guest())
-        <br>
 
     @else
         @if($girl->user_id!=auth()->user()->id)
@@ -54,13 +53,16 @@
 
     Телефон
 
-    @if($phone_settings==1)
-        {{$girl->phone}}
+    @if($phone_settings==1 and $phone!=null)
+        {{$phone}}
     @elseif($phone_settings==2)
-        @if($girl->user_id!=auth()->user()->id)
-            <div id="phoneRequwestApp">
-                <phonerequwest :id="{{$girl->id}}" :user_id="{{$girl->user_id}}"></phonerequwest>
-            </div>
+        @if (Auth::guest())
+        @else
+            @if($girl->user_id!=auth()->user()->id)
+                <div id="phoneRequwestApp">
+                    <phonerequwest :id="{{$girl->id}}" :user_id="{{$girl->user_id}}"></phonerequwest>
+                </div>
+            @endif
         @endif
     @endif
     <p class="card-text"><b>Рост : {{$girl->height}}</b>

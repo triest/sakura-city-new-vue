@@ -63,6 +63,7 @@ class GirlsController extends Controller
             'phone_settings',
             'status',
         ])->where('id', $id)->first();
+      
         if ($girl == null) {
             return $this->index();
         }
@@ -111,6 +112,8 @@ class GirlsController extends Controller
             }
         }
         $phone_settings = $girl->phone_settings;
+
+        $phone=null;
         if ($phone_settings == 1) {
             $phone = $girl->phone;
         } else {
@@ -134,7 +137,6 @@ class GirlsController extends Controller
                 }
             }
         }
-        
         return view('girlView')->with([
             'girl' => $girl,
             'images' => $images,
