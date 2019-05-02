@@ -51,12 +51,14 @@
     @endif
     <br>
 
-    Телефон
+    <b>Телефон:</b>
 
     @if($phone_settings==1 and $phone!=null)
         {{$phone}}
     @elseif($phone_settings==2)
         @if (Auth::guest())
+            <a href="{{ url('/login') }}">Войдите </a> или
+            <b><a href="{{ url('/join') }}">зарегистрируйтесь</a></b> что-бы смотреть телефон!
         @else
             @if($girl->user_id!=auth()->user()->id)
                 <div id="phoneRequwestApp">
@@ -84,10 +86,14 @@
     @endforeach
     <br>
 
-    <b>Интересы</b>
-    @foreach($interes as $target)
-        <li>{{$target->name}}</li>
-    @endforeach
+    <b>Интересы:</b>
+    @if($interes==null)
+        Интересы не указанны
+    @else
+        @foreach($interes as $target)
+            <li>{{$target->name}}</li>
+        @endforeach
+    @endif
     <br>
     <b>Город:</b> <br>
     @if($city!=null)
