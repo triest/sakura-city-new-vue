@@ -615,6 +615,8 @@ class AnketController extends Controller
         if ($user == null) {
             return redirect("\login");
         }
+
+
         $anket = Girl::select([
             'name',
             'id',
@@ -632,7 +634,22 @@ class AnketController extends Controller
             'user_id',
         ])->where('user_id', $user->id)->first();
 
-        return view('myAnket')->with(['anket' => $anket]);
+        //выбираем просмотры за день
+        $views_fo_day = DB::table('view_history')
+            ->where('girl_id', $anket->id)
+            ->whereBetween('time', [Carbon::now()->subDays(1), Carbon::now()->toDateTimeString()])
+            ->count();
+
+        $views_fo_week = DB::table('view_history')
+            ->where('girl_id', $anket->id)
+            ->whereBetween('time', [Carbon::now()->subDays(1), Carbon::now()->toDateTimeString()])
+            ->count();
+
+        return view('myAnket')->with([
+            'anket' => $anket,
+            'views_fo_day' => $views_fo_day,
+            'views_fo_week' => $views_fo_week,
+        ]);
     }
 
     public function getMyAnketData()

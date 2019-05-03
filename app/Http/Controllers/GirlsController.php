@@ -30,7 +30,7 @@ class GirlsController extends Controller
                     ->Paginate(9);
             }
         } else {
-            $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex'])
+            $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex', 'views_all'])
                 ->where('banned', '=', '0')
                 ->orderBy('created_at', 'DESC')
                 ->Paginate(9);
@@ -89,7 +89,7 @@ class GirlsController extends Controller
         $views = $views + 1;
         $girl->views_all = $views;
         //сохраняем данные просмотра
-        DB::table('view_history')->insert(['girl_id'=>$girl->id]);
+        DB::table('view_history')->insert(['girl_id' => $girl->id]);
 
         $girl->save();
 
@@ -162,7 +162,7 @@ class GirlsController extends Controller
             'interes' => $interes,
             'phone_settings' => $phone_settings,
             'phone' => $phone,
-            'views'=>$views
+            'views' => $views,
         ]);
     }
 

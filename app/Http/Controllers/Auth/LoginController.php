@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use DB;
 
 class LoginController extends Controller
 {
@@ -52,6 +54,18 @@ class LoginController extends Controller
         }
 
         return $request->only($this->username(), 'password');
+    }
+
+    function authenticated(Request $request, $user)
+    {
+        //тут когда последний раз заходил
+        $id = $user->get_gitl_id();
+        if ($id != null) {
+            DB::table('girls')
+                ->where('id', $id)
+                ->update(['last_login' => Carbon::now()->toDateTimeString()]);
+        }
+
     }
 
 }
