@@ -13,10 +13,10 @@ class AddLinkToPrivatePhotos extends Migration
      */
     public function up()
     {
-        Schema::table('private_photos', function (Blueprint $table) {
+       /* Schema::table('private_photos', function (Blueprint $table) {
             //
             $table->foreign('girl_id')->references('id')->on('girls');
-        });
+        });*/
     }
 
     /**
@@ -26,9 +26,10 @@ class AddLinkToPrivatePhotos extends Migration
      */
     public function down()
     {
-        Schema::table('private_photos', function (Blueprint $table) {
+        /*Schema::table('private_photos', function (Blueprint $table) {
             //
             $table->dropForeign('girl_id');
         });
+        */
     }
 }

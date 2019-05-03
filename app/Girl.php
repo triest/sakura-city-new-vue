@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Girl extends Model
 {
     //
-    protected $fillable = ['name', 'description', 'sex', 'ptivate','phone_settings'];
+    protected $fillable = ['name', 'description', 'sex', 'ptivate','phone_settings','views_all'];
 
     public function photos()
     {

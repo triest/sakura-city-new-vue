@@ -62,6 +62,7 @@ class GirlsController extends Controller
             'phone',
             'phone_settings',
             'status',
+            'views_all',
         ])->where('id', $id)->first();
 
         if ($girl == null) {
@@ -82,6 +83,12 @@ class GirlsController extends Controller
 
         //интересы
         $interes = $girl->interest()->get();
+
+        //счетчик просмотров
+        $views = $girl->views_all;
+        $views = $views + 1;
+        $girl->views_all = $views;
+        $girl->save();
 
         //проверяем, что просматривающий пользователь зареген.
         if ($AythUser != null) {
@@ -138,9 +145,9 @@ class GirlsController extends Controller
             }
 
         }
-    
-        if (count($interes)==0) {
-            $interes=null;
+
+        if (count($interes) == 0) {
+            $interes = null;
         }
 
         return view('girlView')->with([
@@ -152,6 +159,7 @@ class GirlsController extends Controller
             'interes' => $interes,
             'phone_settings' => $phone_settings,
             'phone' => $phone,
+            'views'=>$views
         ]);
     }
 

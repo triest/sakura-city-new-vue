@@ -24,7 +24,8 @@
         @if(auth()->user()->get_id()!=$girl->user_id)
         @endif
     @endif
-
+    <br>
+    <b>Просмотров анкеты:</b> {{$views}}
 
 
     <div class="card-body" id="likesApp">
@@ -57,7 +58,7 @@
         {{$phone}}
     @elseif($phone_settings==2)
         @if (Auth::guest())
-            <a href="{{ url('/login') }}">Войдите </a> или
+            <b><a href="{{ url('/login') }}">Войдите </a></b> или
             <b><a href="{{ url('/join') }}">зарегистрируйтесь</a></b> что-бы смотреть телефон!
         @else
             @if($girl->user_id!=auth()->user()->id)
