@@ -25,8 +25,8 @@
         @endif
     @endif
     <br>
-    <b>Просмотров анкеты:</b> {{$views}}
-
+    <img height="15" alt="просмотров анкеты:" title="просмотров анкеты" src="<?php echo asset("/images/eye.png")?>">
+    {{$views}}
 
     <div class="card-body" id="likesApp">
         @if (Auth::guest())

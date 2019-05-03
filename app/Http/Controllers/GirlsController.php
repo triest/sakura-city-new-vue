@@ -88,6 +88,9 @@ class GirlsController extends Controller
         $views = $girl->views_all;
         $views = $views + 1;
         $girl->views_all = $views;
+        //сохраняем данные просмотра
+        DB::table('view_history')->insert(['girl_id'=>$girl->id]);
+
         $girl->save();
 
         //проверяем, что просматривающий пользователь зареген.
