@@ -75,7 +75,7 @@
         Интересы:
         @foreach($allInterests as $tag)
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="tags[]" value="{{$tag}}"
+                <input type="checkbox" class="form-check-input" name="interests[]" value="{{$tag}}"
                        @if(in_array($tag,$anketInterests)) checked="1" @endif >
                 <label class="form-check-label" for="exampleCheck1">{{$tag}}</label>
             </div>

@@ -202,6 +202,7 @@ class AnketController extends Controller
         }
         $phone = $user->phone;
 
+        //цели
         $targets = Target::select(['id', 'name'])->get();
         $allTarget = [];
         foreach ($targets as $tag) {
@@ -213,17 +214,23 @@ class AnketController extends Controller
             array_push($anketTarget, $tag->name);
         }
 
-        $interests = $girl->interest()->get();
+        //интересы
+        $interests = Interest::select(['id', 'name'])->get();
+
 
         $allInterests = [];
         foreach ($interests as $tag) {
             array_push($allInterests, $tag->name);
         }
 
+
+        $interests = $girl->interest()->get();
+
         $anketInterest = [];
-        foreach ($interests as $tag) {
-            array_push($anketInterest, $tag->name);
+        foreach ($interests as $item) {
+            array_push($anketInterest, $item->name);
         }
+
 
         if ($girl->city_id != null) {
             $city = DB::table('cities')->where('id_city', '=', $girl->city_id)->first();
@@ -333,6 +340,22 @@ class AnketController extends Controller
                 $girl->target()->attach($target);
             }
         }
+
+
+        //тут интерексы
+        $girl->interest()->detach();
+        $interest_requwest = $request->input('interests');
+        if ($interest_requwest != null) {
+            $interests = Interest::select('id',
+                'name',
+                'created_at',
+                'updated_at')->whereIn('name', $interest_requwest)->get();
+
+            foreach ($interests as $interest) {
+                $girl->interest()->attach($interest);
+            }
+        }
+
 
         //    return $this->girlsEditAuchAnket();
         return redirect('/anket');
