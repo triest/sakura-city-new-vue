@@ -348,3 +348,7 @@ Route::get('/getalldataforsidepanel', 'AnketController@getalldataforsidepanel')-
 
 //gatalldataforpower
 Route::get('/gatalldataforpower', 'AnketController@gatalldataforpower')->middleware('auth');
+
+
+//тест почты
+Route::get('/testmail', 'MailController@testemail');
