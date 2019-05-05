@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-5">
             <img width="200" src="<?php echo asset("/images/upload/$girl->main_image")?>">
             {{$girl->status}}
             @if (Auth::guest())
