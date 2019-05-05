@@ -81,12 +81,25 @@
             </div>
         @endforeach
 
+        Настройки вилимости телефона: <br>
+        @foreach($phone_settings as $item)
+            @if($select_phone_settings->id==$item->id)
+                <input type="radio" id="phone_settings"
+                       name="phone_settings" value="{{$item->id}}" checked>
+            @else
+                <input type="radio" id="phone_settings"
+                       name="phone_settings" value="{{$item->id}}">
+            @endif
+            <label for="phone_settings">{{$item->name}}</label>
+            <br>
+        @endforeach
+
         <div id="country">
             <label>Город</label>
             @if($city!=null)
                 <input type="text" name="state" id="state" class="form-control" value="{{$city->name}}">
             @else
-                <input type="text" name="state" id="state" class="form-control">
+                <input name="cityname" id="cityname" oninput="findCity();" type="text"/>
             @endif
         </div>
 
@@ -138,6 +151,26 @@
             });
         </script>
 
+        <script>
+            function findCity() {
+                var inputcity = document.getElementById('cityname').value;
+                console.log(inputcity);
+                var x = document.getElementById("city");
+                var option = document.createElement("option");
+                axios.get('/findcity/' + inputcity, {
+                    params: {}
+                })
+                    .then((response) => {
+                        var data = response.data;
+                        $('#city').empty();
+                        for (var i = 0; i <= data[0].length; i++) {
+                            $('#city').append('<option value="' + data[0][i].id + '">' + data[0][i].name + '</option>');
+                        }
+                    });
+            }
+
+        </script>
+
 
         <br>
         <script type="text/javascript">
@@ -172,5 +205,6 @@
             });
         </script>
         <button type="submit" class="btn btn-default">Сохранить изминения</button>
+        <a class="btn btn-primary"  href="{{route('myAnket')}}" role="link" onclick=" relocate_home()">Отменить</a>
     </form>
 @endsection

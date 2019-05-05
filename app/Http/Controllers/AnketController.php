@@ -42,7 +42,11 @@ class AnketController extends Controller
         }
         // dump($user);
 
+        $select_phone_settings = $girl->phone_settings;
+
+
         $phone_setting = collect(DB::select('select * from phone_settings'));
+
         $phone = $user->phone;
 
         // dump($phone);
@@ -89,6 +93,7 @@ class AnketController extends Controller
         $girl->private = $request->private;
         $girl->user_id = $user->id;
         $girl->phone_settings = $request->phone_settings;
+        $girl->phone = $request->phone;
         $girl->save();
 
 
@@ -114,7 +119,7 @@ class AnketController extends Controller
         if (Auth::guest()) {
             return redirect('/login');
         }
-        dump($request);
+        // dump($request);
 
         if (Input::hasFile('images')) {
 
@@ -156,7 +161,7 @@ class AnketController extends Controller
         }
 
 
-        dump($request);
+        // dump($request);
         if ($request->has('city')) {
             $girl->city_id = $request->city;
         }
@@ -196,6 +201,7 @@ class AnketController extends Controller
             'region_id',
             'city_id',
             'private',
+            'phone_settings',
         ])->where('user_id', $user->id)->first();
         if ($girl == null) {
             return $this->index();
@@ -238,8 +244,19 @@ class AnketController extends Controller
             $city = null;
         }
 
+        $phone_settings = $girl->phone_settings;
+
+
         //   $countries = collect(DB::select('select * from countries'));
         //$countries = collect(DB::select('select * from countries'));
+
+
+        //тут настройки телефона
+        $select_phone_settings = DB::table('phone_settings')->where('id', $girl->phone_settings)->first();
+        $phone_setting = collect(DB::select('select * from phone_settings'));
+        // dump($select_phone_settings);
+        //dump($phone_setting);
+
 
         return view('editGirl')->with([
             'username' => $user->name,
@@ -252,6 +269,8 @@ class AnketController extends Controller
             'anketInterests' => $anketInterest,
             'allInterests' => $allInterests,
             'city' => $city,
+            'phone_settings' => $phone_setting,
+            'select_phone_settings' => $select_phone_settings,
         ]);
     }
 
@@ -356,6 +375,9 @@ class AnketController extends Controller
             }
         }
 
+        //тут сохраняем телефон
+        $girl->phone_settings = $request->phone_settings;
+        $girl->save();
 
         //    return $this->girlsEditAuchAnket();
         return redirect('/anket');

@@ -40,6 +40,8 @@ class Girl extends Model
     {
         return $this->hasOne('App\Girl');
     }
+
+    
 }
 
 
