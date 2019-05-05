@@ -21,23 +21,22 @@ class GirlsController extends Controller
         if (Auth::check()) {
             $user = Auth::user();  // и если админ
             if ($user->isAdmin == 1) {
-                $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'banned'])
+                $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'banned','age'])
                     ->orderBy('created_at', 'DESC')->simplePaginate(9);
             } else {
-                $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex'])
+                $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex','age'])
                     ->where('banned', '=', '0')
                     ->orderBy('created_at', 'DESC')
                     ->Paginate(9);
             }
         } else {
-            $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex', 'views_all'])
+            $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex', 'views_all','age'])
                 ->where('banned', '=', '0')
                 ->orderBy('created_at', 'DESC')
                 ->Paginate(9);
         }
         $user = Auth::user();
-
-
+      
         return view('index')->with(['girls' => $girls]);
     }
 
@@ -63,6 +62,7 @@ class GirlsController extends Controller
             'phone_settings',
             'status',
             'views_all',
+            'last_login'
         ])->where('id', $id)->first();
 
         if ($girl == null) {
@@ -71,6 +71,7 @@ class GirlsController extends Controller
         $images = $girl->photos()->get();
 
         $AythUser = Auth::user();
+
         $privatephoto = null;
 
         $targets = $girl->target()->get();
@@ -118,6 +119,7 @@ class GirlsController extends Controller
                     'user_id',
                     'private',
                     'phone_settings',
+                    'last_login'
                 ])->where('id', $id)->first();
                 $privatephoto = $girl->privatephotos()->get();
             }
@@ -153,6 +155,9 @@ class GirlsController extends Controller
         if (count($interes) == 0) {
             $interes = null;
         }
+
+
+        //время псоледнего захода
 
         return view('girlView')->with([
             'girl' => $girl,

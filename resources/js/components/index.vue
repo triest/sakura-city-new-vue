@@ -2,19 +2,19 @@
     <div>
         <b>Я</b> <br>
         <label for="who_woman">Женщина</label>
-        <input type="radio" id="who_woman" value="famele" v-model="who_met" checked> <br>
+        <input type="radio" id="who_woman" value="famele" v-model="who_met" checked>
         <label for="who_man">Мужчина</label>
-        <input type="radio" id="who_man" value="male" v-model="who_met"><br>
+        <input type="radio" id="who_man" value="male" v-model="who_met">
         <label for="contect_who">Неважно</label>
-        <input type="radio" id="contect_who" value="contect_who" v-model="who_met"><br>
+        <input type="radio" id="contect_who" value="contect_who" v-model="who_met">
 
-        <b> Хочу познакомиться с</b><br>
+        <b> Хочу познакомиться с</b>
         <label for="who_woman">женщиной</label>
-        <input type="radio" id="with_woman" value="famele" v-model="with_met"> <br>
+        <input type="radio" id="with_woman" value="famele" v-model="with_met">
         <label for="who_man">мужчиной</label>
-        <input type="radio" id="with_man" value="male" v-model="with_met"><br>
+        <input type="radio" id="with_man" value="male" v-model="with_met">
         <label for="contect_who">неважно</label>
-        <input type="radio" id="contect_with" value="contect_who" v-model="with_met"><br>
+        <input type="radio" id="contect_with" value="contect_who" v-model="with_met">
 
         Возраст:
         от:

@@ -10,7 +10,9 @@
                      src="<?php echo asset("/images/small/$girl->main_image")?>"></a>
             </a>
             <h4 class="card-title">
-                <b> <a href="{{route('showGirl',['id'=>$girl->id])}}">{{$girl->name}}</a></b>
+                <a href="{{route('showGirl',['id'=>$girl->id])}}"> <b>{{$girl->name}}</b>
+                    <small>{{$girl->age}}</small>
+                </a>
             </h4>
         </div>
     @endforeach

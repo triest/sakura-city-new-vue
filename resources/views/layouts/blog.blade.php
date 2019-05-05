@@ -8,7 +8,7 @@
     <title>{{$title}}</title>
 
 
-  <!--  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <!--  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
 
     <link href="{{asset('css/gallery-grid.css')}}">
@@ -58,6 +58,10 @@
         }
     </style>
 
+    <!-- иконка -->
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
+    <!-- For apple devices -->
+  <!--  <link rel="apple-touch-icon" type="image/png" href="/icon.png"/> -->
 </head>
 
 <body>
@@ -125,7 +129,7 @@
 <script src="{{ asset('js/offcanvas.js') }}" defer></script>
 <!-- скрипт для галлереи -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
-<script src="{{ asset('js/baguetteBox.min.js') }}" ></script>
+<script src="{{ asset('js/baguetteBox.min.js') }}"></script>
 <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
 <script>
     baguetteBox.run('.tz-gallery');

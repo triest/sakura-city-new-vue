@@ -73,8 +73,6 @@ Route::get('/getrequwesttoopenphone', 'ContactsController@getrequwesttoopenphone
 Route::get('/getnewphonaaplication', 'ContactsController@getnewphonaaplication')->middleware('auth');
 
 
-
-
 //отклонить доступ
 Route::get('/denideaccess', 'ContactsController@denideAccess')->middleware('auth');
 
@@ -341,7 +339,6 @@ Route::get('/likeSended', 'LikeController@likeSended');
 Route::get('/getLikesList', 'LikeController@getLikesList');
 
 
-
 //боковая панель, все данные
 //getalldataforsidepanel
 Route::get('/getalldataforsidepanel', 'AnketController@getalldataforsidepanel')->middleware('auth');
@@ -352,3 +349,7 @@ Route::get('/gatalldataforpower', 'AnketController@gatalldataforpower')->middlew
 
 //тест почты
 Route::get('/testmail', 'MailController@testemail');
+
+Route::get('/newsearch', function () {
+    return view('search.example');
+})->name('newsearch');

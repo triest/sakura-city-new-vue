@@ -7,6 +7,8 @@
         <div class="col-sm-5">
             <img width="200" src="<?php echo asset("/images/upload/$girl->main_image")?>">
             {{$girl->status}}
+            <br>
+            Последний раз была: {{$girl->last_login}}
             @if (Auth::guest())
 
             @else
