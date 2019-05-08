@@ -36,7 +36,7 @@ class GirlsController extends Controller
                 ->Paginate(9);
         }
         $user = Auth::user();
-      
+
         return view('index')->with(['girls' => $girls]);
     }
 

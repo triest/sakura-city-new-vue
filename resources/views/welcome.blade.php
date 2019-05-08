@@ -291,6 +291,8 @@
         }
     </style>
     <meta name="yandex-verification" content="af4168af7d682a89"/>
+    <!-- иконка -->
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
 </head>
 <body>
 <div class="flex-center position-ref full-height">

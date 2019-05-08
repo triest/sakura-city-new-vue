@@ -4,16 +4,25 @@
 
     @foreach($girls as $girl)
         <!-- md -комп-->
-        <div class="col-lg-4 col-md-3 col-sm-5 col-xs-9 ">
-            <a href="{{route('showGirl',['id'=>$girl->id])}}">
-                <img height="200" width="200"
-                     src="<?php echo asset("/images/small/$girl->main_image")?>"></a>
-            </a>
-            <h4 class="card-title">
-                <a href="{{route('showGirl',['id'=>$girl->id])}}"> <b>{{$girl->name}}</b>
-                    <small>{{$girl->age}}</small>
-                </a>
-            </h4>
+        <div class="col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow">
+            <div class="card  border-dark" style="width: 18rem; background-color: #eeeeee;
+             border: 1px solid transparent;
+             border-color: #666869;
+">
+                <div class="card-body">
+                    <a href="{{route('showGirl',['id'=>$girl->id])}}">
+                        <img height="150" width="150"
+                             src="<?php echo asset("/images/small/$girl->main_image")?>">
+                    </a>
+
+                    <h4 class="card-title">
+                        <a href="{{route('showGirl',['id'=>$girl->id])}}"> <b>{{$girl->name}}</b>
+                            <small>{{$girl->age}}</small>
+                        </a>
+                    </h4>
+
+                </div>
+            </div>
         </div>
     @endforeach
 

@@ -96,6 +96,7 @@
 
                     img {
                         width: 50px;
+                        height: 60px;
                         border-radius: 70%;
                         margin: 0 auto;
                     }

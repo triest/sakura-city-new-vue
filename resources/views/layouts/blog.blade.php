@@ -31,6 +31,8 @@
           rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
+          integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
     <link href="http://bootstrap-3.ru/examples/offcanvas/offcanvas.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -56,12 +58,21 @@
             padding-right: 0;
             padding-left: 0;
         }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 6px;
+        }
+
+
     </style>
+
 
     <!-- иконка -->
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
     <!-- For apple devices -->
-  <!--  <link rel="apple-touch-icon" type="image/png" href="/icon.png"/> -->
+    <!--  <link rel="apple-touch-icon" type="image/png" href="/icon.png"/> -->
 </head>
 
 <body>
@@ -70,7 +81,7 @@
 <script src="{{ asset('/js/axios.min.js') }}"></script>
 
 
-<div class="container">
+<div class="container" bg-light>
     <div class="card-body" id="app2">
         <carouseltemp></carouseltemp>
     </div>
@@ -88,45 +99,50 @@
         </div>
 
         <div class="col-xs-3 col-sm-3  sidebar-offcanvas" id="sidebar" role="navigation">
-            <div class="card-body" id="app">
-                @if (Auth::guest())
-                    <b><a href="{{ url('/login') }}">Войти</a></b><br>
-                    <b><a href="{{ url('/join') }}">Зарегистрироваться</a></b>
-                @else
-                    <b>{{auth()->user()->name}}</b><br>
-                    <b><a href="{{ url('/logout') }}">Выйти</a></b>
-                    <br>
-                    @if($girl=Auth::user()->anketisExsis()!=null)
-                    <!-- {{$girl=Auth::user()->anketisExsis()}} -->
-                        <img height="150" width="150"
-                             src="<?php echo asset("images/small/$girl->main_image")?>">
-                        <side-panel :user="{{auth()->user()}}"></side-panel>
-                        <br>
-                        <b><a class="btn btn-primary" href="{{route('myAnket')}}">Моя анкета</a> </b>
-                        <br>
+            <div class="card " style="width: 18rem; background-color: #eeeeee;
+             border: 1px solid transparent;
+             border-color: #666869;
+">
+                <div class="card-body" id="app">
+                    @if (Auth::guest())
+                        <b><a href="{{ url('/login') }}">Войти</a></b><br>
+                        <b><a href="{{ url('/join') }}">Зарегистрироваться</a></b>
                     @else
+                        <b>{{auth()->user()->name}}</b><br>
+                        <b><a href="{{ url('/logout') }}">Выйти</a></b>
                         <br>
-                        <b><a class="btn btn-primary" href="{{route('createGirlPage')}}">Создать анкету</a> </b>
+                        @if($girl=Auth::user()->anketisExsis()!=null)
+                        <!-- {{$girl=Auth::user()->anketisExsis()}} -->
+                            <img height="150" width="150"
+                                 src="<?php echo asset("images/small/$girl->main_image")?>">
+                            <side-panel :user="{{auth()->user()}}"></side-panel>
+                            <br>
+                            <b><a class="btn btn-primary" href="{{route('myAnket')}}">Моя анкета</a> </b>
+                            <br>
+                        @else
+                            <br>
+                            <b><a class="btn btn-primary" href="{{route('createGirlPage')}}">Создать анкету</a> </b>
+                            <br>
+                        @endif
                         <br>
-                    @endif
-                    <br>
-                    <!--check is admin -->
-                    @if(Auth::user()->is_admin==1)
-                        <b><a class="btn btn-success" href="{{route('adminPanel')}}">Панель администратора</a> </b>
+                        <!--check is admin -->
+                        @if(Auth::user()->is_admin==1)
+                            <b><a class="btn btn-success" href="{{route('adminPanel')}}">Панель администратора</a> </b>
+                            <br>
+                        @endif
                         <br>
-                    @endif
-                    <br>
-                    <b><a class="btn btn-success" href="{{route('main')}}">На главную</a> </b>
+                        <b><a class="btn btn-success" href="{{route('main')}}">На главную</a> </b>
 
-                @endif
+                    @endif
+                </div>
             </div>
         </div>
     </div><!--/span-->
 </div>
 
 <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
-<!--<script src="http://bootstrap-3.ru/examples/offcanvas/offcanvas.js"></script>-->
-<script src="{{ asset('js/offcanvas.js') }}" defer></script>
+<script src="http://bootstrap-3.ru/examples/offcanvas/offcanvas.js"></script>
+
 <!-- скрипт для галлереи -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
 <script src="{{ asset('js/baguetteBox.min.js') }}"></script>

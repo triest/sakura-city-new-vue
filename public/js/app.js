@@ -4226,6 +4226,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10063,7 +10091,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".contacts-list[data-v-484f3208] {\n  flex: 2;\n  max-height: 600px;\n  overflow: scroll;\n  border-left: 1px solid #a6a6a6;\n  max-width: 200px;\n}\n.contacts-list ul[data-v-484f3208] {\n  list-style-type: none;\n  padding: 0;\n}\n.contacts-list ul li[data-v-484f3208] {\n  display: flex;\n  padding: 0px;\n  border-bottom: 1px solid #aaaaaa;\n  height: 60px;\n  position: relative;\n  cursor: pointer;\n}\n.contacts-list ul li.selected[data-v-484f3208] {\n  background: #dfdfdf;\n}\n.contacts-list ul li span.unread[data-v-484f3208] {\n  background: #82e0a8;\n  color: #fff;\n  position: absolute;\n  right: 110px;\n  top: 1px;\n  display: flex;\n  font-weight: 400;\n  min-width: 20px;\n  justify-content: center;\n  align-items: center;\n  line-height: 20px;\n  font-size: 12px;\n  padding: 0 4px;\n  border-radius: 3px;\n}\n.contacts-list ul li .avatar[data-v-484f3208] {\n  flex: 1;\n  display: flex;\n  align-items: center;\n}\n.contacts-list ul li .avatar img[data-v-484f3208] {\n  width: 50px;\n  border-radius: 70%;\n  margin: 0 auto;\n}\n.contacts-list ul li .contact[data-v-484f3208] {\n  flex: 3;\n  font-size: 14px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.contacts-list ul li .contact p[data-v-484f3208] {\n  margin: 0;\n}\n.contacts-list ul li .contact p.name[data-v-484f3208] {\n  font-weight: bold;\n}", ""]);
+exports.push([module.i, ".contacts-list[data-v-484f3208] {\n  flex: 2;\n  max-height: 600px;\n  overflow: scroll;\n  border-left: 1px solid #a6a6a6;\n  max-width: 200px;\n}\n.contacts-list ul[data-v-484f3208] {\n  list-style-type: none;\n  padding: 0;\n}\n.contacts-list ul li[data-v-484f3208] {\n  display: flex;\n  padding: 0px;\n  border-bottom: 1px solid #aaaaaa;\n  height: 60px;\n  position: relative;\n  cursor: pointer;\n}\n.contacts-list ul li.selected[data-v-484f3208] {\n  background: #dfdfdf;\n}\n.contacts-list ul li span.unread[data-v-484f3208] {\n  background: #82e0a8;\n  color: #fff;\n  position: absolute;\n  right: 110px;\n  top: 1px;\n  display: flex;\n  font-weight: 400;\n  min-width: 20px;\n  justify-content: center;\n  align-items: center;\n  line-height: 20px;\n  font-size: 12px;\n  padding: 0 4px;\n  border-radius: 3px;\n}\n.contacts-list ul li .avatar[data-v-484f3208] {\n  flex: 1;\n  display: flex;\n  align-items: center;\n}\n.contacts-list ul li .avatar img[data-v-484f3208] {\n  width: 50px;\n  height: 60px;\n  border-radius: 70%;\n  margin: 0 auto;\n}\n.contacts-list ul li .contact[data-v-484f3208] {\n  flex: 3;\n  font-size: 14px;\n  overflow: hidden;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n.contacts-list ul li .contact p[data-v-484f3208] {\n  margin: 0;\n}\n.contacts-list ul li .contact p.name[data-v-484f3208] {\n  font-weight: bold;\n}", ""]);
 
 // exports
 
@@ -55284,22 +55312,24 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Отправит запрос на открытие\n        анкеты\n    ")]
+            [
+              _vm._v(
+                "Отправит запрос на открытие\n            анкеты\n        "
+              )
+            ]
           )
         : _vm._e(),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _vm.regStatus == "notreaded"
-        ? _c("h3", [_vm._v("Заявка не рассмотрена")])
+        ? _c("h5", [_vm._v("Заявка на открытие анкеты не рассмотрена")])
         : _vm._e(),
       _vm._v(" "),
       _vm.regStatus == "acept"
-        ? _c("h3", [_vm._v("Заявка принята")])
+        ? _c("h5", [_vm._v("Заявка на открытие анкеты принята")])
         : _vm._e(),
       _vm._v(" "),
       _vm.regStatus == "denide"
-        ? _c("h3", [_vm._v("Заявка отклонена")])
+        ? _c("h5", [_vm._v("Заявка на открытие анкеты отклонена")])
         : _vm._e(),
       _vm._v(" "),
       _c("br"),
@@ -55308,36 +55338,33 @@ var render = function() {
         "button",
         {
           staticClass: "btn-default",
+          staticStyle: {
+            "button.css3button {\n\tfont-family":
+              "Arial, Helvetica, sans-serif",
+            "font-size": "12px",
+            color: "#000000",
+            padding: "10px 20px",
+            background: "-webkit-gradient(",
+            "-moz-border-radius": "5px",
+            "-webkit-border-radius": "5px",
+            "border-radius": "5px",
+            border: "1px solid #000000"
+          },
           on: {
             click: function($event) {
               return _vm.showMessageWindow()
             }
           }
         },
-        [_vm._v("Написать сообщение")]
+        [_vm._v("Написать сообщение\n        ")]
       ),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _vm.showModal === true
-        ? _c(
-            "modal",
-            {
-              attrs: { id: _vm.id },
-              on: {
-                close: function($event) {
-                  _vm.showModal = false
-                }
-              }
-            },
-            [_vm._v(">")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "btn-success",
+          staticClass: " btn-success\n        ",
           attrs: { alt: "Отправить подарок" },
           on: {
             click: function($event) {
@@ -55345,7 +55372,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Отправить подарок")]
+        [_vm._v("Отправить подарок\n        ")]
       ),
       _vm._v(" "),
       _c("br"),
@@ -55387,6 +55414,21 @@ var render = function() {
               }
             }
           })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showModal === true
+        ? _c(
+            "modal",
+            {
+              attrs: { id: _vm.id },
+              on: {
+                close: function($event) {
+                  _vm.showModal = false
+                }
+              }
+            },
+            [_vm._v(">")]
+          )
         : _vm._e()
     ],
     1
@@ -56120,8 +56162,6 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _c("label", { attrs: { for: "who_man" } }, [_vm._v("Мужчина")]),
       _vm._v(" "),
       _c("input", {
@@ -56141,7 +56181,6 @@ var render = function() {
           }
         }
       }),
-      _c("br"),
       _vm._v(" "),
       _c("label", { attrs: { for: "contect_who" } }, [_vm._v("Неважно")]),
       _vm._v(" "),
@@ -56162,10 +56201,8 @@ var render = function() {
           }
         }
       }),
-      _c("br"),
       _vm._v(" "),
       _c("b", [_vm._v(" Хочу познакомиться с")]),
-      _c("br"),
       _vm._v(" "),
       _c("label", { attrs: { for: "who_woman" } }, [_vm._v("женщиной")]),
       _vm._v(" "),
@@ -56187,8 +56224,6 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _c("label", { attrs: { for: "who_man" } }, [_vm._v("мужчиной")]),
       _vm._v(" "),
       _c("input", {
@@ -56208,7 +56243,6 @@ var render = function() {
           }
         }
       }),
-      _c("br"),
       _vm._v(" "),
       _c("label", { attrs: { for: "contect_who" } }, [_vm._v("неважно")]),
       _vm._v(" "),
@@ -56229,7 +56263,6 @@ var render = function() {
           }
         }
       }),
-      _c("br"),
       _vm._v("\n\n    Возраст:\n    от:\n    "),
       _c("input", {
         directives: [
