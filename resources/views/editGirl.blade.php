@@ -81,7 +81,7 @@
             </div>
         @endforeach
 
-        Настройки вилимости телефона: <br>
+        Настройки видимости телефона: <br>
         @foreach($phone_settings as $item)
             @if($select_phone_settings->id==$item->id)
                 <input type="radio" id="phone_settings"

@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "laravel-echo": "^1.5.3",
+        "pc-bootstrap4-datetimepicker": "^4.17.50",
         "pusher-js": "^4.4.0",
         "vue-carousel": "^0.18.0"
     }

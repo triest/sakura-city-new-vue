@@ -33,7 +33,7 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
           integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-    <link href="http://bootstrap-3.ru/examples/offcanvas/offcanvas.css" rel="stylesheet">
+    <link href="http://bootstrap-4.ru/examples/offcanvas/offcanvas.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
@@ -64,8 +64,6 @@
             border: 1px solid transparent;
             border-radius: 6px;
         }
-
-
     </style>
 
 
@@ -73,6 +71,15 @@
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
     <!-- For apple devices -->
     <!--  <link rel="apple-touch-icon" type="image/png" href="/icon.png"/> -->
+
+    <!--datitimepicher -->
+    <!-- Optional theme -->
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+
+
+
 </head>
 
 <body>
@@ -118,7 +125,9 @@
                             <side-panel :user="{{auth()->user()}}"></side-panel>
                             <br>
                             <b><a class="btn btn-primary" href="{{route('myAnket')}}">Моя анкета</a> </b>
-                            <br>
+                            <br><br>
+                            <b><a class="btn btn-secondary" href="{{route('myevent')}}">Мои события</a> </b>
+
                         @else
                             <br>
                             <b><a class="btn btn-primary" href="{{route('createGirlPage')}}">Создать анкету</a> </b>
@@ -146,8 +155,32 @@
 <!-- скрипт для галлереи -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
 <script src="{{ asset('js/baguetteBox.min.js') }}"></script>
-<script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
-<script>
+
+
+<style type="text/css">
+
+    .datepicker {
+        font-size: 0.875em;
+    }
+
+    /* solution 2: the original datepicker use 20px so replace with the following:*/
+
+    .datepicker td, .datepicker th {
+        width: 1.5em;
+        height: 1.5em;
+    }
+
+</style>
+<script type="text/javascript">
+    $('#datepicker').datepicker({
+        weekStart: 1,
+        daysOfWeekHighlighted: "6,0",
+        autoclose: true,
+        todayHighlight: true,
+    });
+    $('#datepicker').datepicker("setDate", new Date());
+    <
+    script >
     baguetteBox.run('.tz-gallery');
 
     function relocate_home() {

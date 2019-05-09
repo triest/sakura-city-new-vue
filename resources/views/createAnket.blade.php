@@ -52,10 +52,10 @@
             <font color="red"><p>  {{$errors->first('age')}}</p></font>
         @endif
 
-        <label for="age">Рост:
+        <label for="height">Рост:
             <input type="number" name="height" min="100" value="160" onkeypress="return isNumber(event)">
         </label><br>
-        <label for="age">Вес:
+        <label for="weight">Вес:
             <input type="number" name="weight" min="45" step="1" value="50"
                    pattern="[^@]+@[^@]+\.[0-9]{2,3}" onkeypress="return isNumber(event)">
         </label><br>

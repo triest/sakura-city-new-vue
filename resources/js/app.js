@@ -84,12 +84,16 @@ Vue.component('likes', require('./components/likes.vue').default);
 
 Vue.component('phonerequwest', require('./components/phoneRequwest.vue').default);
 
+//события
+Vue.component('myevents', require('./components/Myevents.vue').default);
+
 const phoneRequwestApp = new Vue({
     el: '#phoneRequwestApp',
     data: {
         showModal: false
     }
 });
+
 
 const likesApp = new Vue({
     el: '#likesApp',
@@ -191,6 +195,13 @@ const indexvue = new Vue({
 
 const moneyApp = new Vue({
     el: '#moneyApp',
+    data: {
+        showModal: false
+    }
+});
+
+const myeventApp = new Vue({
+    el: '#myeventApp',
     data: {
         showModal: false
     }

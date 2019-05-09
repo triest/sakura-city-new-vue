@@ -353,3 +353,23 @@ Route::get('/testmail', 'MailController@testemail');
 Route::get('/newsearch', function () {
     return view('search.example');
 })->name('newsearch');
+
+
+//события
+Route::get('/myevent', 'MyEventController@myevent')->name('myevent')->middleware('auth', 'anketExist');
+
+//форма с созданием.
+Route::get('/createevent', 'MyEventController@create')->name('createevent')->middleware('auth', 'anketExist');
+
+Route::post('/createevent', 'MyEventController@store')->name('storeEvent')->middleware('auth', 'anketExist');
+
+//get my events list
+Route::get('/myeventslist', 'MyEventController@list')->name('myeventslist')->middleware('auth', 'anketExist');
+
+//редактировать событие
+Route::get('//editevent/{id}', 'MyEventController@edit')->name('editevent')->middleware('auth', 'anketExist');
+
+//тест карт
+Route::get('/map', function () {
+    return view("map");
+})->name('map')->middleware('auth');

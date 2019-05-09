@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Myevent;
 
 class Girl extends Model
 {
     //
-    protected $fillable = ['name', 'description', 'sex', 'ptivate','phone_settings','views_all'];
+    protected $fillable = ['name', 'description', 'sex', 'ptivate', 'phone_settings', 'views_all'];
 
     public function photos()
     {
@@ -41,7 +42,10 @@ class Girl extends Model
         return $this->hasOne('App\Girl');
     }
 
-    
+    public function eventorganizer()
+    {
+        return $this->hasMany('App\Myevent');
+    }
 }
 
 
