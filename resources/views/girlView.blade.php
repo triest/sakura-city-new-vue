@@ -134,6 +134,13 @@
         @else
             Не указан
         @endif
+        <br>
+        <b>Регион:</b> <br>
+        @if($region!=null)
+            {{$region->name}}
+        @else
+            Не указан
+        @endif
         <br><br>
 
         {!!$girl->description  !!}

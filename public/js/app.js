@@ -54929,7 +54929,7 @@ var render = function() {
         _vm._l(_vm.events, function(event) {
           return _c("tr", [
             _c("td", [
-              _c("a", { attrs: { href: "/editevent/" + event.id } }, [
+              _c("a", { attrs: { href: "/viewmyevent/" + event.id } }, [
                 _vm._v(_vm._s(event.name))
               ])
             ]),

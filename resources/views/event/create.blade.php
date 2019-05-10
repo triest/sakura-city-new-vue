@@ -16,6 +16,39 @@
         @if($errors->has('description'))
             <font color="red"><p class="errors">{{$errors->first('description')}}</p></font>
         @endif
+
+        <div id="country">
+            <label>Город. Начните вводить название, а за тем выберите из списка</label>
+            <input name="cityname" id="cityname" oninput="findCity();" type="text"/>
+        </div>
+
+
+        <label>Выбирите из списка:
+            <select id="city" class="city" style="width: 200px" name="city">
+                <option value="-">-</option>
+            </select>
+        </label>
+
+        <script>
+            function findCity() {
+                var inputcity = document.getElementById('cityname').value;
+                console.log(inputcity);
+                var x = document.getElementById("city");
+                var option = document.createElement("option");
+                axios.get('/findcity/' + inputcity, {
+                    params: {}
+                })
+                    .then((response) => {
+                        var data = response.data;
+                        $('#city').empty();
+                        for (var i = 0; i <= data[0].length; i++) {
+                            $('#city').append('<option value="' + data[0][i].id + '">' + data[0][i].name + '</option>');
+                        }
+                    });
+            }
+
+        </script>
+
         <div class="form-group">
             <label for="title">Место:</label>
             <input type="text" class="form-control" id="place" name="place" placeholder="место события"
@@ -59,7 +92,7 @@
 
 
         Фотографии события
-        <input type="file" id="images" accept="image/*" name="file" value="{{ old('file')}}">
+        <input type="file" id="images" accept="image/*" name="file[]" value="{{ old('file')}}">
         @if($errors->has('file'))
             <font color="red"><p>  {{$errors->first('file')}}</p></font>
         @endif

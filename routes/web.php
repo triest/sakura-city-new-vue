@@ -367,7 +367,10 @@ Route::post('/createevent', 'MyEventController@store')->name('storeEvent')->midd
 Route::get('/myeventslist', 'MyEventController@list')->name('myeventslist')->middleware('auth', 'anketExist');
 
 //редактировать событие
-Route::get('//editevent/{id}', 'MyEventController@edit')->name('editevent')->middleware('auth', 'anketExist');
+Route::get('/editevent/{id}', 'MyEventController@edit')->name('editevent')->middleware('auth', 'anketExist');
+
+//просмотр события
+Route::get('/viewmyevent/{id}', 'MyEventController@viewmyevent')->name('viewmyevent')->middleware('auth', 'anketExist');
 
 //тест карт
 Route::get('/map', function () {

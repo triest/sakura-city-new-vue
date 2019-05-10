@@ -21,16 +21,16 @@ class GirlsController extends Controller
         if (Auth::check()) {
             $user = Auth::user();  // и если админ
             if ($user->isAdmin == 1) {
-                $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'banned','age'])
+                $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'banned', 'age'])
                     ->orderBy('created_at', 'DESC')->simplePaginate(9);
             } else {
-                $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex','age'])
+                $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex', 'age'])
                     ->where('banned', '=', '0')
                     ->orderBy('created_at', 'DESC')
                     ->Paginate(9);
             }
         } else {
-            $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex', 'views_all','age'])
+            $girls = Girl::select(['id', 'name', 'phone', 'main_image', 'description', 'sex', 'views_all', 'age'])
                 ->where('banned', '=', '0')
                 ->orderBy('created_at', 'DESC')
                 ->Paginate(9);
@@ -62,7 +62,7 @@ class GirlsController extends Controller
             'phone_settings',
             'status',
             'views_all',
-            'last_login'
+            'last_login',
         ])->where('id', $id)->first();
 
         if ($girl == null) {
@@ -119,7 +119,7 @@ class GirlsController extends Controller
                     'user_id',
                     'private',
                     'phone_settings',
-                    'last_login'
+                    'last_login',
                 ])->where('id', $id)->first();
                 $privatephoto = $girl->privatephotos()->get();
             }
@@ -159,12 +159,23 @@ class GirlsController extends Controller
 
         //время псоледнего захода
 
+
+        //авв сшен
+        if ($girl->city_id != null) {
+            $city = DB::table('cities')->where('id', $girl->city_id)->first();
+            $region = DB::table('regions')->where('id_region', $city->id_region)->first();
+        } else {
+            $city = null;
+            $region = null;
+        }
+
         return view('girlView')->with([
             'girl' => $girl,
             'images' => $images,
             'privatephotos' => $privatephoto,
             'targets' => $targets,
             'city' => $city,
+            'region' => $region,
             'interes' => $interes,
             'phone_settings' => $phone_settings,
             'phone' => $phone,

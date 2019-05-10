@@ -4,6 +4,7 @@
 /public/images/avatars/*
 /public/images/small/
 /public/images/upload/
+/public/images/events/
 /storage/*.key
 /vendor
 #.env

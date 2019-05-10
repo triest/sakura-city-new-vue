@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Girl;
 use App\Myevent;
 use App\EventStatys;
+use App\EventPhoto;
 use Doctrine\DBAL\Events;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use File;
 
 class MyEventController extends Controller
 {
@@ -23,6 +25,7 @@ class MyEventController extends Controller
     //форма события
     public function create(Request $request)
     {
+
         return view('event.create');
     }
 
@@ -36,8 +39,10 @@ class MyEventController extends Controller
             'min' => 'required|numeric|min:1',
             'begin' => 'required',
             'end' => 'required',
-            // 'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'city' => 'required|numeric',
         ]);
+        //  dump($request);
+        // die();
         $event = new Myevent();
         $event->name = $request->name;
         $event->description = $request->description;
@@ -47,6 +52,9 @@ class MyEventController extends Controller
             $event->place = $request->place;
         }
 
+        // dump($request);
+        //
+
 
         $user = Auth::user();
         $girl = Girl::select(['id', 'name', 'user_id'])->where('user_id', $user->id)->first();
@@ -54,10 +62,25 @@ class MyEventController extends Controller
             return null;
         }
 
-        //
-
+        if ($request->has('city')) {
+            $event->city_id = $request->city;
+        }
         $event->girl_id = $girl->id;
         $event->save();
+
+        if (Input::hasFile('file')) {
+            foreach ($request->file as $key) {
+                $image_extension = $key->getClientOriginalExtension();
+                $image_new_name = md5(microtime(true));
+                $key->move(public_path().'/images/events/', strtolower($image_new_name.'.'.$image_extension));
+
+                $photo = new EventPhoto();
+                $photo['photo_name'] = $image_new_name.'.'.$image_extension;
+                $photo['event_id'] = $event->id;
+                $photo->save();
+            }
+        }
+
 
         return redirect("/myevent");
     }
@@ -92,6 +115,21 @@ class MyEventController extends Controller
         // dump($statys);
 
         return view('event.edit')->with(['event' => $events, 'statys' => $statys]);
+    }
+
+    public function viewmyevent($id)
+    {
+        $events = DB::table('myevents')
+            ->join('event_statys', 'event_statys.id', '=', 'myevents.status_id')
+            ->where('myevents.id', '=', $id)
+            ->first();
+        //dump($events);
+        $statys = EventStatys::select()->get();
+        // dump($events);
+
+        // dump($statys);
+
+        return view('event.viewmy')->with(['event' => $events, 'statys' => $statys]);
     }
 
 }

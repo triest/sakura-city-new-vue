@@ -4,7 +4,7 @@
             <thead>
             <tr>
                 <th>Событие</th>
-                <th>Место</th>
+                <th>Город</th>
                 <th>Дата события</th>
                 <th>Статус события</th>
                 <th>Создано</th>
@@ -14,7 +14,7 @@
             <tbody>
             <tr v-for="event in events">
                 <!--  <a :href="'/anket/'+like.id"> -->
-                <td><a :href="'/editevent/' +event.id">{{event.name}}</a></td>
+                <td><a :href="'/viewmyevent/' +event.id">{{event.name}}</a></td>
                 <td>{{event.place}}</td>
                 <td>{{event.begin}}</td>
                 <td>{{event.status_name}}</td>
@@ -44,11 +44,9 @@
                 axios.get('/myeventslist')
                     .then((response) => {
                         this.events = response.data.events;
-                        //console.log(response.data.events)
                     });
             }
         }
-
     }
 </script>
 
