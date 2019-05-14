@@ -3805,7 +3805,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/myeventslist').then(function (response) {
-        _this.events = response.data.events; //console.log(response.data.events)
+        _this.events = response.data.events;
       });
     }
   }
@@ -4989,6 +4989,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/eventmycity.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/eventmycity.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    city: {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      events: []
+    };
+  },
+  computed: {
+    getImageUrl: function getImageUrl() {
+      return this.getmainImage();
+    },
+    getImagesUrls: function getImagesUrls() {
+      return this.getimages();
+    }
+  },
+  mounted: function mounted() {
+    //console.log("eventmycity");
+    //console.log("id my city " + this.city)
+    this.findEventsInMyCity();
+  },
+  methods: {
+    findEventsInMyCity: function findEventsInMyCity() {
+      var _this = this;
+
+      axios.get('/eventsinmycity', {
+        params: {
+          id: this.city
+        }
+      }).then(function (response) {
+        _this.events = response.data; //console.log(response.data[0])
+      });
+      console.log(this.events);
+    }
+  }
+});
 
 /***/ }),
 
@@ -54959,7 +55024,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Событие")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Место")]),
+        _c("th", [_vm._v("Город")]),
         _vm._v(" "),
         _c("th", [_vm._v("Дата события")]),
         _vm._v(" "),
@@ -56237,6 +56302,47 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/eventmycity.vue?vue&type=template&id=585f4ab6&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/eventmycity.vue?vue&type=template&id=585f4ab6&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    _vm._l(_vm.events, function(event) {
+      return _c("div", [
+        _vm._v("\n        " + _vm._s(event.name) + " "),
+        _c("br"),
+        _vm._v("\n        Начало: " + _vm._s(event.begin) + " "),
+        _c("br"),
+        _vm._v("\n        Место: " + _vm._s(event.place)),
+        _c("br"),
+        _vm._v(" "),
+        _c("a", { attrs: { href: "/singup/" + event.id + "" } }, [
+          _vm._v("Записаться")
+        ])
+      ])
+    }),
+    0
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -69218,6 +69324,19 @@ Vue.component('likes', __webpack_require__(/*! ./components/likes.vue */ "./reso
 Vue.component('phonerequwest', __webpack_require__(/*! ./components/phoneRequwest.vue */ "./resources/js/components/phoneRequwest.vue").default); //события
 
 Vue.component('myevents', __webpack_require__(/*! ./components/Myevents.vue */ "./resources/js/components/Myevents.vue").default);
+Vue.component('eventmycity', __webpack_require__(/*! ./components/eventmycity.vue */ "./resources/js/components/eventmycity.vue").default);
+var events = new Vue({
+  el: '#events',
+  data: {
+    showModal: false
+  }
+});
+var eventmycity = new Vue({
+  el: '#eventmycityApp',
+  data: {
+    showModal: false
+  }
+});
 var phoneRequwestApp = new Vue({
   el: '#phoneRequwestApp',
   data: {
@@ -71829,6 +71948,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_delModal_vue_vue_type_template_id_5074d4a6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_delModal_vue_vue_type_template_id_5074d4a6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/eventmycity.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/eventmycity.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _eventmycity_vue_vue_type_template_id_585f4ab6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./eventmycity.vue?vue&type=template&id=585f4ab6&scoped=true& */ "./resources/js/components/eventmycity.vue?vue&type=template&id=585f4ab6&scoped=true&");
+/* harmony import */ var _eventmycity_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./eventmycity.vue?vue&type=script&lang=js& */ "./resources/js/components/eventmycity.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _eventmycity_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _eventmycity_vue_vue_type_template_id_585f4ab6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _eventmycity_vue_vue_type_template_id_585f4ab6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "585f4ab6",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/eventmycity.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/eventmycity.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/eventmycity.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_eventmycity_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./eventmycity.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/eventmycity.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_eventmycity_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/eventmycity.vue?vue&type=template&id=585f4ab6&scoped=true&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/eventmycity.vue?vue&type=template&id=585f4ab6&scoped=true& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_eventmycity_vue_vue_type_template_id_585f4ab6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./eventmycity.vue?vue&type=template&id=585f4ab6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/eventmycity.vue?vue&type=template&id=585f4ab6&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_eventmycity_vue_vue_type_template_id_585f4ab6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_eventmycity_vue_vue_type_template_id_585f4ab6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -771,7 +771,7 @@ class AnketController extends Controller
         $with_met = $request->with_met;
         $girls = Girl::query();
         $current_date = Carbon::now();// текушая дата
-        
+
         //  dump($current_date);
         $girls
             ->where('sex', $with_met)

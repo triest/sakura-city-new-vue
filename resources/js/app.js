@@ -87,6 +87,23 @@ Vue.component('phonerequwest', require('./components/phoneRequwest.vue').default
 //события
 Vue.component('myevents', require('./components/Myevents.vue').default);
 
+Vue.component('eventmycity', require('./components/eventmycity.vue').default);
+
+
+const events = new Vue({
+    el: '#events',
+    data: {
+        showModal: false
+    }
+});
+
+const eventmycity = new Vue({
+    el: '#eventmycityApp',
+    data: {
+        showModal: false
+    }
+});
+
 const phoneRequwestApp = new Vue({
     el: '#phoneRequwestApp',
     data: {

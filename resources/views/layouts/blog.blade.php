@@ -76,9 +76,19 @@
     <!-- Optional theme -->
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <style>
+        #eventmycityApp {
+            position: absolute;
+            top: 30%;
+            left: 100px;
+        }
 
-
-
+        #events {
+            position: absolute;
+            top: 30%;
+            left: 100px;
+        }
+    </style>
 
 </head>
 
@@ -86,6 +96,23 @@
 
 
 <script src="{{ asset('/js/axios.min.js') }}"></script>
+
+
+<div id="events">
+    События в вашем городе:<br>
+ 
+    <?php
+    $city = \App\Http\Controllers\GirlsController::checkCity();
+    //dump($city);
+    if ($city != null) {
+    echo $city->name;
+    ?>
+    <eventmycity :city="{{$city->id}}"></eventmycity>
+    <?
+    }
+    ?>
+
+</div>
 
 
 <div class="container" bg-light>
@@ -189,3 +216,10 @@
 </script>
 </body>
 </html>
+<script>
+    import Eventmycity from "./eventmycity";
+
+    export default {
+        components: {Eventmycity}
+    }
+</script>

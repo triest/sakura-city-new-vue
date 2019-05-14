@@ -132,4 +132,49 @@ class MyEventController extends Controller
         return view('event.viewmy')->with(['event' => $events, 'statys' => $statys]);
     }
 
+    public function eventsinmycity(Request $request)
+    {
+        /*
+                $events = DB::table('myevents')
+                    ->join('event_statys', 'event_statys.id', '=', 'myevents.status_id')
+                    ->leftJoin('events_participants','event_id','=','myevents.id')
+                    ->where('myevents.city_id', '=', $request->id)
+                    ->first();*/
+        /* $events = DB::table('events_participants')
+             ->select('myevents.id')
+             ->leftJoin('myevents', 'id', '=', 'events_participants.event_id')
+             ->get();*/
+
+        //->join('event_statys', 'event_statys.id', '=', 'myevents.status_id')
+        // ->leftJoin('myevents','id','=','events_participants.event_id')
+        //  ->select('myevenst.id')
+        // ->where('myevents.city_id', '=', $request->id)
+        //$user=collect(DB::select('select * from users where phone like ?', [$phone]))->first();
+        $events = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.status_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
+             where myev.city_id=? ', [$request->id]));
+
+        $count = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.city_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
+             where myev.city_id=? group by myev.id', [$request->id]));
+
+        // dump($count);
+
+        return $events;
+    }
+
+    public function singup($id)
+    {
+        //выбираем событие
+        /* $events = collect(DB::select('select myev.id,myev.name,myev.place,myev.description,myev.max_people,myev.min_people,myev.begin,myev.end,myev.status_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
+              where myev.id=? limit 1', [$id]));*/
+        $events = Myevent::select(['id', 'name', 'place', 'description','max_people'])->Paginate(1);
+        dump($events);
+        $count = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.city_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
+             where myev.id=? group by myev.id', [$id]));
+
+       // dump($count);
+
+
+        return view('event.singup')->with(['events' => $events, 'count' => $count]);
+    }
+
 }

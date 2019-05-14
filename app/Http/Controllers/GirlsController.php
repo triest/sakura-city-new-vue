@@ -6,11 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use File;
 use Illuminate\Support\Facades\DB;
+use  \App\Application;
+use Illuminate\Support\Facades\Session;
 use Storage;
 use DateTime;
 use App\User;
 use App\Girl;
+use App\Myevent;
+use App\EventStatys;
+use App\EventPhoto;
 use App\Photo;
+use GuzzleHttp\Client;
 
 
 class GirlsController extends Controller
@@ -18,6 +24,8 @@ class GirlsController extends Controller
     //
     function index()
     {
+
+
         if (Auth::check()) {
             $user = Auth::user();  // и если админ
             if ($user->isAdmin == 1) {
@@ -35,14 +43,36 @@ class GirlsController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->Paginate(9);
         }
-        $user = Auth::user();
+        $ip = $this->getIp();
+        $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
+        $response = json_decode($response);
+        $name = $response->city->name_ru;
 
-        return view('index')->with(['girls' => $girls]);
+        $city_in_my_databese = DB::table('cities')->where('name', $name)->first();
+
+
+        if (Session::has('city')) {//
+            $city = Session::get('city');
+            $city = DB::table('cities')->where('id_city', $city)->first();
+            if ($city != null) {
+                return view('index')->with(['girls' => $girls, 'events' => null, 'city' => $city]);
+            } else {
+                return view('index')->with(['girls' => $girls, 'events' => null, 'city' => null]);
+            }
+        } else {
+
+            $cities = DB::table('cities')->where('name', 'like', $name.'%')->first();
+
+            return view('confurmCity')->with(['city' => $response]);
+        }
+
+        return view('index')->with(['girls' => $girls, 'events' => null, 'city' => null]);
     }
 
 
-    public function showGirl($id)
-    {
+    public function showGirl(
+        $id
+    ) {
         $girl = Girl::select([
             'name',
             'id',
@@ -183,8 +213,10 @@ class GirlsController extends Controller
         ]);
     }
 
-    public function inputPhone(Request $request)
-    {
+    public
+    function inputPhone(
+        Request $request
+    ) {
         $validatedData = $request->validate([
             'phone' => 'required|numeric|min:11',
         ]);
@@ -211,8 +243,10 @@ class GirlsController extends Controller
     }
 
 
-    public function inputCode(Request $request)
-    {
+    public
+    function inputCode(
+        Request $request
+    ) {
         $validatedData = $request->validate([
             'code' => 'required|numeric|min:11',
         ]);
@@ -229,8 +263,11 @@ class GirlsController extends Controller
         }
     }
 
-    public function SendSMS($phone, $text)
-    {
+    public
+    function SendSMS(
+        $phone,
+        $text
+    ) {
         $src = '<?xml version="1.0" encoding="UTF-8"?>
         <SMS>
             <operations>
@@ -290,5 +327,100 @@ class GirlsController extends Controller
         }
 
         return null;
+    }
+
+    public static function getIpstatic()
+    {
+        foreach (array(
+                     'HTTP_CLIENT_IP',
+                     'HTTP_X_FORWARDED_FOR',
+                     'HTTP_X_FORWARDED',
+                     'HTTP_X_CLUSTER_CLIENT_IP',
+                     'HTTP_FORWARDED_FOR',
+                     'HTTP_FORWARDED',
+                     'REMOTE_ADDR',
+                 ) as $key) {
+            if (array_key_exists($key, $_SERVER) === true) {
+                foreach (explode(',', $_SERVER[$key]) as $ip) {
+                    $ip = trim($ip); // just to be safe
+                    if (filter_var($ip, FILTER_VALIDATE_IP,
+                            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
+                        return $ip;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public function agreeCity(Request $request)
+    {
+
+        $cities = DB::table('cities')->where('name', 'like', $request->city_name.'%')->first();
+        //  dump($cities);
+        $id = $cities->id_city;
+        //dump($id);
+        if ($id == null) {
+            return $this->index();
+        } else {
+            session(['city' => $id]);
+
+            return $this->index();
+        }
+
+        return $this->index();
+    }
+
+    public static function checkCity()
+    {
+        $user = Auth::user();
+
+        if ($user != null) {
+            $girl = $user->get_gitl_id();
+            $girl = Girl::select('id', 'city_id')->where('id', $girl)->first();
+
+            if ($girl != null) {
+
+                if ($girl->city_id != null) {
+                    //dump($girl);
+                    $city = DB::table('cities')->where('id', $girl->city_id)->first();
+                    //dump($city);
+                    if ($city != null) {
+                        return $city;
+                    } else {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        if ($user != null) {
+
+        } else {
+
+            if (Session::has('city')) {//
+
+                $city = Session::get('city');
+                $city = DB::table('cities')->where('id_city', $city)->first();
+                //dump($city);
+                $events = Myevent::select('id', 'name', 'city_id', 'begin', 'end', 'place')->where('city_id',
+                    $city->id_city)->get();
+
+                return $city;
+            } else {
+
+                $ip = GirlsController::getIpStatic();
+                $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
+                $response = json_decode($response);
+                $name = $response->city->name_ru;
+
+                $cities = DB::table('cities')->where('name', 'like', $name.'%')->first();
+                $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
+                $response = json_decode($response);
+
+                return view('confurmCity')->with(['city' => $response]);
+            }
+        }
     }
 }
