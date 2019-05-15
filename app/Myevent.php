@@ -17,9 +17,10 @@ class Myevent extends Model
     }
 
     //учстники
-    public function participant()
+    public function girls()
     {
-        return $this->hasMany('App\Girl');
+        //return $this->hasMany('App\Girl');
+        return $this->belongsToMany('App\Girl' );
     }
 
     //фотографии
@@ -31,7 +32,7 @@ class Myevent extends Model
     public function count_participant()
     {
         //return 1;
-        $particant = $this->participant()->get()->count();
+        $particant = $this->participant;
 
         return $particant;
     }

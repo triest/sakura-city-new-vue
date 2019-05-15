@@ -46,6 +46,10 @@ class Girl extends Model
     {
         return $this->hasMany('App\Myevent');
     }
+
+    public function events(){
+        return $this->belongsToMany('App\Myevent');
+    }
 }
 
 

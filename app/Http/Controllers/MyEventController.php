@@ -168,13 +168,13 @@ class MyEventController extends Controller
               where myev.id=? limit 1', [$id]));*/
         $events = Myevent::select(['id', 'name', 'place', 'description','max_people'])->Paginate(1);
         dump($events);
-        $count = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.city_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
+      /*  $count = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.city_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
              where myev.id=? group by myev.id', [$id]));
-
+*/
        // dump($count);
 
 
-        return view('event.singup')->with(['events' => $events, 'count' => $count]);
+        return view('event.singup')->with(['events' => $events,/* 'count' => $count*/]);
     }
 
 }
