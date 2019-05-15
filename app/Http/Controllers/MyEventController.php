@@ -150,11 +150,10 @@ class MyEventController extends Controller
         //  ->select('myevenst.id')
         // ->where('myevents.city_id', '=', $request->id)
         //$user=collect(DB::select('select * from users where phone like ?', [$phone]))->first();
-        $events = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.status_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
+        $events = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.status_id from myevents myev left join girl_myevent evpart on myev.id=evpart.myevent_id
              where myev.city_id=? ', [$request->id]));
 
-        $count = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.city_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
-             where myev.city_id=? group by myev.id', [$request->id]));
+
 
         // dump($count);
 
