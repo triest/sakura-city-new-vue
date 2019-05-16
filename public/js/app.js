@@ -2974,7 +2974,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    event: {
+      type: Object,
+      required: false
+    }
+  },
+  mounted: function mounted() {
+    console.log("event req");
+    console.log(this.event.id);
+    this.checkRequwet();
+  },
+  methods: {
+    makeRequwest: function makeRequwest() {
+      console.log("make req");
+      axios.get('/event/makerequwest', {
+        params: {
+          id: this.event.id
+        }
+      }).then(function (response) {//console.log(response.data);
+      });
+      this.checkRequwet();
+    },
+    checkRequwet: function checkRequwet() {
+      axios.get('/event/checkrequwest', {
+        params: {
+          id: this.event.id
+        }
+      }).then(function (response) {
+        console.log(response.data);
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -5052,8 +5089,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    //console.log("eventmycity");
-    //console.log("id my city " + this.city)
+    console.log("eventmycity"); //console.log("id my city " + this.city)
+
     this.findEventsInMyCity();
   },
   methods: {
@@ -53998,7 +54035,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "btn-default",
+        on: {
+          click: function($event) {
+            return _vm.makeRequwest()
+          }
+        }
+      },
+      [_vm._v("Отправить заявку на мероприятие\n    ")]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

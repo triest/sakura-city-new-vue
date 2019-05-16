@@ -6,6 +6,7 @@ use App\Girl;
 use App\Myevent;
 use App\EventStatys;
 use App\EventPhoto;
+use App\Eventrequwest;
 use Doctrine\DBAL\Events;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -154,7 +155,6 @@ class MyEventController extends Controller
              where myev.city_id=? ', [$request->id]));
 
 
-
         // dump($count);
 
         return $events;
@@ -165,15 +165,56 @@ class MyEventController extends Controller
         //выбираем событие
         /* $events = collect(DB::select('select myev.id,myev.name,myev.place,myev.description,myev.max_people,myev.min_people,myev.begin,myev.end,myev.status_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
               where myev.id=? limit 1', [$id]));*/
-        $events = Myevent::select(['id', 'name', 'place', 'description','max_people'])->Paginate(1);
+        $events = Myevent::select(['id', 'name', 'place', 'description', 'max_people'])->Paginate(1);
         dump($events);
-      /*  $count = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.city_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
-             where myev.id=? group by myev.id', [$id]));
-*/
-       // dump($count);
+        /*  $count = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.city_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
+               where myev.id=? group by myev.id', [$id]));
+  */
+
+        // dump($count);
 
 
         return view('event.singup')->with(['events' => $events,/* 'count' => $count*/]);
     }
 
+    public function makerequwest(Request $request)
+    {
+        // dump($request);
+        $user = Auth::user();
+        $girl = Girl::select(['id', 'name'])->where('user_id', $user->id)->first();
+        if ($girl == null) {
+            return null;
+        }
+        $eventreq = new Eventrequwest();
+        $eventreq->save();
+
+        $event = Myevent::select(['id', 'name', 'place', 'description', 'max_people'])->where('id',
+            $request->id)->first();
+
+        //$eventreq->who()->associate($girl)->save();
+        $eventreq->girl_id = $girl->id;
+        $eventreq->event_id = $event->id;      //  $eventreq->target()->associate($girl)->save();
+
+        $eventreq->status = 'unredded';
+        $eventreq->save();
+
+        return response()->json('ok');
+    }
+
+    public function checkrequwest(Request $request)
+    {
+        $user = Auth::user();
+        $girl = Girl::select(['id', 'name'])->where('user_id', $user->id)->first();
+        if ($girl == null) {
+            return null;
+        }
+        $eventreq = Eventrequwest::select(['id'])->where('girl_id', $girl->id)->where('event_id',
+            $request->id)->first();
+
+        if ($girl != null and $eventreq != null) {
+            return response()->json('notsend');
+        } else {
+            return response()->json('send');
+        }
+    }
 }

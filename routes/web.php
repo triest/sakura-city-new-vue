@@ -382,5 +382,8 @@ Route::get('/map', function () {
 
 Route::post('/agree', 'GirlsController@agreeCity')->name('agreeCity');
 
-Route::get('/eventsinmycity','MyEventController@eventsinmycity');
+Route::get('/eventsinmycity', 'MyEventController@eventsinmycity');
 
+Route::get('/event/makerequwest', 'MyEventController@makerequwest');
+
+Route::get('/event/checkrequwest', 'MyEventController@checkrequwest');

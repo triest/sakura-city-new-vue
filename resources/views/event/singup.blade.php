@@ -6,7 +6,7 @@
         Место: {{$event->place}} <br>
         {{$event->description}} <br>
 
-        Максимальное число участников: {{$event->max}}
+        Максимальное число участников: {{$event->max_people}}
         <br>
         <div class="container gallery-container">
             <div class="tz-gallery">
@@ -23,7 +23,7 @@
         </div>
 
         <div id="eventrequwestapp">
-            <eventrequwest></eventrequwest>
+            <eventrequwest :event="{{$event}}"></eventrequwest>
         </div>
 
         <b>Участники:</b>

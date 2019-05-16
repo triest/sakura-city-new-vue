@@ -50,6 +50,10 @@ class Girl extends Model
     public function events(){
         return $this->belongsToMany('App\Myevent');
     }
+
+    public function eventreq(){
+        return $this->belongsToMany('App\Eventrequwest');
+    }
 }
 
 
