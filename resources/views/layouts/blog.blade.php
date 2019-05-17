@@ -33,7 +33,7 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
           integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-   <!-- <link href="http://bootstrap-4.ru/examples/offcanvas/offcanvas.css" rel="stylesheet"> -->
+    <!-- <link href="http://bootstrap-4.ru/examples/offcanvas/offcanvas.css" rel="stylesheet"> -->
     <link href="{{ asset('cssoffcanvas.css') }}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
@@ -87,7 +87,12 @@
             position: absolute;
             top: 30%;
             left: 100px;
+            width: 18rem;
+            /*background-color: #eeeeee;
+            border: 1px solid transparent;
+            border-color: #666869;*/
         }
+
     </style>
 
 </head>
@@ -99,19 +104,25 @@
 
 
 <div id="events">
-    События в вашем городе:<br>
- 
-    <?php
-    $city = \App\Http\Controllers\GirlsController::checkCity();
-    //dump($city);
-    if ($city != null) {
-    echo $city->name;
-    ?>
-    <eventmycity :city="{{$city->id}}"></eventmycity>
-    <?
-    }
-    ?>
+    <div class="card " style="width: 18rem; background-color: #eeeeee;
+             border: 1px solid transparent;
+             border-color: #666869;
+">
+        <div class="card-body">
+            События в вашем городе:<br>
 
+            <?php
+            $city = \App\Http\Controllers\GirlsController::checkCity();
+            //dump($city);
+            if ($city != null) {
+            echo $city->name;
+            ?>
+            <eventmycity :city="{{$city->id}}"></eventmycity>
+            <?
+            }
+            ?>
+        </div>
+    </div>
 </div>
 
 
