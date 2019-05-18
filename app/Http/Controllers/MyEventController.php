@@ -7,6 +7,7 @@ use App\Myevent;
 use App\EventStatys;
 use App\EventPhoto;
 use App\Eventrequwest;
+//use App\Events\Neweventrequwest;
 use Doctrine\DBAL\Events;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -94,10 +95,14 @@ class MyEventController extends Controller
             return null;
         }
         //$events = $girl->eventorganizer()->get();
-        $events = DB::table('myevents')
+        /*$events = DB::table('myevents')
             ->join('event_statys', 'event_statys.id', '=', 'myevents.status_id')
+            ->distinct()
             ->where('girl_id', $girl->id)
-            ->get();
+            ->select('myevents.id','event_statys.status_name')
+            ->get();*/
+        //  $user = collect(DB::select('select * from users where phone like ?', [$phone]))->first();
+        $events = collect(DB::select('select myevents.id,myevents.name,event_statys.status_name,city.id_city,city.name as \'city_name\', myevents.place,myevents.created_at,myevents.updated_at from myevents  left join event_statys on myevents.status_id=event_statys.id left join cities city on myevents.city_id=city.id'));
 
         //dump($events);
 
@@ -129,6 +134,7 @@ class MyEventController extends Controller
         // dump($events);
 
         // dump($statys);
+        dump($events);
 
         return view('event.viewmy')->with(['event' => $events, 'statys' => $statys]);
     }
@@ -197,6 +203,7 @@ class MyEventController extends Controller
 
         $eventreq->status = 'unredded';
         $eventreq->save();
+       // broadcast(new Neweventrequwest($eventreq));
 
         return response()->json('ok');
     }
@@ -208,13 +215,14 @@ class MyEventController extends Controller
         if ($girl == null) {
             return null;
         }
-        $eventreq = Eventrequwest::select(['id'])->where('girl_id', $girl->id)->where('event_id',
+        $eventreq = Eventrequwest::select(['id', 'status'])->where('girl_id', $girl->id)->where('event_id',
             $request->id)->first();
 
-        if ($girl != null and $eventreq != null) {
-            return response()->json('notsend');
+        if ($girl != null && $eventreq != null) {
+            //return response()->json('sended');
+            return response()->json($eventreq);
         } else {
-            return response()->json('send');
+            return response()->json('notsend');
         }
     }
 }

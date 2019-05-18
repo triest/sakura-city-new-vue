@@ -5,6 +5,7 @@
             <tr>
                 <th>Событие</th>
                 <th>Город</th>
+                <th>Место события</th>
                 <th>Дата события</th>
                 <th>Статус события</th>
                 <th>Создано</th>
@@ -15,7 +16,8 @@
             <tr v-for="event in events">
                 <!--  <a :href="'/anket/'+like.id"> -->
                 <td><a :href="'/viewmyevent/' +event.id">{{event.name}}</a></td>
-                <td>{{event.place}}</td>
+                <td>{{event.city_name}}</td>
+                <th>{{event.place}}</th>
                 <td>{{event.begin}}</td>
                 <td>{{event.status_name}}</td>
                 <td>{{event.created_at}}</td>

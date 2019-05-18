@@ -12,12 +12,16 @@
 
     Если нет, начните вводить название, а за тем выбирите из списка.
     <label>Город</label>
+    <form action="{{route('newCity')}}" method="post" enctype="multipart/form-data">
+        {{ csrf_field() }}
     <input name="cityname" id="cityname" oninput="findCity();" type="text"/>
     <label>Выбирите из списка:
         <select id="city" class="city" style="width: 200px" name="city">
             <option value="-">-</option>
         </select>
     </label>
+        <button type="submit" class="btn btn-default">Да</button>
+    </form>
     <br>
 
     <script>

@@ -113,14 +113,16 @@
 
             <?php
             $city = \App\Http\Controllers\GirlsController::checkCity();
-            //dump($city);
+            // dump($city);
             if ($city != null) {
             echo $city->name;
             ?>
+            <a class="btn btn-primary" href="{{route('changeCity')}}" role="link">Изменить город</a>
             <eventmycity :city="{{$city->id}}"></eventmycity>
             <?
             }
             ?>
+
         </div>
     </div>
 </div>

@@ -2978,6 +2978,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     event: {
@@ -2990,24 +2997,44 @@ __webpack_require__.r(__webpack_exports__);
     console.log(this.event.id);
     this.checkRequwet();
   },
+  data: function data() {
+    return {
+      requwestSended: false,
+      requwestStatus: null
+    };
+  },
   methods: {
     makeRequwest: function makeRequwest() {
+      var _this = this;
+
       console.log("make req");
       axios.get('/event/makerequwest', {
         params: {
           id: this.event.id
         }
-      }).then(function (response) {//console.log(response.data);
+      }).then(function (response) {
+        //console.log(response.data);
+        _this.checkRequwet();
       });
       this.checkRequwet();
     },
     checkRequwet: function checkRequwet() {
+      var _this2 = this;
+
       axios.get('/event/checkrequwest', {
         params: {
           id: this.event.id
         }
       }).then(function (response) {
-        console.log(response.data);
+        //console.log(response.data);
+        var res = response.data;
+
+        if (res == "notsend") {
+          _this2.requwestSended = 'false';
+        } else if (res['status'] == 'unredded') {
+          _this2.requwestSended = true;
+          _this2.requwestStatus = "notreaded";
+        }
       });
     }
   }
@@ -3814,6 +3841,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -54036,18 +54065,38 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "btn-default",
-        on: {
-          click: function($event) {
-            return _vm.makeRequwest()
-          }
-        }
-      },
-      [_vm._v("Отправить заявку на мероприятие\n    ")]
-    )
+    _vm.requwestSended == "false"
+      ? _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn-default",
+              on: {
+                click: function($event) {
+                  return _vm.makeRequwest()
+                }
+              }
+            },
+            [_vm._v("Отправить заявку на мероприятие\n        ")]
+          )
+        ])
+      : _c("div", [
+          _c("b", [
+            _vm._v(" Ваша заявка на участие в мероприятии отправленна!")
+          ])
+        ]),
+    _vm._v(" "),
+    _vm.requwestStatus == "notreaded"
+      ? _c("h5", [_vm._v("Заявка на участие в мероприятии не рассмотренна")])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.requwestStatus == "acept"
+      ? _c("h5", [_vm._v("Заявка нана участие  принята")])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.requwestStatus == "denide"
+      ? _c("h5", [_vm._v("Заявка нана участие отклонена")])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -55090,7 +55139,9 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(event.place))]),
+            _c("td", [_vm._v(_vm._s(event.city_name))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(event.place))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(event.begin))]),
             _vm._v(" "),
@@ -55116,6 +55167,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Событие")]),
         _vm._v(" "),
         _c("th", [_vm._v("Город")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Место события")]),
         _vm._v(" "),
         _c("th", [_vm._v("Дата события")]),
         _vm._v(" "),

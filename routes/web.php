@@ -316,7 +316,7 @@ Route::post('/edittarget', 'AdminController@edittarget')->middleware('auth', 'ad
 Route::post('/deletetargret', 'AdminController@deletetargret')->middleware('auth', 'admin');
 
 //поиск города
-Route::get('/findcity/{name}', 'AnketController@findcity')->middleware('auth');
+Route::get('/findcity/{name}', 'AnketController@findcity');//->middleware('auth');
 
 Route::get('/getargetslist', 'AdminController@gettargetslist');
 
@@ -380,7 +380,11 @@ Route::get('/map', function () {
     return view("map");
 })->name('map')->middleware('auth');
 
-Route::post('/agree', 'GirlsController@agreeCity')->name('agreeCity');
+Route::post('/city/agree', 'GirlsController@agreeCity')->name('agreeCity');
+
+Route::post('/city/new', 'GirlsController@newCity')->name('newCity');
+
+Route::get('/city/change','GirlsController@changeCity')->name('changeCity');
 
 Route::get('/eventsinmycity', 'MyEventController@eventsinmycity');
 

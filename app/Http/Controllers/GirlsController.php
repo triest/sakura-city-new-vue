@@ -356,7 +356,24 @@ class GirlsController extends Controller
 
     public function agreeCity(Request $request)
     {
+        $cities = DB::table('cities')->where('name', 'like', $request->city_name.'%')->first();
+        //  dump($cities);
+        $id = $cities->id_city;
+        //dump($id);
+        if ($id == null) {
+            return $this->index();
+        } else {
+            session(['city' => $id]);
 
+            return $this->index();
+        }
+
+        return $this->index();
+    }
+
+    public function newCity(Request $request)
+    {
+        dump($request);
         $cities = DB::table('cities')->where('name', 'like', $request->city_name.'%')->first();
         //  dump($cities);
         $id = $cities->id_city;
@@ -422,5 +439,15 @@ class GirlsController extends Controller
                 return view('confurmCity')->with(['city' => $response]);
             }
         }
+    }
+
+    public function changeCity()
+    {
+        //return view('confurmCity')->with(['city' => $response]);
+        $city = Session::get('city');
+        $city = DB::table('cities')->where('id_city', $city)->first();
+        dump($city);
+
+        return view('changeCity')->with(['city' => $city]);
     }
 }
