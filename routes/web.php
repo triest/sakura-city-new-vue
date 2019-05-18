@@ -372,8 +372,13 @@ Route::get('/editevent/{id}', 'MyEventController@edit')->name('editevent')->midd
 //просмотр события
 Route::get('/viewmyevent/{id}', 'MyEventController@viewmyevent')->name('viewmyevent')->middleware('auth', 'anketExist');
 
+Route::get('/listrequwest', 'MyEventController@listrequwest')->name('viewmyevent')->middleware('auth',
+    'anketExist');
+
 //присоединиться к событию
 Route::get('/singup/{id}', 'MyEventController@singup')->name('viewmyevent')->middleware('auth', 'anketExist');
+
+//
 
 //тест карт
 Route::get('/map', function () {
@@ -384,7 +389,7 @@ Route::post('/city/agree', 'GirlsController@agreeCity')->name('agreeCity');
 
 Route::post('/city/new', 'GirlsController@newCity')->name('newCity');
 
-Route::get('/city/change','GirlsController@changeCity')->name('changeCity');
+Route::get('/city/change', 'GirlsController@changeCity')->name('changeCity');
 
 Route::get('/eventsinmycity', 'MyEventController@eventsinmycity');
 

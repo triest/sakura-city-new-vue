@@ -125,16 +125,22 @@ class MyEventController extends Controller
 
     public function viewmyevent($id)
     {
-        $events = DB::table('myevents')
+       /* $events = DB::table('myevents')
             ->join('event_statys', 'event_statys.id', '=', 'myevents.status_id')
             ->where('myevents.id', '=', $id)
-            ->first();
+            ->first();*/
+       $events= collect(DB::select('select myevents.id,myevents.name,myevents.description,myevents.begin,myevents.end_applications,city.id_city,city.name as \'city_name\', myevents.place,myevents.created_at,myevents.updated_at from myevents  left join event_statys statys on myevents.status_id=statys.id left join cities city on myevents.city_id=city.id where myevents.id=?',[$id]));
+        $events=$events[0];
+
         //dump($events);
         $statys = EventStatys::select()->get();
         // dump($events);
 
         // dump($statys);
         dump($events);
+        if ($events == null) {
+            return null;
+        }
 
         return view('event.viewmy')->with(['event' => $events, 'statys' => $statys]);
     }
@@ -172,7 +178,7 @@ class MyEventController extends Controller
         /* $events = collect(DB::select('select myev.id,myev.name,myev.place,myev.description,myev.max_people,myev.min_people,myev.begin,myev.end,myev.status_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
               where myev.id=? limit 1', [$id]));*/
         $events = Myevent::select(['id', 'name', 'place', 'description', 'max_people'])->Paginate(1);
-        dump($events);
+        //dump($events);
         /*  $count = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.city_id from myevents myev left join events_participants evpart on myev.id=evpart.event_id
                where myev.id=? group by myev.id', [$id]));
   */
@@ -203,7 +209,8 @@ class MyEventController extends Controller
 
         $eventreq->status = 'unredded';
         $eventreq->save();
-       // broadcast(new Neweventrequwest($eventreq));
+
+        // broadcast(new Neweventrequwest($eventreq));
 
         return response()->json('ok');
     }
@@ -224,5 +231,12 @@ class MyEventController extends Controller
         } else {
             return response()->json('notsend');
         }
+    }
+
+    public function listrequwest(Request $request)
+    {
+        dump($request);
+        $list= collect(DB::select('select * from event_requwest where event_id=?', [$request->id]));
+        dump($list);
     }
 }

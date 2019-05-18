@@ -92,6 +92,15 @@ Vue.component('eventmycity', require('./components/eventmycity.vue').default);
 //заапрос на участие в событии
 Vue.component('eventrequwest', require('./components/Eventrequwest.vue').default);
 
+Vue.component('requwesteventlist', require('./components/Requwesteventlist.vue').default);
+
+const requwesteventlistapp= new Vue({
+    el: '#requwesteventlistapp',
+    data: {
+        showModal: false
+    }
+});
+
 const eventequwestapp = new Vue({
     el: '#eventrequwestapp',
     data: {
