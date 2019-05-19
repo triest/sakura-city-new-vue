@@ -6,7 +6,7 @@
     <form action="{{route('agreeCity')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="city_name" id="city_name" value="{{$city->city->name_ru}}">
-        <input type="hidden" name="city_id" id="city_id" value="{{$city->city->id}}">
+        <input type="hidden" name="city_id" id="id_city" value="{{$city->city->id_city}}">
         <button type="submit" class="btn btn-default">Да</button>
     </form>
 

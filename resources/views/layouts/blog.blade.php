@@ -118,7 +118,7 @@
             echo $city->name;
             ?>
             <a class="btn btn-primary" href="{{route('changeCity')}}" role="link">Изменить город</a>
-            <eventmycity :city="{{$city->id}}"></eventmycity>
+            <eventmycity :city="{{$city->id_city}}"></eventmycity>
             <?
             }
             ?>

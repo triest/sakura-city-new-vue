@@ -22,10 +22,8 @@ use GuzzleHttp\Client;
 class GirlsController extends Controller
 {
     //
-    function index()
+    function index(Request $request)
     {
-
-
         if (Auth::check()) {
             $user = Auth::user();  // и если админ
             if ($user->isAdmin == 1) {
@@ -47,12 +45,8 @@ class GirlsController extends Controller
         $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
         $response = json_decode($response);
         $name = $response->city->name_ru;
-
-        $city_in_my_databese = DB::table('cities')->where('name', $name)->first();
-
-
-        if (Session::has('city')) {//
-            $city = Session::get('city');
+        if ($request->session()->get('city')) {
+            $city = $request->session()->get('city');
             $city = DB::table('cities')->where('id_city', $city)->first();
             if ($city != null) {
                 return view('index')->with(['girls' => $girls, 'events' => null, 'city' => $city]);
@@ -60,10 +54,9 @@ class GirlsController extends Controller
                 return view('index')->with(['girls' => $girls, 'events' => null, 'city' => null]);
             }
         } else {
-
             $cities = DB::table('cities')->where('name', 'like', $name.'%')->first();
 
-            return view('confurmCity')->with(['city' => $response]);
+            return view('confurnCity2')->with(['city' => $cities]);
         }
 
         return view('index')->with(['girls' => $girls, 'events' => null, 'city' => null]);
@@ -192,8 +185,12 @@ class GirlsController extends Controller
 
         //авв сшен
         if ($girl->city_id != null) {
-            $city = DB::table('cities')->where('id', $girl->city_id)->first();
-            $region = DB::table('regions')->where('id_region', $city->id_region)->first();
+            $city = DB::table('cities')->where('id_city', $girl->city_id)->first();
+            if ($city != null) {
+                $region = DB::table('regions')->where('id_region', $city->id_region)->first();
+            } else {
+                $region = null;
+            }
         } else {
             $city = null;
             $region = null;
@@ -223,9 +220,7 @@ class GirlsController extends Controller
 
         $phone = $request->phone;
         $user = collect(DB::select('select * from users where phone like ?', [$phone]))->first();
-        //   dump($user);
         if ($user != null and $user->phone_confirmed == 1) {
-            //echo 'Phone alredy exist!';
             return response()->json(['result' => 'alredy']);
         }
         $user = Auth::user();
@@ -263,11 +258,8 @@ class GirlsController extends Controller
         }
     }
 
-    public
-    function SendSMS(
-        $phone,
-        $text
-    ) {
+    public function SendSMS($phone, $text)
+    {
         $src = '<?xml version="1.0" encoding="UTF-8"?>
         <SMS>
             <operations>
@@ -359,94 +351,84 @@ class GirlsController extends Controller
         $cities = DB::table('cities')->where('name', 'like', $request->city_name.'%')->first();
         //  dump($cities);
         $id = $cities->id_city;
-        //dump($id);
         if ($id == null) {
-            return $this->index();
+            return redirect('/anket');
         } else {
-            session(['city' => $id]);
+            $request->session()->put('city', $id);
 
-            return $this->index();
+            return redirect('/anket');
         }
-
-        return $this->index();
     }
 
     public function newCity(Request $request)
     {
-        dump($request);
-        $cities = DB::table('cities')->where('name', 'like', $request->city_name.'%')->first();
-        //  dump($cities);
-        $id = $cities->id_city;
-        //dump($id);
-        if ($id == null) {
-            return $this->index();
-        } else {
-            session(['city' => $id]);
+        //dump($request);
+        /*$cities = DB::table('cities')->where('name', 'like', $request->city_name.'%')->first();
+        $id = $cities->id_city;*/
+        $city = $request->city;
 
-            return $this->index();
+        if ($city == null) {
+            return redirect('/anket');
+        } else {
+            $request->session()->put('city', $request->city);
+            return redirect('/anket');
         }
 
-        return $this->index();
     }
 
     public static function checkCity()
     {
-        $user = Auth::user();
+        /*  $user = Auth::user();
 
-        if ($user != null) {
-            $girl = $user->get_gitl_id();
-            $girl = Girl::select('id', 'city_id')->where('id', $girl)->first();
+          if ($user != null) {
+              $girl = $user->get_gitl_id();
+              $girl = Girl::select('id', 'city_id')->where('id', $girl)->first();
 
-            if ($girl != null) {
+              if ($girl != null) {
 
-                if ($girl->city_id != null) {
-                    //dump($girl);
-                    $city = DB::table('cities')->where('id', $girl->city_id)->first();
-                    //dump($city);
-                    if ($city != null) {
-                        return $city;
-                    } else {
-                        return null;
-                    }
-                }
-            }
-        }
+                  if ($girl->city_id != null) {
+                      //dump($girl);
+                      $city = DB::table('cities')->where('id', $girl->city_id)->first();
+                      //dump($city);
+                      if ($city != null) {
+                          return $city;
+                      } else {
+                          return null;
+                      }
+                  }
+              }
+          }
 
-        if ($user != null) {
+          if ($user != null) {
 
+          } else {
+  */
+        $city = session()->get('city');
+        if ($city != null) {//
+            $city = Session::get('city');
+            $city = DB::table('cities')->where('id_city', $city)->first();
+            $events = Myevent::select('id', 'name', 'city_id', 'begin', 'end', 'place')->where('city_id',
+                $city->id_city)->get();
+
+            return $city;
         } else {
+            $ip = GirlsController::getIpStatic();
+            $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
+            $response = json_decode($response);
+            $name = $response->city->name_ru;
 
-            if (Session::has('city')) {//
+            $cities = DB::table('cities')->where('name', 'like', $name.'%')->first();
+            $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
+            $response = json_decode($response);
 
-                $city = Session::get('city');
-                $city = DB::table('cities')->where('id_city', $city)->first();
-                //dump($city);
-                $events = Myevent::select('id', 'name', 'city_id', 'begin', 'end', 'place')->where('city_id',
-                    $city->id_city)->get();
-
-                return $city;
-            } else {
-
-                $ip = GirlsController::getIpStatic();
-                $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
-                $response = json_decode($response);
-                $name = $response->city->name_ru;
-
-                $cities = DB::table('cities')->where('name', 'like', $name.'%')->first();
-                $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
-                $response = json_decode($response);
-
-                return view('confurmCity')->with(['city' => $response]);
-            }
+            return view('confurmCity')->with(['city' => $response]);
         }
     }
 
     public function changeCity()
     {
-        //return view('confurmCity')->with(['city' => $response]);
         $city = Session::get('city');
         $city = DB::table('cities')->where('id_city', $city)->first();
-        dump($city);
 
         return view('changeCity')->with(['city' => $city]);
     }

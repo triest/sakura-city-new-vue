@@ -3,10 +3,10 @@
 @section('content')
     Ваш город {{$city->name}}
 
-   <form action="{{route('agreeCity')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('agreeCity')}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input type="hidden" name="city_name" id="city_name" value="{{$city->name}}">
-        <input type="hidden" name="city_id" id="city_id" value="{{$city->id}}">
+        <input type="hidden" name="city_id" id="city_id" value="{{$city->id_city}}">
         <button type="submit" class="btn btn-default">Да</button>
     </form>
 
@@ -37,7 +37,7 @@
                     var data = response.data;
                     $('#city').empty();
                     for (var i = 0; i <= data[0].length; i++) {
-                        $('#city').append('<option value="' + data[0][i].id + '">' + data[0][i].name + '</option>');
+                        $('#city').append('<option value="' + data[0][i].id_city + '">' + data[0][i].name + '</option>');
                     }
                 });
         }
