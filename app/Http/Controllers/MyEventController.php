@@ -41,10 +41,10 @@ class MyEventController extends Controller
             'min' => 'required|numeric|min:1',
             'begin' => 'required',
             'end' => 'required',
-            'city' => 'required|numeric',
+            'city' => 'required',
         ]);
-        //  dump($request);
-        // die();
+
+
         $event = new Myevent();
         $event->name = $request->name;
         $event->description = $request->description;
@@ -78,7 +78,7 @@ class MyEventController extends Controller
 
                 $photo = new EventPhoto();
                 $photo['photo_name'] = $image_new_name.'.'.$image_extension;
-                $photo['event_id'] = $event->id;
+                $photo['myevent_id'] = $event->id;
                 $photo->save();
             }
         }
@@ -102,7 +102,7 @@ class MyEventController extends Controller
             ->select('myevents.id','event_statys.status_name')
             ->get();*/
         //  $user = collect(DB::select('select * from users where phone like ?', [$phone]))->first();
-        $events = collect(DB::select('select myevents.id,myevents.name,event_statys.status_name,city.id_city,city.name as \'city_name\', myevents.place,myevents.created_at,myevents.updated_at from myevents  left join event_statys on myevents.status_id=event_statys.id left join cities city on myevents.city_id=city.id'));
+        $events = collect(DB::select('select myevents.id,myevents.name,event_statys.status_name,city.id_city,city.name as \'city_name\', myevents.place,myevents.created_at,myevents.updated_at from myevents  left join event_statys on myevents.status_id=event_statys.id left join cities city on myevents.city_id=city.id_city'));
 
         //dump($events);
 
@@ -125,12 +125,13 @@ class MyEventController extends Controller
 
     public function viewmyevent($id)
     {
-       /* $events = DB::table('myevents')
-            ->join('event_statys', 'event_statys.id', '=', 'myevents.status_id')
-            ->where('myevents.id', '=', $id)
-            ->first();*/
-       $events= collect(DB::select('select myevents.id,myevents.name,myevents.description,myevents.begin,myevents.end_applications,city.id_city,city.name as \'city_name\', myevents.place,myevents.created_at,myevents.updated_at from myevents  left join event_statys statys on myevents.status_id=statys.id left join cities city on myevents.city_id=city.id where myevents.id=?',[$id]));
-        $events=$events[0];
+        /* $events = DB::table('myevents')
+             ->join('event_statys', 'event_statys.id', '=', 'myevents.status_id')
+             ->where('myevents.id', '=', $id)
+             ->first();*/
+        $events = collect(DB::select('select myevents.id,myevents.name,myevents.description,myevents.begin,myevents.end_applications,city.id_city,city.name as \'city_name\', myevents.place,myevents.created_at,myevents.updated_at from myevents  left join event_statys statys on myevents.status_id=statys.id left join cities city on myevents.city_id=city.id where myevents.id=?',
+            [$id]));
+        $events = $events[0];
 
         //dump($events);
         $statys = EventStatys::select()->get();
@@ -236,7 +237,7 @@ class MyEventController extends Controller
     public function listrequwest(Request $request)
     {
         dump($request);
-        $list= collect(DB::select('select * from event_requwest where event_id=?', [$request->id]));
+        $list = collect(DB::select('select * from event_requwest where event_id=?', [$request->id]));
         dump($list);
     }
 }

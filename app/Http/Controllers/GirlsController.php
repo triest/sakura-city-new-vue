@@ -210,8 +210,7 @@ class GirlsController extends Controller
         ]);
     }
 
-    public
-    function inputPhone(
+    public function inputPhone(
         Request $request
     ) {
         $validatedData = $request->validate([
@@ -238,8 +237,7 @@ class GirlsController extends Controller
     }
 
 
-    public
-    function inputCode(
+    public function inputCode(
         Request $request
     ) {
         $validatedData = $request->validate([
@@ -362,15 +360,17 @@ class GirlsController extends Controller
 
     public function newCity(Request $request)
     {
-        //dump($request);
-        /*$cities = DB::table('cities')->where('name', 'like', $request->city_name.'%')->first();
-        $id = $cities->id_city;*/
+        $validatedData = $request->validate([
+            'city' => 'required',
+        ]);
+
         $city = $request->city;
 
         if ($city == null) {
             return redirect('/anket');
         } else {
             $request->session()->put('city', $request->city);
+
             return redirect('/anket');
         }
 
@@ -405,6 +405,7 @@ class GirlsController extends Controller
   */
         $city = session()->get('city');
         if ($city != null) {//
+            //dump($city);
             $city = Session::get('city');
             $city = DB::table('cities')->where('id_city', $city)->first();
             $events = Myevent::select('id', 'name', 'city_id', 'begin', 'end', 'place')->where('city_id',
