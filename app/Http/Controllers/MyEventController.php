@@ -125,13 +125,9 @@ class MyEventController extends Controller
 
     public function viewmyevent($id)
     {
-        /* $events = DB::table('myevents')
-             ->join('event_statys', 'event_statys.id', '=', 'myevents.status_id')
-             ->where('myevents.id', '=', $id)
-             ->first();*/
-        $events = collect(DB::select('select myevents.id,myevents.name,myevents.description,
-myevents.begin,myevents.end_applications,city.id_city,city.name as \'city_name\',myevents.status_id, 
-myevents.place,myevents.created_at,myevents.updated_at,statys.id,statys.status_name from myevents  
+        $events = collect(DB::select('select myevents.id as `id`, myevents.name,myevents.description,
+myevents.begin,myevents.end_applications,city.id_city,city.name as \'city_name\',myevents.status_id as `status_id`, 
+myevents.place,myevents.created_at,myevents.updated_at,statys.status_name from myevents  
 left join event_statys statys on myevents.status_id=statys.id left join
  cities city on myevents.city_id=city.id_city where myevents.id=?',
             [$id]));
@@ -142,12 +138,12 @@ left join event_statys statys on myevents.status_id=statys.id left join
         // dump($events);
 
         // dump($statys);
-        dump($events);
+        //dump($events);
 
         if ($events == null) {
             return null;
         }
-      
+
         return view('event.viewmy')->with(['event' => $events, 'statys' => $statys]);
     }
 
@@ -171,7 +167,7 @@ left join event_statys statys on myevents.status_id=statys.id left join
         //$user=collect(DB::select('select * from users where phone like ?', [$phone]))->first();
         $events = collect(DB::select('select myev.id,myev.name,myev.begin,myev.end,myev.status_id from myevents myev left join girl_myevent evpart on myev.id=evpart.myevent_id
              where myev.city_id=? ', [$request->id]));
-
+        dump($events);
 
         // dump($count);
 
@@ -239,10 +235,11 @@ left join event_statys statys on myevents.status_id=statys.id left join
         }
     }
 
-    public function listrequwest(Request $request)
+    public function requwestlist(Request $request)
     {
-        dump($request);
-        $list = collect(DB::select('select * from event_requwest where event_id=?', [$request->id]));
-        dump($list);
+        $list = collect(DB::select('select * from event_requwest where event_id=?', [$request->eventid]));
+        return response()->json($list);
     }
+
+
 }

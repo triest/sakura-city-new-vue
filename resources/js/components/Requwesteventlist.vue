@@ -1,33 +1,36 @@
 <template>
-
+<div>
+    <b>T</b>
+</div>
 </template>
 
 <script>
     export default {
         props: {
             eventid: {
-                type: '',
+                type: Number,
                 required: true
             },
         },
         components: {},
         mounted() {
-            console.log("requwesteventlist");
+            console.log("requwesteventlist1");
             this.getrequwests();
+            console.log(this.eventid)
         },
         data() {
             return {}
         },
         methods: {
             getrequwests() {
-                axios.get('/listrequwest', {
+                axios.get('/eventrequwestlist', {
                         params: {
                             eventid: this.eventid
                         }
                     }
                 )
                     .then((response) => {
-                        console.log(response.data)
+
                     });
             }
         }

@@ -4568,30 +4568,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     eventid: {
-      type: '',
+      type: Number,
       required: true
     }
   },
   components: {},
   mounted: function mounted() {
-    console.log("requwesteventlist");
+    console.log("requwesteventlist1");
     this.getrequwests();
+    console.log(this.eventid);
   },
   data: function data() {
     return {};
   },
   methods: {
     getrequwests: function getrequwests() {
-      axios.get('/listrequwest', {
+      axios.get('/eventrequwestlist', {
         params: {
           eventid: this.eventid
         }
-      }).then(function (response) {
-        console.log(response.data);
-      });
+      }).then(function (response) {});
     }
   }
 });
@@ -55839,9 +55840,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("b", [_vm._v("T")])])
+  }
+]
 render._withStripped = true
 
 
