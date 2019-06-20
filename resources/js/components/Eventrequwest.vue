@@ -4,12 +4,9 @@
             <button class="btn-default" v-on:click="makeRequwest()">Отправить заявку на мероприятие
             </button>
         </div>
-        <div v-else>
-            <b> Ваша заявка на участие в мероприятии отправленна!</b>
-        </div>
-        <h5 v-if="requwestStatus=='notreaded'">Заявка на участие в мероприятии не рассмотренна</h5>
-        <h5 v-if="requwestStatus=='acept'">Заявка нана участие  принята</h5>
-        <h5 v-if="requwestStatus=='denide'">Заявка нана участие отклонена</h5>
+        <h5 v-if="requwestStatus=='notreaded'"><b>Ваша на участие в мероприятии не рассмотренна</b></h5>
+        <h5 v-if="requwestStatus=='acept'"><b>Заявка нана участие  принята</b></h5>
+        <h5 v-if="requwestStatus=='denide'"><b>Заявка нана участие отклонена</b></h5>
     </div>
 </template>
 

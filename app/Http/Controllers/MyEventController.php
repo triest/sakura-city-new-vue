@@ -129,7 +129,11 @@ class MyEventController extends Controller
              ->join('event_statys', 'event_statys.id', '=', 'myevents.status_id')
              ->where('myevents.id', '=', $id)
              ->first();*/
-        $events = collect(DB::select('select myevents.id,myevents.name,myevents.description,myevents.begin,myevents.end_applications,city.id_city,city.name as \'city_name\', myevents.place,myevents.created_at,myevents.updated_at from myevents  left join event_statys statys on myevents.status_id=statys.id left join cities city on myevents.city_id=city.id where myevents.id=?',
+        $events = collect(DB::select('select myevents.id,myevents.name,myevents.description,
+myevents.begin,myevents.end_applications,city.id_city,city.name as \'city_name\',myevents.status_id, 
+myevents.place,myevents.created_at,myevents.updated_at,statys.id,statys.status_name from myevents  
+left join event_statys statys on myevents.status_id=statys.id left join
+ cities city on myevents.city_id=city.id_city where myevents.id=?',
             [$id]));
         $events = $events[0];
 
@@ -139,10 +143,11 @@ class MyEventController extends Controller
 
         // dump($statys);
         dump($events);
+
         if ($events == null) {
             return null;
         }
-
+      
         return view('event.viewmy')->with(['event' => $events, 'statys' => $statys]);
     }
 
