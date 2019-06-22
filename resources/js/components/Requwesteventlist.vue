@@ -1,14 +1,12 @@
 <template>
     <div>
-        <b>Td</b>
         <ul class="nav nav-tabs">
             <li role="presentation" @click="currentTab = 'accepted'"><a href="#"><b>Принятые</b></a></li>
-            <li role="presentation" @click="currentTab = 'rejected'"><a href="#"><b>Отклененные</b></a></li>
+            <li role="presentation" @click="currentTab = 'rejected'"><a href="#"><b>Отклоненные</b></a></li>
             <li role="presentation" @click="currentTab = 'unredded'"><a href="#"><b>Непрочитанные</b></a></li>
             <li role="presentation" @click="currentTab = 'all'"><a href="#"><b>Все</b></a>
             </li>
         </ul>
-
         <div class="applicationClass">
             <div class="tab-content">
                 <div v-if="currentTab == 'all'">
