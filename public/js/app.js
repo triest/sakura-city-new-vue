@@ -4570,6 +4570,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     eventid: {
@@ -4584,15 +4605,25 @@ __webpack_require__.r(__webpack_exports__);
     console.log(this.eventid);
   },
   data: function data() {
-    return {};
+    return {
+      requwestlist: null
+    };
   },
   methods: {
     getrequwests: function getrequwests() {
+      var _this = this;
+
       axios.get('/eventrequwestlist', {
         params: {
           eventid: this.eventid
         }
-      }).then(function (response) {});
+      }).then(function (response) {
+        _this.requwestlist = response.data;
+      });
+    },
+    myFunction: function myFunction(id) {
+      console.log(id);
+      window.open("/anket/" + id, "_blank");
     }
   }
 });
@@ -55840,16 +55871,81 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c("b", [_vm._v("Td")]),
+      _vm._v(" "),
+      _vm._l(_vm.requwestlist, function(requwest) {
+        return _c("div", [
+          _c(
+            "div",
+            { staticClass: "col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow" },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "card  border-dark",
+                  staticStyle: {
+                    width: "18rem",
+                    "background-color": "#eeeeee",
+                    border: "1px solid transparent",
+                    "border-color": "#666869"
+                  }
+                },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("p", [_vm._v(_vm._s(requwest.id))]),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "app" } }, [
+                      _c(
+                        "a",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.myFunction(requwest.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("img", {
+                            attrs: {
+                              src: "/images/upload/" + requwest.main_image,
+                              height: "150"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.myFunction(requwest.id)
+                            }
+                          }
+                        },
+                        [_c("p", [_vm._v(_vm._s(requwest.name))])]
+                      ),
+                      _vm._v(
+                        ",\n                                " +
+                          _vm._s(requwest.age) +
+                          "\n                        "
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]
+          )
+        ])
+      })
+    ],
+    2
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("b", [_vm._v("T")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

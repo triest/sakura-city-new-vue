@@ -237,7 +237,7 @@ left join event_statys statys on myevents.status_id=statys.id left join
 
     public function requwestlist(Request $request)
     {
-        $list = collect(DB::select('select * from event_requwest where event_id=?', [$request->eventid]));
+        $list = collect(DB::select('select girl.id,girl.name,girl.age,req.status,girl.main_image from event_requwest req left join girls girl on req.girl_id=girl.id where event_id=?', [$request->eventid]));
         return response()->json($list);
     }
 

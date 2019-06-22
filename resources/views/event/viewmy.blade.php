@@ -1,9 +1,9 @@
 @extends('layouts.blog', ['title' => 'Мои события'])
 @section('content')
     <div class="row">
-        <div class="card  border-dark" style="width: 60rem; background-color: #eeeeee;
+        <div class="card  border-dark" <!--style="width: 60rem; background-color: #eeeeee;
              border: 1px solid transparent;
-             border-color: #666869;
+             border-color: #666869; -->
 ">
             <div class="card-body">
                 <a class="btn btn-primary" href="{{route('main')}}" role="link" onclick=" relocate_home()">Редактировать</a>
@@ -18,6 +18,7 @@
                 Список подавших заявку:
                 <div id="requwesteventlistapp">
                     <requwesteventlist eventid="{{$event->id}}"></requwesteventlist>
+                    
                 </div>
             </div>
         </div>
