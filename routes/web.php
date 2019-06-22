@@ -397,4 +397,7 @@ Route::get('/event/makerequwest', 'MyEventController@makerequwest');
 
 Route::get('/event/checkrequwest', 'MyEventController@checkrequwest');
 
+
 Route::get('/eventrequwestlist', 'MyEventController@requwestlist');
+
+Route::get('/event/accept', 'MyEventController@accept');
