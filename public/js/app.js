@@ -4730,10 +4730,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     eventid: {
@@ -56221,26 +56217,6 @@ var render = function() {
                                     _c(
                                       "a",
                                       {
-                                        staticClass: "btn btn-primary",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.accept(
-                                              requwest.id,
-                                              requwest.req_id
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                            Принять\n                                        "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "a",
-                                      {
                                         staticClass: "btn btn-danger",
                                         on: {
                                           click: function($event) {
@@ -56388,26 +56364,6 @@ var render = function() {
                                   _c(
                                     "a",
                                     {
-                                      staticClass: "btn btn-primary",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.accept(
-                                            requwest.id,
-                                            requwest.req_id
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        Принять\n                                    "
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
                                       staticClass: "btn btn-danger",
                                       on: {
                                         click: function($event) {
@@ -56421,6 +56377,32 @@ var render = function() {
                                     [
                                       _vm._v(
                                         "\n                                        Отклонить\n                                    "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          requwest.status == "denide"
+                            ? _c("h5", [
+                                _c("b", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-primary",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.accept(
+                                            requwest.id,
+                                            requwest.req_id
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        Принять\n                                    "
                                       )
                                     ]
                                   )
@@ -56502,7 +56484,7 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          requwest.status == "unredded"
+                          requwest.status == "denide"
                             ? _c("h5", [
                                 _c("b", [
                                   _c(
@@ -56521,72 +56503,6 @@ var render = function() {
                                     [
                                       _vm._v(
                                         "\n                                        Принять\n                                    "
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "btn btn-danger",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.reject(
-                                            requwest.id,
-                                            requwest.req_id
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        Отклонить\n                                    "
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          requwest.status == "accept"
-                            ? _c("h5", [
-                                _c("b", [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "btn btn-primary",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.accept(
-                                            requwest.id,
-                                            requwest.req_id
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        Принять\n                                    "
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "btn btn-danger",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.reject(
-                                            requwest.id,
-                                            requwest.req_id
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        Отклонить\n                                    "
                                       )
                                     ]
                                   )
@@ -56753,6 +56669,32 @@ var render = function() {
                                     [
                                       _vm._v(
                                         "\n                                        Отклонить\n                                    "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          requwest.status == "denide"
+                            ? _c("h5", [
+                                _c("b", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-primary",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.accept(
+                                            requwest.id,
+                                            requwest.req_id
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        Принять\n                                    "
                                       )
                                     ]
                                   )

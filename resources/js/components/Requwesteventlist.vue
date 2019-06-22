@@ -36,9 +36,6 @@
                                         </a>
                                     </b></h5>
                                     <h5 v-if="requwest.status=='accept'"><b>
-                                        <a class="btn btn-primary" @click="accept(requwest.id,requwest.req_id)">
-                                            Принять
-                                        </a>
                                         <a class="btn btn-danger" @click="reject(requwest.id,requwest.req_id)">
                                             Отклонить
                                         </a>
@@ -66,6 +63,7 @@
                                 <a @click="myFunction(requwest.id)">
                                     <p>{{requwest.name}},
                                         {{requwest.age}}</p></a>
+
                                 <h5 v-if="requwest.status=='unredded'"><b>
                                     <a class="btn btn-primary" @click="accept(requwest.id,requwest.req_id)">
                                         Принять
@@ -75,14 +73,16 @@
                                     </a>
                                 </b></h5>
                                 <h5 v-if="requwest.status=='accept'"><b>
-                                    <a class="btn btn-primary" @click="accept(requwest.id,requwest.req_id)">
-                                        Принять
-                                    </a>
                                     <a class="btn btn-danger" @click="reject(requwest.id,requwest.req_id)">
                                         Отклонить
                                     </a>
                                 </b></h5>
-
+                                <h5 v-if="requwest.status=='denide'"><b>
+                                    <a class="btn btn-primary" @click="accept(requwest.id,requwest.req_id)">
+                                        Принять
+                                    </a>
+                                </b>
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -104,23 +104,13 @@
                                 <a @click="myFunction(requwest.id)">
                                     <p>{{requwest.name}},
                                         {{requwest.age}}</p></a>
-                                <h5 v-if="requwest.status=='unredded'"><b>
-                                    <a class="btn btn-primary" @click="accept(requwest.id,requwest.req_id)">
-                                        Принять
-                                    </a>
-                                    <a class="btn btn-danger" @click="reject(requwest.id,requwest.req_id)">
-                                        Отклонить
-                                    </a>
-                                </b></h5>
-                                <h5 v-if="requwest.status=='accept'"><b>
-                                    <a class="btn btn-primary" @click="accept(requwest.id,requwest.req_id)">
-                                        Принять
-                                    </a>
-                                    <a class="btn btn-danger" @click="reject(requwest.id,requwest.req_id)">
-                                        Отклонить
-                                    </a>
-                                </b></h5>
 
+                                <h5 v-if="requwest.status=='denide'"><b>
+                                    <a class="btn btn-primary" @click="accept(requwest.id,requwest.req_id)">
+                                        Принять
+                                    </a>
+                                </b>
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -157,8 +147,14 @@
                                     <a class="btn btn-danger" @click="reject(requwest.id,requwest.req_id)">
                                         Отклонить
                                     </a>
-                                </b></h5>
 
+                                </b></h5>
+                                <h5 v-if="requwest.status=='denide'"><b>
+                                    <a class="btn btn-primary" @click="accept(requwest.id,requwest.req_id)">
+                                        Принять
+                                    </a>
+                                </b>
+                                </h5>
                             </div>
                         </div>
                     </div>
