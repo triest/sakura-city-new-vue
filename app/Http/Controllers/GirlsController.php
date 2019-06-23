@@ -17,6 +17,7 @@ use App\EventStatys;
 use App\EventPhoto;
 use App\Photo;
 use GuzzleHttp\Client;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 
 class GirlsController extends Controller
@@ -378,52 +379,74 @@ class GirlsController extends Controller
 
     public static function checkCity()
     {
-        /*  $user = Auth::user();
+        if (Auth::user()) {
+            $user = Auth::user()->first();
+            dump($user);
+            $girl = $user->anketisExsis();
+            $girl=Girl::select(['id'])->where('user_id',$user->id)->first();
+            dump($girl);
+            if ($girl == null) {
+                return null;
+            } else {
+                $city = $girl->city_id;
+                $city = DB::table('cities')->where('id_city', $city)->first();
+                return $city;
+            }
 
-          if ($user != null) {
-              $girl = $user->get_gitl_id();
-              $girl = Girl::select('id', 'city_id')->where('id', $girl)->first();
+        }
 
-              if ($girl != null) {
 
-                  if ($girl->city_id != null) {
-                      //dump($girl);
-                      $city = DB::table('cities')->where('id', $girl->city_id)->first();
-                      //dump($city);
-                      if ($city != null) {
-                          return $city;
-                      } else {
-                          return null;
-                      }
-                  }
-              }
-          }
-
-          if ($user != null) {
-
-          } else {
-  */
         $city = session()->get('city');
         if ($city != null) {//
             //dump($city);
             $city = Session::get('city');
-            $city = DB::table('cities')->where('id_city', $city)->first();
+            try {
+                $city = DB::table('cities')->where('id_city', $city)->first();
+                if ($city == null) {
+                    $girlcController = new GirlsController();
+
+                    return $girlcController->getCityByIpAndRedirect2();
+                }
+            } catch (IOException $e) {
+                return null;
+            }
             $events = Myevent::select('id', 'name', 'city_id', 'begin', 'end', 'place')->where('city_id',
                 $city->id_city)->get();
 
             return $city;
         } else {
-            $ip = GirlsController::getIpStatic();
-            $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
-            $response = json_decode($response);
-            $name = $response->city->name_ru;
+            $girlcController = new GirlsController();
 
-            $cities = DB::table('cities')->where('name', 'like', $name.'%')->first();
-            $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
-            $response = json_decode($response);
-
-            return view('confurmCity')->with(['city' => $response]);
+            return $girlcController->getCityByIpAndRedirect2();
         }
+    }
+
+    public static function getCityByIpAndRedirect2()
+    {
+        $ip = GirlsController::getIpStatic();
+        $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
+        $response = json_decode($response);
+        $name = $response->city->name_ru;
+
+        $cities = DB::table('cities')->where('name', 'like', $name.'%')->first();
+        $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
+        $response = json_decode($response);
+
+        return view('confurmCity')->with(['city' => $response]);
+    }
+
+    public function getCityByIpAndRedirect()
+    {
+        $ip = GirlsController::getIpStatic();
+        $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
+        $response = json_decode($response);
+        $name = $response->city->name_ru;
+
+        $cities = DB::table('cities')->where('name', 'like', $name.'%')->first();
+        $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
+        $response = json_decode($response);
+
+        return view('confurmCity')->with(['city' => $response]);
     }
 
     public function changeCity()

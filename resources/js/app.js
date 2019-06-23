@@ -94,6 +94,17 @@ Vue.component('eventrequwest', require('./components/Eventrequwest.vue').default
 
 Vue.component('requwesteventlist', require('./components/Requwesteventlist.vue').default);
 
+Vue.component('requwesteventlist', require('./components/Requwesteventlist.vue').default);
+
+Vue.component('eventinmycityside', require('./components/EventInMyCitySide.vue').default);
+
+const eventinmycityapp= new Vue({
+    el: '#eventinmycityapp',
+    data: {
+        showModal: false
+    }
+});
+
 const requwesteventlistapp= new Vue({
     el: '#requwesteventlistapp',
     data: {
@@ -240,4 +251,15 @@ const myeventApp = new Vue({
     data: {
         showModal: false
     }
+
+    //appacepted
 });
+
+const appaceptedApp = new Vue({
+    el: '#appaceptedApp',
+    data: {
+        showModal: false
+    }
+
+    //appacepted
+})

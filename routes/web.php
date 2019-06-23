@@ -372,6 +372,8 @@ Route::get('/editevent/{id}', 'MyEventController@edit')->name('editevent')->midd
 //просмотр события
 Route::get('/viewmyevent/{id}', 'MyEventController@viewmyevent')->name('viewmyevent')->middleware('auth', 'anketExist');
 
+Route::get('/viewmyevent/{id}/edit', 'MyEventController@edit')->name('editevent')->middleware('auth', 'anketExist');
+
 Route::get('/listrequwest', 'MyEventController@listrequwest')->name('viewmyevent')->middleware('auth',
     'anketExist');
 
@@ -401,3 +403,7 @@ Route::get('/event/checkrequwest', 'MyEventController@checkrequwest');
 Route::get('/eventrequwestlist', 'MyEventController@requwestlist');
 
 Route::get('/event/accept', 'MyEventController@accept');
+
+Route::get('/test',function (){
+    return view('test');
+});

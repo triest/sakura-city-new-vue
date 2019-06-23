@@ -6,7 +6,7 @@
              border-color: #666869; -->
 ">
             <div class="card-body">
-                <a class="btn btn-primary" href="{{route('main')}}" role="link" onclick=" relocate_home()">Редактировать</a>
+                <a class="btn btn-primary"  href="{{route('editevent',['id'=>$event->id])}}" role="link" onclick=" relocate_home()">Редактировать</a>
 
                 <h2>{{$event->name}}<br></h2>
                 Место: {{$event->place}}<br>

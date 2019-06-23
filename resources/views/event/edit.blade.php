@@ -37,6 +37,45 @@
                 <font color="red"><p>  {{$errors->first('arrival')}}</p></font>
             @endif
         </div>
+        <h3>Time</h3>
+        <input id="timepicker" class="timepicker" name="datetime" type="text" required>
+
+        <label class="mt-5">Time picker</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="material-icons">event</i></span>
+            </div>
+            <input class="form-control" id="timepicker" type="text" placeholder="Choose time">
+        </div>
+        <label class="mt-5">Date picker</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="material-icons">event</i></span>
+            </div>
+            <input class="form-control" id="datepicker" type="text" placeholder="Choose a date">
+        </div>
+
+        <script>
+            $('#timepicker').bootstrapMaterialDatePicker({
+                format: 'HH:mm',
+                shortTime: false,
+                date: false,
+                time: true,
+                monthPicker: false,
+                year: false,
+                switchOnClick: true
+            });
+        </script>
+
+        <script>
+            $(function() {
+                $("#datepicker1").datepicker();
+            });
+
+            $(function() {
+                $('#timepicker').timepicker();
+            });
+        </script>
         <div class="form-group">
             <div class="dates row">
                 <label class="col-md-2 control-label">Дата окончания:</label>
@@ -73,5 +112,36 @@
         </select>
         <input type="submit">
     </form>
+
+    <script type="text/javascript">
+        var defaults = {
+            calendarWeeks: true,
+            showClear: true,
+            showClose: true,
+            allowInputToggle: true,
+            useCurrent: false,
+            ignoreReadonly: true,
+            minDate: new Date(),
+            toolbarPlacement: 'top',
+            locale: 'nl',
+            icons: {
+                time: 'fa fa-clock-o',
+                date: 'fa fa-calendar',
+                up: 'fa fa-angle-up',
+                down: 'fa fa-angle-down',
+                previous: 'fa fa-angle-left',
+                next: 'fa fa-angle-right',
+                today: 'fa fa-dot-circle-o',
+                clear: 'fa fa-trash',
+                close: 'fa fa-times'
+            }
+        };
+
+        $(function() {
+            var optionsTime = $.extend({}, defaults, {format:'HH:mm'});
+
+            $('.timepicker').datetimepicker(optionsTime);
+        });
+    </script>
 
 @endsection

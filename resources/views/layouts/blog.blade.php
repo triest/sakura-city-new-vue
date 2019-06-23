@@ -2,21 +2,20 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-
+    <script src="{{ asset('js/jquery-3.4.1.js') }}" type="text/javascript"></script>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{$title}}</title>
 
 
     <!--  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
+
 
     <link href="{{asset('css/gallery-grid.css')}}">
     <!-- Bootstrap core CSS -->
 
 
     <!-- galeray -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
     <link href="{{asset('css/baguetteBox.min.css')}}">
     <!--table CSS -->
     <!--   <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet"> -->
@@ -31,18 +30,20 @@
           rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
-          integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-    <!-- <link href="http://bootstrap-4.ru/examples/offcanvas/offcanvas.css" rel="stylesheet"> -->
-    <link href="{{ asset('cssoffcanvas.css') }}" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+          integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-
-    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"> -->
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!--Yandex -->
@@ -77,21 +78,19 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <style>
-        #eventmycityApp {
-            position: absolute;
-            top: 30%;
-            left: 100px;
-        }
-
         #events {
-            position: absolute;
-            top: 30%;
-            left: 100px;
-            width: 18rem;
+
             /*background-color: #eeeeee;
             border: 1px solid transparent;
             border-color: #666869;*/
         }
+
+           #test{
+               position: absolute;
+               top: 200px;
+             /*  right: 15px;
+               line-height: 1px;*/
+           }
 
     </style>
 
@@ -104,7 +103,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <script>
         $(function () {
             $('.dates #arrival').datepicker({
@@ -121,6 +119,10 @@
         });
     </script>
     <!--end for datepicker -->
+
+    <!-- -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+
 </head>
 
 <body>
@@ -128,7 +130,7 @@
 
 <script src="{{ asset('/js/axios.min.js') }}"></script>
 
-
+<!--
 <div id="events">
     <div class="card " style="width: 18rem; background-color: #eeeeee;
              border: 1px solid transparent;
@@ -137,22 +139,18 @@
         <div class="card-body">
             События в вашем городе:<br>
 
-            <?php
-            $city = \App\Http\Controllers\GirlsController::checkCity();
-            // dump($city);
-            if ($city != null) {
-            echo $city->name;
-            ?>
-            <a class="btn btn-primary" href="{{route('changeCity')}}" role="link">Изменить город</a>
-            <eventmycity :city="{{$city->id_city}}"></eventmycity>
-            <?
-            }
-            ?>
 
+-->
+<div id="test">
+    <div class="card " style="width: 18rem; background-color: #eeeeee;
+             border: 1px solid transparent;
+             border-color: #666869;
+">
+        <div id="eventinmycityapp">
+            <eventinmycityside></eventinmycityside>
         </div>
     </div>
 </div>
-
 
 <div class="container" bg-light>
     <div class="card-body" id="app2">
@@ -237,22 +235,8 @@
     }
 
 </style>
-<script type="text/javascript">
-    $('#datepicker').datepicker({
-        weekStart: 1,
-        daysOfWeekHighlighted: "6,0",
-        autoclose: true,
-        todayHighlight: true,
-    });
-    $('#datepicker').datepicker("setDate", new Date());
-    <
-    script >
-    baguetteBox.run('.tz-gallery');
 
-    function relocate_home() {
-        location.href = "www.yoursite.com";
-    }
-</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 </body>
 </html>
 <script>

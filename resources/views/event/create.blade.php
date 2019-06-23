@@ -67,29 +67,22 @@
                    required>
         </div>
         
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css"
-              rel="stylesheet">
-
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
 
         <strong>Дата : </strong>
 
-        <input class="date form-control" id="begin_date" style="width: 300px;" type="text">
+
+
+        <input type="text" class="form-control" id="datetimepicker5">
 
         <script type="text/javascript">
-            $('.date').datepicker({
-                format: 'mm-dd-yyyy hh:mm'
+            $(function () {
+                $('#datetimepicker5').datetimepicker(
+                    {locale: 'ru'}
+                );
             });
         </script>
-
-
 
         <label for="max">Максимальное число участников (если нет ограничения, оставьте пустым):
             <input type="number" name="max" id="min" min="1" checked>
