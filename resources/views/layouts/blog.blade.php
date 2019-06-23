@@ -59,6 +59,13 @@
             padding-right: 0;
             padding-left: 0;
         }
+        #test{
+            position: absolute;
+            top: 200px;
+            /*  right: 15px;
+              line-height: 1px;*/
+        }
+
 
         .card {
             background-color: #fff;
@@ -78,19 +85,6 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <style>
-        #events {
-
-            /*background-color: #eeeeee;
-            border: 1px solid transparent;
-            border-color: #666869;*/
-        }
-
-           #test{
-               position: absolute;
-               top: 200px;
-             /*  right: 15px;
-               line-height: 1px;*/
-           }
 
     </style>
 
@@ -142,7 +136,7 @@
 
 -->
 <div id="test">
-    <div class="card " style="width: 18rem; background-color: #eeeeee;
+    <div class="card " style="width: 25rem; background-color: #eeeeee;
              border: 1px solid transparent;
              border-color: #666869;
 ">

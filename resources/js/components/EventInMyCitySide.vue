@@ -2,7 +2,8 @@
     <div>
         <div v-for="event in eventList">
             <b>{{event.name}}</b>
-            
+            <b>{{event.place}}</b>
+
         </div>
     </div>
 </template>

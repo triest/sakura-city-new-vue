@@ -2979,6 +2979,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log("event in my my city side");
@@ -54356,7 +54357,11 @@ var render = function() {
   return _c(
     "div",
     _vm._l(_vm.eventList, function(event) {
-      return _c("div", [_c("b", [_vm._v(_vm._s(event.name))])])
+      return _c("div", [
+        _c("b", [_vm._v(_vm._s(event.name))]),
+        _vm._v(" "),
+        _c("b", [_vm._v(_vm._s(event.place))])
+      ])
     }),
     0
   )
