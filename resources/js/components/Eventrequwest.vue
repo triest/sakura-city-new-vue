@@ -4,9 +4,9 @@
             <button class="btn-default" v-on:click="makeRequwest()">Отправить заявку на мероприятие
             </button>
         </div>
-        <h5 v-if="requwestStatus=='notreaded'"><b>Ваша на участие в мероприятии не рассмотренна</b></h5>
-        <h5 v-if="requwestStatus=='acept'"><b>Заявка нана участие  принята</b></h5>
-        <h5 v-if="requwestStatus=='denide'"><b>Заявка нана участие отклонена</b></h5>
+        <h5 v-if="requwestStatus=='notreaded'"><b>Ваша заявка на участие в мероприятии не рассмотренна</b></h5>
+        <h5 v-if="requwestStatus=='aсcept'"><b>Заявка на участие  принята!</b></h5>
+        <h5 v-if="requwestStatus=='denide'"><b>Заявка на участие отклонена</b></h5>
     </div>
 </template>
 
@@ -58,6 +58,10 @@
                         else if (res['status'] == 'unredded') {
                             this.requwestSended = true;
                             this.requwestStatus= "notreaded";
+                        }
+                        else if (res['status'] == 'accept') {
+                            this.requwestSended = true;
+                            this.requwestStatus= "aсcept";
                         }
                     })
             }

@@ -3086,6 +3086,9 @@ __webpack_require__.r(__webpack_exports__);
         } else if (res['status'] == 'unredded') {
           _this2.requwestSended = true;
           _this2.requwestStatus = "notreaded";
+        } else if (res['status'] == 'accept') {
+          _this2.requwestSended = true;
+          _this2.requwestStatus = "aсcept";
         }
       });
     }
@@ -54441,16 +54444,18 @@ var render = function() {
     _vm._v(" "),
     _vm.requwestStatus == "notreaded"
       ? _c("h5", [
-          _c("b", [_vm._v("Ваша на участие в мероприятии не рассмотренна")])
+          _c("b", [
+            _vm._v("Ваша заявка на участие в мероприятии не рассмотренна")
+          ])
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.requwestStatus == "acept"
-      ? _c("h5", [_c("b", [_vm._v("Заявка нана участие  принята")])])
+    _vm.requwestStatus == "aсcept"
+      ? _c("h5", [_c("b", [_vm._v("Заявка на участие  принята!")])])
       : _vm._e(),
     _vm._v(" "),
     _vm.requwestStatus == "denide"
-      ? _c("h5", [_c("b", [_vm._v("Заявка нана участие отклонена")])])
+      ? _c("h5", [_c("b", [_vm._v("Заявка на участие отклонена")])])
       : _vm._e()
   ])
 }
