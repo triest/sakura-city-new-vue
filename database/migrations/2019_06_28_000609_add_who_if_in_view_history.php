@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeginKeysEventPartificants2 extends Migration
+class AddWhoIfInViewHistory extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class AddForeginKeysEventPartificants2 extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('events_participants', function (Blueprint $table) {
+        Schema::table('view_history', function (Blueprint $table) {
             //
-            $table->foreign('event_id')->references('id')->on('myevents');
-            });
+            $table->integer('who_id')->unsigned()->index()->nullable()->default(null);
+        });
     }
 
     /**
@@ -27,10 +26,9 @@ class AddForeginKeysEventPartificants2 extends Migration
      */
     public function down()
     {
-        //
-        Schema::table('events_participants', function (Blueprint $table) {
+        Schema::table('view_history', function (Blueprint $table) {
             //
-            $table->dropForeign('event_id');
+            $table->dropColumn('who_id');
         });
     }
 }

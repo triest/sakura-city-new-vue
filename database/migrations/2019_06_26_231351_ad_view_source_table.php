@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStatusColumn2 extends Migration
+class AdViewSourceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,10 @@ class AddStatusColumn2 extends Migration
     public function up()
     {
         //
-        Schema::table('myevents', function (Blueprint $table) {
-            $table->integer('status_id')->unsigned()->index();
-
+        Schema::create('view_source', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->index();
+            $table->timestamps();
         });
     }
 
@@ -28,8 +29,6 @@ class AddStatusColumn2 extends Migration
     public function down()
     {
         //
-        Schema::table('myevents', function (Blueprint $table) {
-            $table->dropColumn('status_id');
-        });
+        Schema::dropIfExists('view_source');
     }
 }

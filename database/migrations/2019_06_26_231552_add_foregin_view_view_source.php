@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeginKeysEventPartificants2 extends Migration
+class AddForeginViewViewSource extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,11 @@ class AddForeginKeysEventPartificants2 extends Migration
     public function up()
     {
         //
-        Schema::table('events_participants', function (Blueprint $table) {
+        Schema::table('view_history', function (Blueprint $table) {
             //
-            $table->foreign('event_id')->references('id')->on('myevents');
-            });
+            $table->foreign('source_id')->references('id')->on('view_source');
+
+        });
     }
 
     /**
@@ -28,9 +29,9 @@ class AddForeginKeysEventPartificants2 extends Migration
     public function down()
     {
         //
-        Schema::table('events_participants', function (Blueprint $table) {
+        Schema::table('view_history', function (Blueprint $table) {
             //
-            $table->dropForeign('event_id');
+            $table->dropForeign('source_id');
         });
     }
 }
