@@ -145,8 +145,20 @@ class GirlsController extends Controller
                     'phone_settings',
                     'last_login',
                 ])->where('id', $id)->first();
+
                 $privatephoto = $girl->privatephotos()->get();
+                $who_girl = $AythUser->anketisExsis();
+                if ($who_girl != null) {
+                    // записываем, что оен смотрелж
+                    DB::table('view_history')->insert([
+                        'who_id' => $who_girl->id,
+                        'girl_id' => $girl->id,
+                    ]);
+                }
             }
+
+
+
         }
         $phone_settings = $girl->phone_settings;
 
@@ -383,13 +395,14 @@ class GirlsController extends Controller
             $user = Auth::user()->first();
             dump($user);
             $girl = $user->anketisExsis();
-            $girl=Girl::select(['id'])->where('user_id',$user->id)->first();
+            $girl = Girl::select(['id'])->where('user_id', $user->id)->first();
             dump($girl);
             if ($girl == null) {
                 return null;
             } else {
                 $city = $girl->city_id;
                 $city = DB::table('cities')->where('id_city', $city)->first();
+
                 return $city;
             }
 
