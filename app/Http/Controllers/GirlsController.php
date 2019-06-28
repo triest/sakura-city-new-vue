@@ -144,16 +144,15 @@ class GirlsController extends Controller
                 ])->where('id', $id)->first();
 
                 $privatephoto = $girl->privatephotos()->get();
-                $who_girl = $AythUser->anketisExsis();
-                if ($who_girl != null) {
-                    // записываем, что оен смотрелж
-                    DB::table('view_history')->insert([
-                        'who_id' => $who_girl->id,
-                        'girl_id' => $girl->id,
-                    ]);
-                }
-            }
+                dump($user3);
 
+                $who_girl = $AythUser->anketisExsis();
+            }
+            $ip = $this->getIp();
+            $ayth_girl=Girl::select('id','user_id')->where('user_id',$AythUser->id)->first();
+            if ($ip!=null and $ayth_girl!=null) {
+                DB::table('view_history')->insert(['girl_id' => $girl->id, 'ip' => $ip, 'who_id' => $ayth_girl->id]);
+            }
         }else{
             $ip = $this->getIp();
             //сохраняем данные просмотра

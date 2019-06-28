@@ -56996,7 +56996,11 @@ var render = function() {
               }
             }
           })
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._m(3),
+      _c("br"),
+      _c("br")
     ],
     1
   )
@@ -57029,6 +57033,16 @@ var staticRenderFns = [
     return _c("b", [
       _c("a", { attrs: { type: "btn primary", href: "/power" } }, [
         _vm._v("Поместить анкету в поиск")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _c("a", { staticClass: "btn btn-primary", attrs: { href: "/history" } }, [
+        _vm._v("Просмотры моей анкеты")
       ])
     ])
   }

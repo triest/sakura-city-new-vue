@@ -23,7 +23,7 @@
             <b><a type="btn primary" href="/power">Поместить анкету в поиск</a></b>
         </div>
         <likemodal v-if="showLikeModal" @closeLikeModalEmit='closeLikeModal()'></likemodal>
-
+        <b><a class="btn btn-primary" href="/history">Просмотры моей анкеты</a> </b><br><br>
     </div>
 </template>
 

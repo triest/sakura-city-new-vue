@@ -407,3 +407,5 @@ Route::get('/event/accept', 'MyEventController@accept');
 Route::get('/test',function (){
     return view('test');
 });
+
+Route::get('/history', 'AnketController@history');

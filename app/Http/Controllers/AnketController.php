@@ -858,4 +858,23 @@ class AnketController extends Controller
             'changeMainImage' => $chageMainImage,
         ]);
     }
+
+    //история просмотров моеё анкеты
+    public function history(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user == null) {
+            return redirect('/anket');
+        }
+        $girl = Girl::select('id', 'user_id')->where('user_id', $user->id)->first();
+        if ($girl == null) {
+            return redirect('/anket');
+        }
+
+        $history = DB::table('view_history')->where('girl_id', $girl->id) ->paginate(15);
+        dump($history);
+        return view('viewhistory')->with(['history'=>$history]);
+    }
+
 }
