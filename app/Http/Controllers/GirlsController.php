@@ -113,9 +113,6 @@ class GirlsController extends Controller
         $views = $girl->views_all;
         $views = $views + 1;
         $girl->views_all = $views;
-        $ip = $this->getIp();
-        //сохраняем данные просмотра
-        DB::table('view_history')->insert(['girl_id' => $girl->id, 'ip' => $ip]);
 
         $girl->save();
 
@@ -157,8 +154,10 @@ class GirlsController extends Controller
                 }
             }
 
-
-
+        }else{
+            $ip = $this->getIp();
+            //сохраняем данные просмотра
+            DB::table('view_history')->insert(['girl_id' => $girl->id, 'ip' => $ip]);
         }
         $phone_settings = $girl->phone_settings;
 
