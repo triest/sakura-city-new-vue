@@ -5364,6 +5364,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log("Viewhistory");
@@ -57563,25 +57566,32 @@ var render = function() {
     "div",
     _vm._l(_vm.viewArray, function(item) {
       return _c("div", [
-        _c(
-          "div",
-          { staticClass: "col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow" },
-          [
-            _c("img", {
-              attrs: { src: "images/upload/" + item.main_image, height: "200" }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow" },
-          [
-            _c("p", [_c("b", [_vm._v(_vm._s(item.name))])]),
-            _vm._v(" "),
-            _c("p", [_c("b", [_vm._v(_vm._s(item.time))])])
-          ]
-        )
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow" },
+            [
+              _c("img", {
+                attrs: {
+                  src: "images/upload/" + item.main_image,
+                  height: "200"
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow" },
+            [
+              _c("p", [_c("b", [_vm._v(_vm._s(item.name))])]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(item.city_name))]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(item.time))])
+            ]
+          )
+        ])
       ])
     }),
     0

@@ -404,13 +404,11 @@ Route::get('/eventrequwestlist', 'MyEventController@requwestlist');
 
 Route::get('/event/accept', 'MyEventController@accept');
 
-Route::get('/test', function () {
+Route::get('/test',function (){
     return view('test');
 });
 
-//Route::get('/history', 'AnketController@history');
-Route::get('/history', function () {
-    return view('viewhistory2');
-        })->middleware('auth', 'anketExist');
+Route::get('/history', 'AnketController@history');
+//Route::get('/history', 'AnketController@historypage');
 
 Route::get('/gethistory', 'AnketController@history');

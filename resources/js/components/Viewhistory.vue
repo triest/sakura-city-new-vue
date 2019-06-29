@@ -1,12 +1,15 @@
 <template>
     <div>
         <div v-for="item in viewArray">
-            <div class="col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow">
-                <img :src="'images/upload/'+item.main_image" height="200">
-            </div>
-            <div class="col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow">
-                <p><b>{{item.name}}</b></p>
-                <p><b>{{item.time}}</b></p>
+            <div class="row">
+                <div class="col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow">
+                    <img :src="'images/upload/'+item.main_image" height="200">
+                </div>
+                <div class="col-lg-4 col-md-3 col-sm-5 col-xs-9 box-shadow">
+                    <p><b>{{item.name}}</b></p>
+                    <p>{{item.city_name}}</p>
+                    <p>{{item.time}}</p>
+                </div>
             </div>
         </div>
     </div>

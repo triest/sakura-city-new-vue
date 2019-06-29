@@ -873,18 +873,48 @@ class AnketController extends Controller
         }
 
 
+        $history_today = DB::table('view_history')
+            ->select('girl_id', 'who_id', 'girls.name as name', 'girls.main_image', 'view_history.time', 'girls.age',
+                'cities.name as city_name', 'girls.city_id')
+            ->where('girl_id', $girl->id)
+            ->where('who_id', '!=', null)
+            ->where('who_id', '!=', $girl->id)
+            ->leftJoin('girls', 'girls.id', '=', 'view_history.who_id')
+            ->leftJoin('cities', 'girls.city_id', '=', 'cities.id_city')
+            ->orderBy('time','DESC')
+            //->get()
+            ->paginate(15);
+
+        dump($history_today);
+
+        return view('viewhistory')->with(['today' => $history_today]);
+    }
+
+    //история просмотров моеё анкеты
+    public function historypage(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user == null) {
+            return redirect('/anket');
+        }
+        $girl = Girl::select('id', 'user_id')->where('user_id', $user->id)->first();
+        if ($girl == null) {
+            return redirect('/anket');
+        }
+
 
         $history_today = DB::table('view_history')
-            ->select('girls.name as name','girls.main_image','view_history.time','girls.age','cities.name as city_name','girls.city_id')
-
+            ->select('girl_id', 'who_id', 'girls.name as name', 'girls.main_image', 'view_history.time', 'girls.age',
+                'cities.name as city_name', 'girls.city_id')
             ->where('girl_id', $girl->id)
-            ->where('who_id','!=' ,null)
-            ->leftJoin('girls','girls.id','=','view_history.who_id')
-            ->leftJoin('cities','girls.city_id','=','cities.id_city')
+            ->where('who_id', '!=', null)
+            ->where('who_id', '!=', $girl->id)
+            ->leftJoin('girls', 'girls.id', '=', 'view_history.who_id')
+            ->leftJoin('cities', 'girls.city_id', '=', 'cities.id_city')
             ->orderBy('time')
-            ->get()
-            //->paginate(15)
-        ;
+            //->get()
+            ->paginate(15);
 
 
         return response()->json($history_today);
