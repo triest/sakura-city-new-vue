@@ -98,6 +98,16 @@ Vue.component('requwesteventlist', require('./components/Requwesteventlist.vue')
 
 Vue.component('eventinmycityside', require('./components/EventInMyCitySide.vue').default);
 
+Vue.component('viewhistory', require('./components/Viewhistory.vue').default);
+
+
+const viewhistoryapp= new Vue({
+    el: '#viewhistoryapp',
+    data: {
+        showModal: false
+    }
+});
+
 const eventinmycityapp= new Vue({
     el: '#eventinmycityapp',
     data: {

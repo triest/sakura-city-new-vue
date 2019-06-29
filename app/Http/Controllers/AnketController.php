@@ -872,27 +872,22 @@ class AnketController extends Controller
             return redirect('/anket');
         }
 
+
+
         $history_today = DB::table('view_history')
+            ->select('girls.name as name','girls.main_image','view_history.time','girls.age','cities.name as city_name','girls.city_id')
+
             ->where('girl_id', $girl->id)
             ->where('who_id','!=' ,null)
-            ->whereRaw('Date(time) = CURDATE()')
             ->leftJoin('girls','girls.id','=','view_history.who_id')
+            ->leftJoin('cities','girls.city_id','=','cities.id_city')
             ->orderBy('time')
-            ->paginate(15);
+            ->get()
+            //->paginate(15)
+        ;
 
 
-        $week_days = \Carbon\Carbon::today()->subDays(30);
-        $this_week=DB::table('view_history')
-            ->where('girl_id', $girl->id)
-            ->where('who_id','!=' ,null)
-            ->where('time','>=',$week_days)
-            ->leftJoin('girls','girls.id','=','view_history.who_id')
-            ->orderBy('time')
-            ->paginate(15);
-        dump($this_week);
-
-
-        return view('viewhistory')->with(['today'=>$history_today,'this_week'=>$this_week]);
+        return response()->json($history_today);
     }
 
 }
