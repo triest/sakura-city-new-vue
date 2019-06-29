@@ -872,7 +872,11 @@ class AnketController extends Controller
             return redirect('/anket');
         }
 
-        $history = DB::table('view_history')->where('girl_id', $girl->id) ->paginate(15);
+        $history = DB::table('view_history')
+            ->where('girl_id', $girl->id)
+            ->where('who_id','!=' ,null)
+            ->leftJoin('girls','girls.id','=','view_history.who_id')
+            ->paginate(15);
         dump($history);
         return view('viewhistory')->with(['history'=>$history]);
     }
