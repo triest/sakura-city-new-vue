@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use File;
 use Illuminate\Support\Facades\DB;
 use  \App\Application;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Storage;
+
 use DateTime;
 use App\User;
 use App\Girl;
@@ -115,6 +117,11 @@ class GirlsController extends Controller
         $girl->views_all = $views;
 
         $girl->save();
+        //get parametr
+        $utm_source = null;
+        if (request()->has('utm_source')) {
+            $utm_source = Input::get('utm_source');
+        }
 
         //проверяем, что просматривающий пользователь зареген.
         if ($AythUser != null) {
@@ -144,19 +151,49 @@ class GirlsController extends Controller
                 ])->where('id', $id)->first();
 
                 $privatephoto = $girl->privatephotos()->get();
-                dump($user3);
-
-                $who_girl = $AythUser->anketisExsis();
             }
             $ip = $this->getIp();
-            $ayth_girl=Girl::select('id','user_id')->where('user_id',$AythUser->id)->first();
-            if ($ip!=null and $ayth_girl!=null) {
-                DB::table('view_history')->insert(['girl_id' => $girl->id, 'ip' => $ip, 'who_id' => $ayth_girl->id]);
+            $ayth_girl = Girl::select('id', 'user_id')->where('user_id', $AythUser->id)->first();
+            if ($ip != null and $ayth_girl != null) {
+
+                if ($utm_source != null) {
+                    dump($utm_source);
+                    $source_id = DB::table('view_source')->where('name', $utm_source)->first();
+
+                    if ($source_id != null) {
+                        DB::table('view_history')->insert([
+                            'girl_id' => $girl->id,
+                            'ip' => $ip,
+                            'source_id' => $source_id->id,
+                        ]);
+                    }
+                } else {
+                    $source_id = DB::table('view_source')->where('name', $utm_source)->first();
+                    if ($source_id != null) {
+                        DB::table('view_history')->insert([
+                            'girl_id' => $girl->id,
+                            'ip' => $ip,
+                            'source_id' => $source_id->id,
+                        ]);
+                        DB::table('view_history')->insert(['girl_id' => $girl->id, 'ip' => $ip]);
+                    }
+                }
             }
-        }else{
+        } else {
             $ip = $this->getIp();
             //сохраняем данные просмотра
-            DB::table('view_history')->insert(['girl_id' => $girl->id, 'ip' => $ip]);
+            if ($utm_source != null) {
+                $source_id = DB::table('view_source')->where('name', $utm_source)->first();
+                if ($source_id != null) {
+                    DB::table('view_history')->insert([
+                        'girl_id' => $girl->id,
+                        'ip' => $ip,
+                        'source_id' => $source_id->id,
+                    ]);
+                } else {
+                    DB::table('view_history')->insert(['girl_id' => $girl->id, 'ip' => $ip]);
+                }
+            }
         }
         $phone_settings = $girl->phone_settings;
 
@@ -183,7 +220,6 @@ class GirlsController extends Controller
                     $phone = null;
                 }
             }
-
         }
 
         if (count($interes) == 0) {
@@ -248,7 +284,8 @@ class GirlsController extends Controller
     }
 
 
-    public function inputCode(
+    public
+    function inputCode(
         Request $request
     ) {
         $validatedData = $request->validate([
@@ -267,8 +304,11 @@ class GirlsController extends Controller
         }
     }
 
-    public function SendSMS($phone, $text)
-    {
+    public
+    function SendSMS(
+        $phone,
+        $text
+    ) {
         $src = '<?xml version="1.0" encoding="UTF-8"?>
         <SMS>
             <operations>
@@ -305,7 +345,8 @@ class GirlsController extends Controller
     }
 
     //get ip
-    public function getIp()
+    public
+    function getIp()
     {
         foreach (array(
                      'HTTP_CLIENT_IP',
@@ -330,7 +371,8 @@ class GirlsController extends Controller
         return null;
     }
 
-    public static function getIpstatic()
+    public
+    static function getIpstatic()
     {
         foreach (array(
                      'HTTP_CLIENT_IP',
@@ -355,8 +397,10 @@ class GirlsController extends Controller
         return null;
     }
 
-    public function agreeCity(Request $request)
-    {
+    public
+    function agreeCity(
+        Request $request
+    ) {
         $cities = DB::table('cities')->where('name', 'like', $request->city_name.'%')->first();
         //  dump($cities);
         $id = $cities->id_city;
@@ -369,8 +413,10 @@ class GirlsController extends Controller
         }
     }
 
-    public function newCity(Request $request)
-    {
+    public
+    function newCity(
+        Request $request
+    ) {
         $validatedData = $request->validate([
             'city' => 'required',
         ]);
@@ -387,7 +433,8 @@ class GirlsController extends Controller
 
     }
 
-    public static function checkCity()
+    public
+    static function checkCity()
     {
         if (Auth::user()) {
             $user = Auth::user()->first();
@@ -432,7 +479,8 @@ class GirlsController extends Controller
         }
     }
 
-    public static function getCityByIpAndRedirect2()
+    public
+    static function getCityByIpAndRedirect2()
     {
         $ip = GirlsController::getIpStatic();
         $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
@@ -446,7 +494,8 @@ class GirlsController extends Controller
         return view('confurmCity')->with(['city' => $response]);
     }
 
-    public function getCityByIpAndRedirect()
+    public
+    function getCityByIpAndRedirect()
     {
         $ip = GirlsController::getIpStatic();
         $response = file_get_contents("http://api.sypexgeo.net/json/".$ip); //запрашиваем местоположение
@@ -460,7 +509,8 @@ class GirlsController extends Controller
         return view('confurmCity')->with(['city' => $response]);
     }
 
-    public function changeCity()
+    public
+    function changeCity()
     {
         $city = Session::get('city');
         $city = DB::table('cities')->where('id_city', $city)->first();

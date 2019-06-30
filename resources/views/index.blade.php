@@ -16,7 +16,8 @@
                     </a>
 
                     <h4 class="card-title">
-                        <a href="{{route('showGirl',['id'=>$girl->id])}}"> <b>{{$girl->name}}</b>
+                        <a href="{{route('showGirl',['id'=>$girl->id,'utm_source'=>'mainstream'])}}">
+                            <b>{{$girl->name}}</b>
                             <small>{{$girl->age}}</small>
                         </a>
                     </h4>
