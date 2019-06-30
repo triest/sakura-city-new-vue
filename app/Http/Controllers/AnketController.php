@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Input;
 use File;
 use Carbon\Carbon;
 
+
 use App\ImageResize;
 use Nexmo\Response;
 
@@ -873,19 +874,32 @@ class AnketController extends Controller
         }
 
 
-        $history_today = DB::table('view_history')
-            ->select('girl_id', 'who_id', 'girls.name as name', 'girls.main_image', 'view_history.time', 'girls.age',
-                'cities.name as city_name', 'girls.city_id')
-            ->where('girl_id', $girl->id)
-            ->where('who_id', '!=', null)
-            ->where('who_id', '!=', $girl->id)
-            ->leftJoin('girls', 'girls.id', '=', 'view_history.who_id')
-            ->leftJoin('cities', 'girls.city_id', '=', 'cities.id_city')
-            ->orderBy('time','DESC')
-            //->get()
-            ->paginate(15);
+        /* $history_today = DB::table('view_history')
+             ->select('girl_id', 'who_id', 'girls.name as name', 'girls.main_image', 'view_history.time', 'girls.age',
+                 'cities.name as city_name', 'girls.city_id')
+             ->where('girl_id', $girl->id)
+             ->where('who_id', '!=', null)
+             ->where('who_id', '!=', $girl->id)
+             ->leftJoin('girls', 'girls.id', '=', 'view_history.who_id')
+             ->leftJoin('cities', 'girls.city_id', '=', 'cities.id_city')
+             ->orderBy('time')
+             ->groupBy('who_id')
+             ->paginate(15);*/
+        $history_today = DB::select('select  gl.id,gl.name,gl.age,gl.main_image,his.time,gl.city_id from view_history his left JOIN girls gl on gl.id=his.who_id left join cities citye on citye.id_city=gl.city_id where girl_id=:girl_id ORDER BY his.time DESC',
+            ['girl_id' => $girl->id]);
 
         dump($history_today);
+        $history_today2 = array();
+        array_push($history_today2, $history_today[0]);
+        $tempID = null;
+        //тут удаляем повторяющиеся записб, идушие последовательно
+        for ($i = 1; $i < count($history_today) - 1; $i++) {
+            if ($history_today[$i - 1]->id != $history_today[$i]->id) {
+                array_push($history_today2, $history_today[$i]);
+            }
+        }
+        dump($history_today2);
+        die("array exist");
 
         return view('viewhistory')->with(['today' => $history_today]);
     }
@@ -904,17 +918,18 @@ class AnketController extends Controller
         }
 
 
-        $history_today = DB::table('view_history')
-            ->select('girl_id', 'who_id', 'girls.name as name', 'girls.main_image', 'view_history.time', 'girls.age',
-                'cities.name as city_name', 'girls.city_id')
-            ->where('girl_id', $girl->id)
-            ->where('who_id', '!=', null)
-            ->where('who_id', '!=', $girl->id)
-            ->leftJoin('girls', 'girls.id', '=', 'view_history.who_id')
-            ->leftJoin('cities', 'girls.city_id', '=', 'cities.id_city')
-            ->orderBy('time')
-            //->get()
-            ->paginate(15);
+        /* $history_today = DB::table('view_history')
+             ->select('girl_id', 'who_id', 'girls.name as name', 'girls.main_image', 'view_history.time', 'girls.age',
+                 'cities.name as city_name', 'girls.city_id')
+             ->where('girl_id', $girl->id)
+             ->where('who_id', '!=', null)
+             ->where('who_id', '!=', $girl->id)
+             ->leftJoin('girls', 'girls.id', '=', 'view_history.who_id')
+             ->leftJoin('cities', 'girls.city_id', '=', 'cities.id_city')
+             ->orderBy('time')
+             //->get()
+             ->paginate(15);*/
+        $history_today = DB::select('select * from view_history');
 
 
         return response()->json($history_today);
