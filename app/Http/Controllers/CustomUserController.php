@@ -71,10 +71,12 @@ class CustomUserController extends Controller
         try {
             SendMessageAboutEvent::dispatch("New User ".$user->name, 'triest21@gmail.com', $user->name, "new user");
             $file = 'send_mail_log.txt';
-            $text = $user->name;
+            $text = $user->name.$date;
             file_put_contents($file, $text);
         } catch (IOException $e) {
-            $text = $user->name + $date + $e->getMessage();
+            $file = 'send_mail_error_log.txt';
+
+            $text = $user->name.":".$date.":";
             file_put_contents($file, $text);
         }
 

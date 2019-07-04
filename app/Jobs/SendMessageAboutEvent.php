@@ -2,11 +2,13 @@
 
 namespace App\Jobs;
 
+use Faker\Provider\DateTime;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 
 class SendMessageAboutEvent implements ShouldQueue
@@ -44,6 +46,7 @@ class SendMessageAboutEvent implements ShouldQueue
         //
         $name = $this->name;
         $mail = 'triest21@gmail.com';
+        $subject = $this->subject;
         //echo $mail;
         try {
             Mail::send('email.notification', ['name' => $name], function ($message) use ($mail) {
@@ -51,12 +54,19 @@ class SendMessageAboutEvent implements ShouldQueue
                     ->to($mail, 'some guy')
                     //->from('newmail.sm@yandex.ru')
                     ->from('sakura-testmail@sakura-city.info')
-                    ->subject('Новый вользователь');
-
+                    ->subject("Новый пользователь");
             });
-
+            $file = 'sendmailSucsessLog.txt';
+            $timestamp = Carbon::now();
+            $text = "erro send message ".gmdate("Y-m-d\TH:i:s\Z", $timestamp);
+            file_put_contents($file, $text);
         } catch (\Exception $exception) {
+            $file = 'sendmailErroLog.txt';
+            $timestamp = Carbon::now();
 
+            $text = $timestamp.$mail.$exception;
+
+            file_put_contents($file, $text);
         }
     }
 
