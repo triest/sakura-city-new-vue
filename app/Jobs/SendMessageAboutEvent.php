@@ -7,31 +7,31 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Mail;
 
 class SendMessageAboutEvent implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $message;
     protected $mail;
     protected $name;
     protected $event;
     protected $phone;
+    protected $subject;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($message, $mail, $name, $phone, $event)
+    public function __construct($message, $mail, $name, $subject)
     {
         //
         $this->message = $message;
         $this->mail = $mail;
-        $this->phone = $phone;
-        $this->event = $event;
         $this->name = $name;
+        $this->subject = $subject;
     }
 
     /**
@@ -43,16 +43,21 @@ class SendMessageAboutEvent implements ShouldQueue
     {
         //
         $name = $this->name;
-        $mail2 = $this->mail;
-        $event = $this->event;
-        Mail::send('mail.test', ['name' => $name, 'event' => $event], function ($message) use ($mail2) {
-            $message
-                ->to($mail2, 'some guy')
-                ->from('sakura-testmail@sakura-city.info')
-                ->subject('Обновление ваших событий!');
-        });
+        $mail = 'triest21@gmail.com';
+        //echo $mail;
+        try {
+            Mail::send('email.notification', ['name' => $name], function ($message) use ($mail) {
+                $message
+                    ->to($mail, 'some guy')
+                    //->from('newmail.sm@yandex.ru')
+                    ->from('sakura-testmail@sakura-city.info')
+                    ->subject('Новый вользователь');
 
-        return null;
+            });
+
+        } catch (\Exception $exception) {
+
+        }
     }
 
 }

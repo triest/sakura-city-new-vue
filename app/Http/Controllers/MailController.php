@@ -13,6 +13,7 @@ class MailController extends Controller
     {
         $testname = 'testname1';
         $mail = 'dmitry.tikhonenko@yandex.ru';
+        $mail='triest21@gmail.com';
         //echo $mail;
         try {
             Mail::send('email.test', ['name' => $testname], function ($message) use ($mail) {

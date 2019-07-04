@@ -11,10 +11,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 class SendSMSAboutEvent implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $message;
-    protected $mail;
+
+
     protected $name;
-    protected $event;
     protected $phone;
 
     /**
@@ -22,14 +21,12 @@ class SendSMSAboutEvent implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($message, $mail, $name, $phone, $event)
+    public function __construct($message, $phone, $event)
     {
         //
         $this->message = $message;
-        $this->mail = $mail;
         $this->phone = $phone;
-        $this->event = $event;
-        $this->name = $name;
+
     }
 
     /**

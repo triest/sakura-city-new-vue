@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 use App\Comment;
+use App\Jobs\SendMessageAboutEvent;
 
 use Response;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -63,6 +65,18 @@ class CustomUserController extends Controller
 
         $user->save();
         Auth::loginUsingId($user->id);
+        $date = new DateTime();
+        $date = $date->format('Y-m-d H:i:s');
+        $file = 'send_mail_log.txt';
+        try {
+            SendMessageAboutEvent::dispatch("New User ".$user->name, 'triest21@gmail.com', $user->name, "new user");
+            $file = 'send_mail_log.txt';
+            $text = $user->name;
+            file_put_contents($file, $text);
+        } catch (IOException $e) {
+            $text = $user->name + $date + $e->getMessage();
+            file_put_contents($file, $text);
+        }
 
         return view('custom.resetSMS2');
     }
