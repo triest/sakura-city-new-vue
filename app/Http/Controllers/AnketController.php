@@ -12,6 +12,7 @@ use App\User;
 use App\Privatephoto;
 use App\Interest;
 use App\Aperance;
+use App\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,12 +40,15 @@ class AnketController extends Controller
         $targets = Target::select(['id', 'name'])->get();
         $interests = Interest::select(['id', 'name'])->get();
         $apperance = Aperance::select(['id', 'name'])->get();
+        $relations = Relation::select(['id', 'name'])->get();
+
         //add check phone is confurnd
         if ($user->phone == null or $user->phone_confirmed == 0) {
             return view("custom.resetSMS2");
         }
         // dump($user);
         $phone_setting = collect(DB::select('select * from phone_settings'));
+
 
         $phone = $user->phone;
 
@@ -56,6 +60,7 @@ class AnketController extends Controller
                     'tagrets' => $targets,
                     'interests' => $interests,
                     'apperance' => $apperance,
+                    'realtions' => $relations,
                     'phone' => $phone,
                     'phone_setting' => $phone_setting,
                 ]);
@@ -73,6 +78,7 @@ class AnketController extends Controller
             'met' => 'required',
             'description' => 'required',
             'private' => 'required',
+
             // 'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -171,11 +177,19 @@ class AnketController extends Controller
                 $girl->apperance_id = $target->id;
                 $girl->save();
             }
+        }
 
+        dump($request);
+
+        if ($request->has('realtion')) {
+            $target = Relation::select(['id', 'name'])->where('id', $request->realtion)->first();
+            if ($target != null) {
+                $girl->relation_id = $target->id;
+                $girl->save();
+            }
         }
 
 
-        // dump($request);
         if ($request->has('city')) {
             $girl->city_id = $request->city;
         }

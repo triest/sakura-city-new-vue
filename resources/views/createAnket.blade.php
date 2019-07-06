@@ -64,19 +64,25 @@
 
         <b>Внешность:</b> <br>
         @foreach($apperance as $target)
-            <input  type="radio" value="{{$target->id}}" name="aperance" id="aperance">
+            <input type="radio" value="{{$target->id}}" name="aperance" id="aperance">
             {{$target->name}}
         @endforeach
         <br>
 
-        <b> С кем хотите познакомиться:</b> <br>
+        <p><b>Отношения:</b> </p>
+            @foreach($realtions as $item)
+                <input type="radio" value="{{$item->id}}" name="realtion" id="relation">
+                {{$item->name}}
+            @endforeach
+
+        <p><b> С кем хотите познакомиться:</b></p>
         <input type="radio" id="contactmet"
                name="met" value="famele">
-        <label for="contactChoice1">c женщиной</label>
+        c женщиной
         <br>
         <input type="radio" id="contactmet2"
                name="met" value="male" checked>
-        <label for="contactChoice2">с мужчиной</label>
+        с мужчиной
         <br>
         <br>
         в возрасте от <input type="number" name="from" id="from" min="18" value="18"
@@ -92,10 +98,7 @@
             <font color="red"><p>  {{$errors->first('to')}}</p></font>
         @endif
 
-
-        <br> <br>
-
-        <b>Цель знакомства:</b> <br>
+        <p><b>Цель знакомства:</b></p>
         @foreach($tagrets as $target)
             <input class="form-check-input" type="checkbox" value="{{$target->id}}" name="target[]">
             {{$target->name}}
