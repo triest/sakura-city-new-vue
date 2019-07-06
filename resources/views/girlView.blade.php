@@ -79,19 +79,20 @@
                         @endif
                     @endif
                 @endif
-                <p class="card-text"><b>Рост : {{$girl->height}}</b>
-                <p class="card-text"><b>Вес : {{$girl->weight}}</b>
-                <p class="card-text"><b>Возраст : {{$girl->age}}</b>
+                <p class="card-text"><b>Рост :</b> {{$girl->height}}</p>
+                <p class="card-text"><b>Вес : </b>{{$girl->weight}}</p>
+                <p class="card-text"><b>Возраст :</b> {{$girl->age}}</p>
+                <p class="card-text"><b>Внешность :</b> {{$aperance->name}}</p>
 
                 <p class="card-text"><b>Хочу встретиться с :</b> @if($girl->meet=='famele')
-                        <b> женщиной</b>
+                        женщиной
                     @endif
 
                     @if($girl->meet=='male')
-                        <b> мужчиной</b>
+                        мужчиной
                     @endif
                 </p>
-                В возрасте от <b>{{$girl->from_age}}</b> до  <b>{{$girl->to_age}}</b>
+                В возрасте от <b>{{$girl->from_age}}</b> до <b>{{$girl->to_age}}</b>
             </div>
         </div>
         <br>

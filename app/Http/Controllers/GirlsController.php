@@ -18,6 +18,7 @@ use App\Myevent;
 use App\EventStatys;
 use App\EventPhoto;
 use App\Photo;
+use App\Aperance;
 use GuzzleHttp\Client;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -90,7 +91,8 @@ class GirlsController extends Controller
             'views_all',
             'last_login',
             'from_age',
-            'to_age'
+            'to_age',
+            'apperance_id',
         ])->where('id', $id)->first();
 
         if ($girl == null) {
@@ -151,7 +153,7 @@ class GirlsController extends Controller
                     'phone_settings',
                     'last_login',
                     'from_age',
-                    'to_age'
+                    'to_age',
                 ])->where('id', $id)->first();
 
                 $privatephoto = $girl->privatephotos()->get();
@@ -246,6 +248,7 @@ class GirlsController extends Controller
             $city = null;
             $region = null;
         }
+        $aperance = Aperance::select('id', 'name')->where('id', $girl->apperance_id)->first();
 
         return view('girlView')->with([
             'girl' => $girl,
@@ -258,6 +261,7 @@ class GirlsController extends Controller
             'phone_settings' => $phone_settings,
             'phone' => $phone,
             'views' => $views,
+            'aperance' => $aperance,
         ]);
     }
 

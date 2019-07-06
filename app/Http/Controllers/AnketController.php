@@ -11,6 +11,7 @@ use App\Target;
 use App\User;
 use App\Privatephoto;
 use App\Interest;
+use App\Aperance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -37,6 +38,7 @@ class AnketController extends Controller
 
         $targets = Target::select(['id', 'name'])->get();
         $interests = Interest::select(['id', 'name'])->get();
+        $apperance = Aperance::select(['id', 'name'])->get();
         //add check phone is confurnd
         if ($user->phone == null or $user->phone_confirmed == 0) {
             return view("custom.resetSMS2");
@@ -53,6 +55,7 @@ class AnketController extends Controller
                     'username' => $user->name,
                     'tagrets' => $targets,
                     'interests' => $interests,
+                    'apperance' => $apperance,
                     'phone' => $phone,
                     'phone_setting' => $phone_setting,
                 ]);
@@ -159,6 +162,16 @@ class AnketController extends Controller
                     $girl->target()->attach($target);
                 }
             }
+        }
+        
+        //цели
+        if ($request->has('aperance')) {
+            $target = Aperance::select(['id', 'name'])->where('id', $request->aperance)->first();
+            if ($target != null) {
+                $girl->apperance_id = $target->id;
+                $girl->save();
+            }
+
         }
 
 

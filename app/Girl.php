@@ -31,6 +31,13 @@ class Girl extends Model
         return $this->belongsToMany('App\Target', 'girl_target', 'girl_id');
     }
 
+    public function aperance()
+    {
+        //return $this->hasOne('App\Target');
+        return $this->belongsTo('App\Aperance');
+
+    }
+
     public function interest()
     {
         //return $this->hasOne('App\Target');
@@ -47,11 +54,13 @@ class Girl extends Model
         return $this->hasMany('App\Myevent');
     }
 
-    public function events(){
+    public function events()
+    {
         return $this->belongsToMany('App\Myevent');
     }
 
-    public function eventreq(){
+    public function eventreq()
+    {
         return $this->belongsToMany('App\Eventrequwest');
     }
 }

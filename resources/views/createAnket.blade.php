@@ -45,7 +45,6 @@
         <label for="contactChoice2">Мужской</label>
 
 
-
         <br>
         <label for="age">Возраст:
             <input type="number" name="age" min="18" value="18" onkeypress="return isNumber(event)" checked>
@@ -63,6 +62,12 @@
                    pattern="[^@]+@[^@]+\.[0-9]{2,3}" onkeypress="return isNumber(event)">
         </label><br>
 
+        <b>Внешность:</b> <br>
+        @foreach($apperance as $target)
+            <input  type="radio" value="{{$target->id}}" name="aperance" id="aperance">
+            {{$target->name}}
+        @endforeach
+        <br>
 
         <b> С кем хотите познакомиться:</b> <br>
         <input type="radio" id="contactmet"
@@ -74,7 +79,8 @@
         <label for="contactChoice2">с мужчиной</label>
         <br>
         <br>
-         в возрасте от       <input type="number" name="from" id="from" min="18" value="18" onkeypress="return isNumber(event)">
+        в возрасте от <input type="number" name="from" id="from" min="18" value="18"
+                             onkeypress="return isNumber(event)">
         @if($errors->has('from'))
             <font color="red"><p>  {{$errors->first('from')}}</p></font>
         @endif
@@ -87,17 +93,19 @@
         @endif
 
 
+        <br> <br>
+
         <b>Цель знакомства:</b> <br>
         @foreach($tagrets as $target)
             <input class="form-check-input" type="checkbox" value="{{$target->id}}" name="target[]">
-            <label class="form-check-label" for="{{$target->id}}">{{$target->name}}</label>
+            {{$target->name}}
             <br>
         @endforeach
 
         <b>Интересы:</b> <br>
         @foreach($interests as $interest)
             <input class="form-check-input" type="checkbox" value="{{$interest->id}}" name="interest[]">
-            <label class="form-check-label" for="{{$target->id}}">{{$interest->name}}</label>
+            {{$interest->name}}
             <br>
         @endforeach
 
@@ -115,20 +123,20 @@
         <br>
 
         <script>
-          /*  function findCity() {
-                var inputcity = document.getElementById('cityname').value;
-                console.log(inputcity);
-                var x = document.getElementById("city");
-                var option = document.createElement("option");
-                axios.get('/findcity/' + inputcity, {
-                    params: {}
-                })
-                    .then((response) => {
-                        var data = response.data;
-                        for (var i = 0; i <= data.length; i++) {
-                        }
-                    });
-            }*/
+            /*  function findCity() {
+                  var inputcity = document.getElementById('cityname').value;
+                  console.log(inputcity);
+                  var x = document.getElementById("city");
+                  var option = document.createElement("option");
+                  axios.get('/findcity/' + inputcity, {
+                      params: {}
+                  })
+                      .then((response) => {
+                          var data = response.data;
+                          for (var i = 0; i <= data.length; i++) {
+                          }
+                      });
+              }*/
         </script>
         <script>
             function findCity() {
