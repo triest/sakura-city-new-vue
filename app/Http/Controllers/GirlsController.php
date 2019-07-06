@@ -89,6 +89,8 @@ class GirlsController extends Controller
             'status',
             'views_all',
             'last_login',
+            'from_age',
+            'to_age'
         ])->where('id', $id)->first();
 
         if ($girl == null) {
@@ -148,6 +150,8 @@ class GirlsController extends Controller
                     'private',
                     'phone_settings',
                     'last_login',
+                    'from_age',
+                    'to_age'
                 ])->where('id', $id)->first();
 
                 $privatephoto = $girl->privatephotos()->get();

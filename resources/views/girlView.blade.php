@@ -91,6 +91,7 @@
                         <b> мужчиной</b>
                     @endif
                 </p>
+                В возрасте от <b>{{$girl->from_age}}</b> до  <b>{{$girl->to_age}}</b>
             </div>
         </div>
         <br>

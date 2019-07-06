@@ -44,6 +44,8 @@
                name="sex" value="male">
         <label for="contactChoice2">Мужской</label>
 
+
+
         <br>
         <label for="age">Возраст:
             <input type="number" name="age" min="18" value="18" onkeypress="return isNumber(event)" checked>
@@ -51,6 +53,7 @@
         @if($errors->has('age'))
             <font color="red"><p>  {{$errors->first('age')}}</p></font>
         @endif
+
 
         <label for="height">Рост:
             <input type="number" name="height" min="100" value="160" onkeypress="return isNumber(event)">
@@ -71,6 +74,18 @@
         <label for="contactChoice2">с мужчиной</label>
         <br>
         <br>
+         в возрасте от       <input type="number" name="from" id="from" min="18" value="18" onkeypress="return isNumber(event)">
+        @if($errors->has('from'))
+            <font color="red"><p>  {{$errors->first('from')}}</p></font>
+        @endif
+        до
+        <input type="number" id="to" name="to" min="18" value="18" onkeypress="return isNumber(event)">
+
+
+        @if($errors->has('to'))
+            <font color="red"><p>  {{$errors->first('to')}}</p></font>
+        @endif
+
 
         <b>Цель знакомства:</b> <br>
         @foreach($tagrets as $target)

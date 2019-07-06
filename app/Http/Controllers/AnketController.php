@@ -42,10 +42,6 @@ class AnketController extends Controller
             return view("custom.resetSMS2");
         }
         // dump($user);
-
-        $select_phone_settings = $girl->phone_settings;
-
-
         $phone_setting = collect(DB::select('select * from phone_settings'));
 
         $phone = $user->phone;
@@ -69,6 +65,8 @@ class AnketController extends Controller
             'name' => 'required',
             'sex' => 'required',
             'age' => 'required|numeric|min:18',
+            'from' => 'required|numeric|min:18',
+            'to' => 'required|numeric|min:18',
             'met' => 'required',
             'description' => 'required',
             'private' => 'required',
@@ -95,6 +93,8 @@ class AnketController extends Controller
         $girl->user_id = $user->id;
         $girl->phone_settings = $request->phone_settings;
         $girl->phone = $request->phone;
+        $girl->from_age = $request->from;
+        $girl->to_age = $request->age;
         $girl->save();
 
 
