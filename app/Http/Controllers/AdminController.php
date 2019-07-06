@@ -9,6 +9,7 @@ use App\Present;
 use App\Target;
 use App\Interest;
 use App\User;
+use App\Aperance;
 use Illuminate\Http\Request;
 use File;
 use App\ImageResize;
@@ -209,22 +210,82 @@ class AdminController extends Controller
         } else {
             $baned = 3;
         }
-    //    dump($baned);
+        //    dump($baned);
 
         $girls = Girl::query();
 
         //если есть имя
         if ($request->has('seachName')) {
             $girls
-                ->where('name','like', '%' .$request->seachName. '%')
+                ->where('name', 'like', '%'.$request->seachName.'%')
                 ->get();
         }
         if ($baned != 3) {
-         //   echo $baned;
+            //   echo $baned;
             $girls->where('banned', $baned)->get();
         }
 
 
         return response()->json($girls->get());
     }
+
+    public function getaperancelist(Request $request)
+    {
+        $targets = Aperance::select(['id', 'name'])->get();
+
+        return response()->json($targets);
+    }
+
+    public function aperancestore(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'name' => 'required',
+        ]);
+
+        $name = $request->name;
+        $rez = Aperance::select(['id', 'name'])->where('name', $name)->first();
+        if ($rez != null) {
+            return response()->json('alredy');
+        }
+        $target = new Aperance();
+        $target->name = $name;
+        $target->save();
+
+        return response(200);
+    }
+
+    public function aperanceedit(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'id' => 'required',
+        ]);
+        $target = Aperance::select(['id', 'name'])->where('id', $request->id)->first();
+
+        if ($target == null) {
+            return response(404);
+        }
+        $target->name = $request->name;
+        $target->save();
+
+        return response(200);
+    }
+
+    public function aperancedelete(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id' => 'required',
+        ]);
+        $target = Aperance::select(['id', 'name'])->where('id', $request->id)->first();
+
+        if ($target == null) {
+            return response(404);
+        }
+        $target->delete();
+
+        return response(200);
+    }
+
 }

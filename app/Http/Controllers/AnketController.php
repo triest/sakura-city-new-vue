@@ -203,6 +203,8 @@ class AnketController extends Controller
             'city_id',
             'private',
             'phone_settings',
+            'from_age',
+            'to_age',
         ])->where('user_id', $user->id)->first();
         if ($girl == null) {
             return $this->index();
@@ -285,6 +287,8 @@ class AnketController extends Controller
             'private' => 'required',
             'description' => 'required',
             'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'from' => 'required|numeric|min:18',
+            'to' => 'required|numeric|min:18',
         ]);
         if (Auth::guest()) {
             return redirect('/login');
@@ -313,7 +317,9 @@ class AnketController extends Controller
         $girl->age = $request->age;
         $girl->description = $request->description;
         $girl->private = $request->private;
-
+        $girl->from_age = $request->from;
+        $girl->to_age = $request->to;
+        $girl->save();
         if ($request->has('famele')) {
             $sex = 'famele';
         }
@@ -403,7 +409,6 @@ class AnketController extends Controller
 
             $girl = Girl::select(['main_image'])->where('user_id', $user->get_id())->first();
 
-            $image_extension = $request->file('file')->getClientOriginalExtension();
             //$image_new_name = md5(microtime(true));
             $image_new_name = $girl->main_image;
             $temp_file = base_path().'/public/images/upload/'.strtolower($image_new_name);// кладем файл с новыс именем

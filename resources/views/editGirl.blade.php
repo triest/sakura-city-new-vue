@@ -63,6 +63,14 @@
                name="met" value="male" checked>
         <label for="contactChoice2">с мужчиной</label>
         <br>
+        в возрасте от <input type="number" name="from" id="from" min="18" value="{{$girl->from_age}}"
+                             onkeypress="return isNumber(event)">
+        @if($errors->has('from'))
+            <font color="red"><p>  {{$errors->first('from')}}</p></font>
+        @endif
+        до
+        <input type="number" id="to" name="to" min="18" value="{{$girl->to_age}}" onkeypress="return isNumber(event)">
+        <br>
         Цель знакомства:
         @foreach($allTarget as $tag)
             <div class="form-check">
@@ -205,6 +213,6 @@
             });
         </script>
         <button type="submit" class="btn btn-default">Сохранить изминения</button>
-        <a class="btn btn-primary"  href="{{route('myAnket')}}" role="link" onclick=" relocate_home()">Отменить</a>
+        <a class="btn btn-primary" href="{{route('myAnket')}}" role="link" onclick=" relocate_home()">Отменить</a>
     </form>
 @endsection

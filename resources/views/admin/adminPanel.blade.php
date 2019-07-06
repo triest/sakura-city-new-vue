@@ -8,7 +8,11 @@
 
     <b><a class="btn btn-primary" href="{{route('interetsControll')}}">Управление интересами</a> </b>
 
+    <b><a class="btn btn-primary" href="{{route('apperanceControll')}}">Управление внешнестью</a> </b>
+
     <b><a class="btn btn-primary" href="{{route('usersControll')}}">Управление пользователями</a> </b>
+
+
 
     <br><br>
 

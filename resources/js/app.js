@@ -100,6 +100,14 @@ Vue.component('eventinmycityside', require('./components/EventInMyCitySide.vue')
 
 Vue.component('viewhistory', require('./components/Viewhistory.vue').default);
 
+Vue.component('aperance', require('./components/Aperance.vue').default);
+
+const aperanceApp= new Vue({
+    el: '#aperanceApp',
+    data: {
+        showModal: false
+    }
+});
 
 const viewhistoryapp= new Vue({
     el: '#viewhistoryapp',

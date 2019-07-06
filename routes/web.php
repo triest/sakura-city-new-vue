@@ -179,6 +179,20 @@ Route::group(['middleware' => 'admin'], function () {
         return view('admin.usersControll');
     })->name('usersControll');
 
+    Route::get('/apperanceControll', function () {
+        return view('admin.apperanceControll');
+    })->name('apperanceControll');
+
+    //get aperance
+    Route::get('/admin/aperance', 'AdminController@getaperancelist');
+
+    Route::post('/admin/aperance', 'AdminController@aperancestore');
+
+    Route::post('/admin/aperance/edit', 'AdminController@aperanceedit');
+
+    Route::post('/admin/aperance/delete', 'AdminController@aperancedelete');
+
+
     Route::get('/moneyControll', function () {
         return view('admin.moneyControll');
     })->name('moneyControll');
@@ -404,7 +418,7 @@ Route::get('/eventrequwestlist', 'MyEventController@requwestlist');
 
 Route::get('/event/accept', 'MyEventController@accept');
 
-Route::get('/test',function (){
+Route::get('/test', function () {
     return view('test');
 });
 
