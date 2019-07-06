@@ -31,11 +31,10 @@
         <b> Пол:</b> <br>
         <input type="radio" id="contactChoice1"
                name="sex" value="famele" checked>
-        <label for="contactChoice1">Женский</label>
-
+        Женский
         <input type="radio" id="contactChoice2"
                name="sex" value="male">
-        <label for="contactChoice2">Мужской</label>
+        Мужской
 
         <br>
         <label for="age">Возраст:
@@ -53,15 +52,25 @@
                    pattern="[^@]+@[^@]+\.[0-9]{2,3}" onkeypress="return isNumber(event)">
         </label><br>
 
+        <b>Внешность:</b> <br>
+        @foreach($aperance as $target)
+            @if($girl->apperance_id==$target->id)
+                <input type="radio" value="{{$target->id}}" name="aperance" id="aperance" checked>
+            @else
+                <input type="radio" value="{{$target->id}}" name="aperance" id="aperance">
+            @endif
+            {{$target->name}}
+        @endforeach
+        <br>
 
         <b> С кем хотите познакомиться:</b> <br>
         <input type="radio" id="contactmet"
                name="met" value="famele">
-        <label for="contactChoice1">c женщиной</label>
+        c женщиной
         <br>
         <input type="radio" id="contactmet2"
                name="met" value="male" checked>
-        <label for="contactChoice2">с мужчиной</label>
+        с мужчиной
         <br>
         в возрасте от <input type="number" name="from" id="from" min="18" value="{{$girl->from_age}}"
                              onkeypress="return isNumber(event)">
@@ -71,25 +80,25 @@
         до
         <input type="number" id="to" name="to" min="18" value="{{$girl->to_age}}" onkeypress="return isNumber(event)">
         <br>
-        Цель знакомства:
+        <label>Цель знакомства:</label>
         @foreach($allTarget as $tag)
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" name="tags[]" value="{{$tag}}"
                        @if(in_array($tag,$anketTarget)) checked="1" @endif >
-                <label class="form-check-label" for="exampleCheck1">{{$tag}}</label>
+                {{$tag}}
             </div>
         @endforeach
         <br>
-        Интересы:
+        <label>Интересы:</label>
         @foreach($allInterests as $tag)
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" name="interests[]" value="{{$tag}}"
                        @if(in_array($tag,$anketInterests)) checked="1" @endif >
-                <label class="form-check-label" for="exampleCheck1">{{$tag}}</label>
+                {{$tag}}
             </div>
         @endforeach
 
-        Настройки видимости телефона: <br>
+        <label>Настройки видимости телефона:</label> <br>
         @foreach($phone_settings as $item)
             @if($select_phone_settings->id==$item->id)
                 <input type="radio" id="phone_settings"
@@ -98,7 +107,7 @@
                 <input type="radio" id="phone_settings"
                        name="phone_settings" value="{{$item->id}}">
             @endif
-            <label for="phone_settings">{{$item->name}}</label>
+            {{$item->name}}
             <br>
         @endforeach
 

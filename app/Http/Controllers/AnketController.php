@@ -163,7 +163,7 @@ class AnketController extends Controller
                 }
             }
         }
-        
+
         //цели
         if ($request->has('aperance')) {
             $target = Aperance::select(['id', 'name'])->where('id', $request->aperance)->first();
@@ -218,6 +218,7 @@ class AnketController extends Controller
             'phone_settings',
             'from_age',
             'to_age',
+            'apperance_id',
         ])->where('user_id', $user->id)->first();
         if ($girl == null) {
             return $this->index();
@@ -260,18 +261,14 @@ class AnketController extends Controller
             $city = null;
         }
 
-        $phone_settings = $girl->phone_settings;
-
-
-        //   $countries = collect(DB::select('select * from countries'));
-        //$countries = collect(DB::select('select * from countries'));
+        //внешность
+        $selected_aperance = Aperance::select('id', 'name')->where('id', $girl->apperance_id)->first();
+        $aperance = Aperance::select(['id', 'name'])->get();
 
 
         //тут настройки телефона
         $select_phone_settings = DB::table('phone_settings')->where('id', $girl->phone_settings)->first();
         $phone_setting = collect(DB::select('select * from phone_settings'));
-        // dump($select_phone_settings);
-        //dump($phone_setting);
 
 
         return view('editGirl')->with([
@@ -287,6 +284,8 @@ class AnketController extends Controller
             'city' => $city,
             'phone_settings' => $phone_setting,
             'select_phone_settings' => $select_phone_settings,
+            'aperance' => $aperance,
+            'selected_aperance' => $selected_aperance,
         ]);
     }
 
@@ -392,6 +391,14 @@ class AnketController extends Controller
 
             foreach ($interests as $interest) {
                 $girl->interest()->attach($interest);
+            }
+        }
+
+        if ($request->has('aperance')) {
+            $target = Aperance::select(['id', 'name'])->where('id', $request->aperance)->first();
+            if ($target != null) {
+                $girl->apperance_id = $target->id;
+                $girl->save();
             }
         }
 
