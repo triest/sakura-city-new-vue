@@ -22,6 +22,7 @@ use App\Photo;
 use App\Aperance;
 use App\Relationh;
 use App\Children;
+use App\Smoking;
 use GuzzleHttp\Client;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -260,6 +261,8 @@ class GirlsController extends Controller
 
         $children = Children::select(['id', 'name'])->where('id', $girl->children_id)->first();
 
+        $smoking = Smoking::select(['id', 'name'])->where('id', $girl->smoking_id)->first();
+
 
         return view('girlView')->with([
             'girl' => $girl,
@@ -275,6 +278,7 @@ class GirlsController extends Controller
             'aperance' => $aperance,
             'relation' => $relation,
             'children' => $children,
+            'smoking' => $smoking,
         ]);
     }
 

@@ -120,6 +120,12 @@
             {{$item->name}}
         @endforeach
 
+        <p><b>Отношение к курению:</b></p>
+        @foreach($smoking as $item)
+            <input type="radio" value="{{$item->id}}" name="smoking" id="smoking">
+            {{$item->name}}
+        @endforeach
+
         <div id="country">
             <label>Город</label>
             <input name="cityname" id="cityname" oninput="findCity();" type="text"/>

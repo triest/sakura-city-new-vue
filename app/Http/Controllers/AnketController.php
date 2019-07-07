@@ -14,6 +14,7 @@ use App\Interest;
 use App\Aperance;
 use App\Relationh;
 use App\Children;
+use App\Smoking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +43,8 @@ class AnketController extends Controller
         $interests = Interest::select(['id', 'name'])->get();
         $apperance = Aperance::select(['id', 'name'])->get();
         $relations = Relationh::select(['id', 'name'])->get();
-        $chidren=Children::select(['id', 'name'])->get();
+        $chidren = Children::select(['id', 'name'])->get();
+        $smoking = Smoking::select(['id', 'name'])->get();
 
         //add check phone is confurnd
         if ($user->phone == null or $user->phone_confirmed == 0) {
@@ -63,7 +65,8 @@ class AnketController extends Controller
                     'interests' => $interests,
                     'apperance' => $apperance,
                     'realtions' => $relations,
-                    'childrens' =>$chidren,
+                    'childrens' => $chidren,
+                    'smoking' => $smoking,
                     'phone' => $phone,
                     'phone_setting' => $phone_setting,
                 ]);
@@ -191,13 +194,21 @@ class AnketController extends Controller
             }
         }
 
-       if ($request->has('childrens')) {
-           $target = Children::select(['id', 'name'])->where('id', $request->childrens)->first();
-           if ($target != null) {
-               $girl->children_id = $target->id;
-               $girl->save();
-           }
-       }
+        if ($request->has('childrens')) {
+            $target = Children::select(['id', 'name'])->where('id', $request->childrens)->first();
+            if ($target != null) {
+                $girl->children_id = $target->id;
+                $girl->save();
+            }
+        }
+
+        if ($request->has('smoking')) {
+            $target = Smoking::select(['id', 'name'])->where('id', $request->childrens)->first();
+            if ($target != null) {
+                $girl->smoking_id = $target->id;
+                $girl->save();
+            }
+        }
 
 
         if ($request->has('city')) {
