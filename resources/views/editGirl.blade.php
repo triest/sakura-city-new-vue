@@ -63,6 +63,17 @@
         @endforeach
         <br>
 
+        <p><b>Отношения:</b></p>
+        @foreach($realtions as $item)
+            @if($girl->relation_id==$item->id)
+                <input type="radio" value="{{$item->id}}" name="realtion" id="relation" checked>
+                {{$item->name}}
+            @else
+                <input type="radio" value="{{$item->id}}" name="realtion" id="relation">
+            @endif
+        @endforeach
+
+
         <b> С кем хотите познакомиться:</b> <br>
         <input type="radio" id="contactmet"
                name="met" value="famele">
@@ -78,7 +89,8 @@
             <font color="red"><p>  {{$errors->first('from')}}</p></font>
         @endif
         до
-        <input type="number" id="to" name="to" min="18" value="{{$girl->to_age}}" onkeypress="return isNumber(event)">
+        <input type="number" id="to" name="to" min="18" value="{{$girl->to_age}}"
+               onkeypress="return isNumber(event)">
         <br>
         <label>Цель знакомства:</label>
         @foreach($allTarget as $tag)
@@ -135,14 +147,16 @@
         <br>
         <div class="form-group">
             <label for="exampleInputFile">Текст анкеты:</label><br>
-            <textarea class="form-control" rows="10" name="description" required>{{$girl->description}} </textarea>
+            <textarea class="form-control" rows="10" name="description"
+                      required>{{$girl->description}} </textarea>
         </div>
         @if($errors->has('description'))
             <font color="red"><p class="errors">{{$errors->first('description')}}</p></font>
         @endif
 
         <div class="form-group">
-            <label for="exampleInputFile">Приватный текст, который видно только тем, кому вы откроете доступ:</label>
+            <label for="exampleInputFile">Приватный текст, который видно только тем, кому вы откроете
+                доступ:</label>
             <br>
             <textarea class="form-control" rows="10" name="private" required>{{$girl->private}} </textarea>
         </div>
@@ -222,6 +236,7 @@
             });
         </script>
         <button type="submit" class="btn btn-default">Сохранить изминения</button>
-        <a class="btn btn-primary" href="{{route('myAnket')}}" role="link" onclick=" relocate_home()">Отменить</a>
+        <a class="btn btn-primary" href="{{route('myAnket')}}" role="link"
+           onclick=" relocate_home()">Отменить</a>
     </form>
 @endsection

@@ -63,6 +63,8 @@
                 @endif
                 <br>
 
+                <b>Отношения:</b> {{$relation->name}}
+                <br>
                 <b>Телефон:</b>
 
                 @if($phone_settings==1 and $phone!=null)

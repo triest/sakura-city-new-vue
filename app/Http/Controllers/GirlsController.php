@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use File;
@@ -19,6 +20,7 @@ use App\EventStatys;
 use App\EventPhoto;
 use App\Photo;
 use App\Aperance;
+use App\Relationh;
 use GuzzleHttp\Client;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -93,6 +95,7 @@ class GirlsController extends Controller
             'from_age',
             'to_age',
             'apperance_id',
+            'relation_id'
         ])->where('id', $id)->first();
 
         if ($girl == null) {
@@ -154,6 +157,7 @@ class GirlsController extends Controller
                     'last_login',
                     'from_age',
                     'to_age',
+                    'relation_id'
                 ])->where('id', $id)->first();
 
                 $privatephoto = $girl->privatephotos()->get();
@@ -250,6 +254,10 @@ class GirlsController extends Controller
         }
         $aperance = Aperance::select('id', 'name')->where('id', $girl->apperance_id)->first();
 
+        $relation = Relationh::select('id', 'name')->where('id', $girl->relation_id)->first();
+
+
+
         return view('girlView')->with([
             'girl' => $girl,
             'images' => $images,
@@ -262,6 +270,7 @@ class GirlsController extends Controller
             'phone' => $phone,
             'views' => $views,
             'aperance' => $aperance,
+            'relation' => $relation,
         ]);
     }
 

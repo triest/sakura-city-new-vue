@@ -179,7 +179,6 @@ class AnketController extends Controller
             }
         }
 
-        dump($request);
 
         if ($request->has('realtion')) {
             $target = Relation::select(['id', 'name'])->where('id', $request->realtion)->first();
@@ -233,6 +232,7 @@ class AnketController extends Controller
             'from_age',
             'to_age',
             'apperance_id',
+            'relation_id',
         ])->where('user_id', $user->id)->first();
         if ($girl == null) {
             return $this->index();
@@ -284,6 +284,8 @@ class AnketController extends Controller
         $select_phone_settings = DB::table('phone_settings')->where('id', $girl->phone_settings)->first();
         $phone_setting = collect(DB::select('select * from phone_settings'));
 
+        $relations = Relationh::select(['id', 'name'])->get();
+
 
         return view('editGirl')->with([
             'username' => $user->name,
@@ -300,6 +302,7 @@ class AnketController extends Controller
             'select_phone_settings' => $select_phone_settings,
             'aperance' => $aperance,
             'selected_aperance' => $selected_aperance,
+            'relations' => $relations,
         ]);
     }
 
