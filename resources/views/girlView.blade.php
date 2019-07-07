@@ -63,8 +63,14 @@
                 @endif
                 <br>
 
-                <b>Отношения:</b> {{$relation->name}}
+                <b>Отношения:</b>
+                @if ($relation!=null)
+                    {{$relation->name}}
+                @endif
                 <br>
+                @if ($children!=null)
+                    <b>Дети:</b> {{$children->name}} <br>
+                @endif
                 <b>Телефон:</b>
 
                 @if($phone_settings==1 and $phone!=null)
@@ -78,13 +84,22 @@
                             <div id="phoneRequwestApp">
                                 <phonerequwest :id="{{$girl->id}}" :user_id="{{$girl->user_id}}"></phonerequwest>
                             </div>
+                        @elseif($phone_settings==2 and $girl->user_id=auth()->user()->id)
+                            Ваш телефон виден только тем,  вы его откроете
                         @endif
                     @endif
                 @endif
+
                 <p class="card-text"><b>Рост :</b> {{$girl->height}}</p>
                 <p class="card-text"><b>Вес : </b>{{$girl->weight}}</p>
                 <p class="card-text"><b>Возраст :</b> {{$girl->age}}</p>
-                <p class="card-text"><b>Внешность :</b> {{$aperance->name}}</p>
+                <p class="card-text"><b>Внешность :</b></p>
+                @if ($aperance!=null)
+                    <p> {{$aperance->name}}</p>
+                @else
+                    Не указана
+                @endif
+
 
                 <p class="card-text"><b>Хочу встретиться с :</b> @if($girl->meet=='famele')
                         женщиной

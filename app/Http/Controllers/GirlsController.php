@@ -21,6 +21,7 @@ use App\EventPhoto;
 use App\Photo;
 use App\Aperance;
 use App\Relationh;
+use App\Children;
 use GuzzleHttp\Client;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -95,7 +96,8 @@ class GirlsController extends Controller
             'from_age',
             'to_age',
             'apperance_id',
-            'relation_id'
+            'relation_id',
+            'children_id',
         ])->where('id', $id)->first();
 
         if ($girl == null) {
@@ -157,7 +159,7 @@ class GirlsController extends Controller
                     'last_login',
                     'from_age',
                     'to_age',
-                    'relation_id'
+                    'relation_id',
                 ])->where('id', $id)->first();
 
                 $privatephoto = $girl->privatephotos()->get();
@@ -256,6 +258,7 @@ class GirlsController extends Controller
 
         $relation = Relationh::select('id', 'name')->where('id', $girl->relation_id)->first();
 
+        $children = Children::select(['id', 'name'])->where('id', $girl->children_id)->first();
 
 
         return view('girlView')->with([
@@ -271,6 +274,7 @@ class GirlsController extends Controller
             'views' => $views,
             'aperance' => $aperance,
             'relation' => $relation,
+            'children' => $children,
         ]);
     }
 

@@ -69,11 +69,12 @@
         @endforeach
         <br>
 
-        <p><b>Отношения:</b> </p>
-            @foreach($realtions as $item)
-                <input type="radio" value="{{$item->id}}" name="realtion" id="relation">
-                {{$item->name}}
-            @endforeach
+        <p><b>Отношения:</b></p>
+        @foreach($realtions as $item)
+            <input type="radio" value="{{$item->id}}" name="realtion" id="relation">
+            {{$item->name}}
+        @endforeach
+
 
         <p><b> С кем хотите познакомиться:</b></p>
         <input type="radio" id="contactmet"
@@ -110,6 +111,13 @@
             <input class="form-check-input" type="checkbox" value="{{$interest->id}}" name="interest[]">
             {{$interest->name}}
             <br>
+        @endforeach
+
+        <b>Дети:</b>
+        @foreach($childrens as $item)
+            <br>
+            <input type="radio" value="{{$item->id}}" name="childrens" id="childrens">
+            {{$item->name}}
         @endforeach
 
         <div id="country">

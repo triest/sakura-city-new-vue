@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Relationh extends Model
+class Children extends Model
 {
     //
-    protected $table = "relations";
+    protected $table = 'children';
 }

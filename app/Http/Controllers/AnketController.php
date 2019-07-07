@@ -12,7 +12,8 @@ use App\User;
 use App\Privatephoto;
 use App\Interest;
 use App\Aperance;
-use App\Relation;
+use App\Relationh;
+use App\Children;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +41,8 @@ class AnketController extends Controller
         $targets = Target::select(['id', 'name'])->get();
         $interests = Interest::select(['id', 'name'])->get();
         $apperance = Aperance::select(['id', 'name'])->get();
-        $relations = Relation::select(['id', 'name'])->get();
+        $relations = Relationh::select(['id', 'name'])->get();
+        $chidren=Children::select(['id', 'name'])->get();
 
         //add check phone is confurnd
         if ($user->phone == null or $user->phone_confirmed == 0) {
@@ -61,6 +63,7 @@ class AnketController extends Controller
                     'interests' => $interests,
                     'apperance' => $apperance,
                     'realtions' => $relations,
+                    'childrens' =>$chidren,
                     'phone' => $phone,
                     'phone_setting' => $phone_setting,
                 ]);
@@ -181,12 +184,20 @@ class AnketController extends Controller
 
 
         if ($request->has('realtion')) {
-            $target = Relation::select(['id', 'name'])->where('id', $request->realtion)->first();
+            $target = Relationh::select(['id', 'name'])->where('id', $request->realtion)->first();
             if ($target != null) {
                 $girl->relation_id = $target->id;
                 $girl->save();
             }
         }
+
+       if ($request->has('childrens')) {
+           $target = Children::select(['id', 'name'])->where('id', $request->childrens)->first();
+           if ($target != null) {
+               $girl->children_id = $target->id;
+               $girl->save();
+           }
+       }
 
 
         if ($request->has('city')) {
