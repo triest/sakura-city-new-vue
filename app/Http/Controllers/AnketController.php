@@ -835,30 +835,28 @@ class AnketController extends Controller
         $who_met = $request->who_met;
         $with_met = $request->with_met;
         $girls = Girl::query();
-        $current_date = Carbon::now();// текушая дата
-
-        //  dump($current_date);
-        $girls
-            ->where('sex', $with_met)
-            ->where('meet', $who_met)
-            ->where('age', '>=', $request->min_age)
-            ->where('age', '<=', $request->max_age)
-            ->where('begin_search', '<', $current_date)
-            ->where('end_search', '>', $current_date)
-            ->get();
 
 
-        if ($request->get('targets')) {
-            $girls->whereHas('target', function ($query) use ($request) {
-                return $query->where('target_id', $request->targets);
-            })->get();
+        if ($request->has('max_age')) {
+            $girls->where('age', '<=', $request->max_age);
         }
 
-        if ($request->get('interests')) {
-            $girls->whereHas('interest', function ($query) use ($request) {
-                return $query->where('interest_id', $request->interests);
-            })->get();
+        if ($request->has('min_age')) {
+            $girls->where('age', '>=', $request->min_age);
         }
+
+        if ($request->has('with_met')) {
+            $with=$request->with_met;
+            if ($with=="with_famele"){
+                $girls->where('sex','famele');
+            }elseif ($with=="with_male"){
+                $girls->where('sex','male');
+            }
+
+            $girls->where('age', '>=', $request->min_age);
+        }
+
+        $girls->get();
 
 
         return response()->json($girls->get());

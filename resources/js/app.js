@@ -23,7 +23,7 @@ Vue.use(VueCarousel);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component('index2', require('./components/index.vue').default);
+Vue.component('index2', require('./components/index2.vue').default);
 Vue.component('chat-app', require('./components/ChatApp.vue').default);
 Vue.component('chat-app2', require('./components/ChatApp2.vue').default);
 Vue.component('conversation', require('./components/Conversation.vue').default);

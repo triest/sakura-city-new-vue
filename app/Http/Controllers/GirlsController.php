@@ -87,6 +87,7 @@ class GirlsController extends Controller
             'country_id',
             'region_id',
             'city_id',
+
             'banned',
             'user_id',
             'phone',
@@ -99,6 +100,7 @@ class GirlsController extends Controller
             'apperance_id',
             'relation_id',
             'children_id',
+            'smoking_id',
         ])->where('id', $id)->first();
 
         if ($girl == null) {
@@ -161,6 +163,7 @@ class GirlsController extends Controller
                     'from_age',
                     'to_age',
                     'relation_id',
+                    'smoking_id',
                 ])->where('id', $id)->first();
 
                 $privatephoto = $girl->privatephotos()->get();
@@ -262,7 +265,6 @@ class GirlsController extends Controller
         $children = Children::select(['id', 'name'])->where('id', $girl->children_id)->first();
 
         $smoking = Smoking::select(['id', 'name'])->where('id', $girl->smoking_id)->first();
-
 
         return view('girlView')->with([
             'girl' => $girl,

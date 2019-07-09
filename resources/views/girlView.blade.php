@@ -73,7 +73,7 @@
                     <b>Дети:</b> {{$children->name}} <br>
                 @endif
 
-                @if ($smoking=null)
+                @if ($smoking!=null)
                     <b>Отношение к курению:</b> {{$smoking->name}} <br>
                 @endif
                 <b>Телефон:</b>
